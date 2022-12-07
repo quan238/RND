@@ -1,5 +1,5 @@
 {
-  "name": "thesis_fullstack",
+  "name": "RND",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,11 +8,13 @@
     "start": "node ./bin/www",
     "server": "nodemon app.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "capstone",
+    "rnd"
+  ],
+  "author": "quantran2381",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^3.6.1",
