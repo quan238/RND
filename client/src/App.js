@@ -39,17 +39,18 @@ import withAuth from "./withAuth";
 import Login from "./components/Login";
 import JobList from "./components/JobList";
 import JobListManager from './components/manager/JobList'
+import { NotFound } from "./components/NotFound";
 
 export default class App extends Component {
   render() {
     return (
       <>
         <Router>
-            <Switch>
-              <Route exact path="/login" component={LoginContainer} />
-              <Route exact path="/register" component={RegisterContainer} />
-              <Route path="/" component={withAuth(DefaultContainer)} />
-            </Switch>
+          <Switch>
+            <Route exact path="/login" component={LoginContainer} />
+            <Route exact path="/register" component={RegisterContainer} />
+            <Route path="/" component={withAuth(DefaultContainer)} />
+          </Switch>
         </Router>
       </>
     )
@@ -57,14 +58,14 @@ export default class App extends Component {
 }
 
 const LoginContainer = () => (
-  <div style={{display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "600px"}}>
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "600px" }}>
     <Route exact path="/" render={() => <Redirect to="/login" />} />
     <Route path="/login" component={Login} />
   </div>
 )
 
 const RegisterContainer = () => (
-  <div style={{display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "600px"}}>
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "600px" }}>
     <Route exact path="/" render={() => <Redirect to="/register" />} />
     <Route path="/register" component={Register} />
   </div>
@@ -97,13 +98,13 @@ const AdminContainer = () => (
         <Route exact path="/job-list" component={withAuth(JobList)} />
         <Route exact path="/application-list" component={withAuth(ApplicationList)} />
         <Route exact path="/application" component={withAuth(Application)} />
-        <Route exact path="/salary-details" component={withAuth(SalaryDetails)} />
-        <Route exact path="/salary-list" component={withAuth(SalaryList)} />
-        <Route exact path="/salary-view" component={withAuth(SalaryView)} />
-        <Route exact path="/payment" component={withAuth(Payment)} />
-        <Route exact path="/expense" component={withAuth(Expense)} />
-        <Route exact path="/expense-report" component={withAuth(ExpenseReport)} />
-        <Route exact path="/announcement" component={withAuth(Announcement)} />
+        <Route exact path="/salary-details" component={withAuth(NotFound)} />
+        <Route exact path="/salary-list" component={withAuth(NotFound)} />
+        <Route exact path="/salary-view" component={withAuth(NotFound)} />
+        <Route exact path="/payment" component={withAuth(NotFound)} />
+        <Route exact path="/expense" component={withAuth(NotFound)} />
+        <Route exact path="/expense-report" component={withAuth(NotFound)} />
+        <Route exact path="/announcement" component={withAuth(NotFound)} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
       </Switch>
@@ -124,10 +125,10 @@ const ManagerContainer = () => (
         <Route exact path="/job-list" component={withAuth(JobListManager)} />
         <Route exact path="/application-list" component={withAuth(ApplicationListManager)} />
         <Route exact path="/application" component={withAuth(Application)} />
-        <Route exact path="/expense" component={withAuth(ExpenseManager)} />
-        <Route exact path="/salary-view" component={withAuth(SalaryViewManager)} />
-        <Route exact path="/expense-report" component={withAuth(ExpenseReportManager)} />
-        <Route exact path="/announcement" component={withAuth(AnnouncementManager)} />
+        <Route exact path="/expense" component={withAuth(NotFound)} />
+        <Route exact path="/salary-view" component={withAuth(NotFound)} />
+        <Route exact path="/expense-report" component={withAuth(NotFound)} />
+        <Route exact path="/announcement" component={withAuth(NotFound)} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
       </Switch>
@@ -145,9 +146,9 @@ const EmployeeContainer = () => (
         <Route exact path="/" component={withAuth(DashboardEmployee)} />
         <Route exact path="/employee-view" component={withAuth(EmployeeViewEmployee)} />
         <Route exact path="/application-list" component={withAuth(ApplicationListEmployee)} />
-        <Route exact path="/application" component={withAuth(Application)} />
-        <Route exact path="/salary-view" component={withAuth(SalaryViewEmployee)} />
-        <Route exact path="/announcement" component={withAuth(AnnouncementEmployee)} />
+        <Route exact path="/application" component={withAuth(NotFound)} />
+        <Route exact path="/salary-view" component={withAuth(NotFound)} />
+        <Route exact path="/announcement" component={withAuth(NotFound)} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
       </Switch>

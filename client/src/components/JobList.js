@@ -200,9 +200,9 @@ export default class JobList extends Component {
                 <div className="row">
                     <div className="col-sm-12">
                         <h4>
-                            <a className="fa fa-plus mb-2 ml-2" onClick={this.addJob} style={{ color: 'blue', cursor: 'pointer' }}>
+                            <Button onClick={this.addJob} >
                                 Add Job
-                            </a>
+                            </Button>
                         </h4>
                         <Card className="main-card">
                             <Card.Header>

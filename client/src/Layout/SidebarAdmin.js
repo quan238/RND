@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { loadTree } from '../menuTreeHelper';
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export default class SidebarAdmin extends Component {
 
@@ -14,17 +14,17 @@ export default class SidebarAdmin extends Component {
 
   componentDidMount() {
     let userData = JSON.parse(localStorage.getItem('user'))
-    this.setState({user: userData})
+    this.setState({ user: userData })
     loadTree();
   }
 
   render() {
     return (
-      <aside className="main-sidebar sidebar-dark-primary elevation-4" >
+      <aside className="main-sidebar sidebar-light-primary elevation-4" >
         {/* Brand Logo */}
-        <a href="/" className="brand-link">
+        {/* <a href="/" className="brand-link">
           <span className="brand-text font-weight-light ml-1">HRMS Admin</span>
-        </a>
+        </a> */}
         {/* Sidebar */}
         <div className="sidebar">
           {/* Sidebar user panel (optional) */}

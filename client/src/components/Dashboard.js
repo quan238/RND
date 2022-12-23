@@ -83,7 +83,7 @@ export default class Dashboard extends Component {
           <div className="col-md-4 col-sm-6 col-xs-12">
             <Infobox
               title="Total Expenses"
-              description={this.state.totalExpenses + "€"}
+              description={this.state.totalExpenses + "VNĐ"}
               color="bg-warning"
               icon="fa fa-shopping-cart"
             />
@@ -92,7 +92,7 @@ export default class Dashboard extends Component {
           <div className="col-md-4 col-sm-6 col-xs-12">
             <Infobox
               title="Total Payments"
-              description={this.state.totalPayments + "€"}
+              description={this.state.totalPayments + "VNĐ"}
               color="bg-danger"
               icon="fa fa-money-check"
             />
