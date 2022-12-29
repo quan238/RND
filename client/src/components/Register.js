@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Alert } from "react-bootstrap";
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export default class Register extends Component {
   constructor(props) {
@@ -65,12 +65,12 @@ export default class Register extends Component {
         data: newUser,
       })
         .then((res) => {
-          this.setState({completed: true, hasError: false})
+          this.setState({ completed: true, hasError: false })
         })
         .catch((err) => {
           this.setState({
             hasError: true,
-            errorMessage: err.response.data.message 
+            errorMessage: err.response.data.message
           });
         });
     }
@@ -79,12 +79,6 @@ export default class Register extends Component {
   render() {
     return (
       <div className="register-box">
-        <div className="register-logo">
-          <a href="../../index2.html">
-            <b>HR</b>MS{" "}
-            <small style={{ fontSize: "10px" }}>by Mantzaris Vasileios</small>
-          </a>
-        </div>
         <div className="card">
           <div className="card-body register-card-body">
             {this.state.hasError ? (
@@ -205,7 +199,7 @@ export default class Register extends Component {
               Already have an account? Login
             </a>
             <hr className="mt-3" />
-            <p className="mb-0">by Mantzaris Vasileios</p>
+
           </div>
           {/* /.form-box */}
         </div>

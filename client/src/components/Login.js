@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom'
-import { Alert } from "react-bootstrap";
 import axios from "axios";
+import TextField from '@mui/material/TextField';
+import { Alert, Button } from "@mui/material";
 
 export default class Login extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ export default class Login extends Component {
     })
       .then((res) => {
         localStorage.setItem('token', res.data.token)
-        this.setState({done: true})
+        this.setState({ done: true })
       })
       .catch((err) => {
         console.log(err.response);
@@ -64,25 +65,25 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="register-box">
+      <div className="register-box" >
         <div className="register-logo">
           <a href="/">
             {this.state.done ? <Redirect to="/" /> : <></>}
-            <b>HR</b>MS{" "}
-            <small style={{ fontSize: "10px" }}>by Mantzaris Vasileios</small>
           </a>
         </div>
-        <div className="card">
-          <div className="card-body register-card-body">
+        <div className="card" >
+          <div className="card-body register-card-body" style={{ borderRadius: '15px' }}>
             {this.state.hasError ? (
-              <Alert variant="danger">{this.state.errorMessage}</Alert>
+              <Alert severity="error" className="mb-2">{this.state.errorMessage}</Alert>
             ) : null}
             <p className="login-box-msg">Login</p>
             <form onSubmit={this.onSubmit}>
               <div>
-                <div className="input-group mb-3">
-                  <input
-                    type="text"
+                <div className="input-group mb-4">
+                  <TextField
+                    label="Email"
+                    InputLabelProps={{ shrink: true }}
+                    size="small"
                     className="form-control"
                     name="username"
                     placeholder="Username"
@@ -97,8 +98,11 @@ export default class Login extends Component {
                   </div>
                 </div>
                 <div className="input-group mb-3">
-                  <input
+                  <TextField
+                    label="Password"
+                    size="small"
                     type="password"
+                    InputLabelProps={{ shrink: true }}
                     className="form-control"
                     name="password"
                     id="password"
@@ -106,6 +110,7 @@ export default class Login extends Component {
                     value={this.state.password}
                     onChange={this.onChange}
                     required
+                    endAd
                   />
                   <div className="input-group-append">
                     <div className="input-group-text">
@@ -126,23 +131,22 @@ export default class Login extends Component {
                   </div>
                 </div>
               </div>
-              <div className="row">
+              <div className="row mt-5" >
                 <div className="col-8"></div>
                 {/* /.col */}
-                <div className="col-4">
-                  <button type="submit" className="btn btn-primary btn-block">
-                    Login
-                  </button>
-                </div>
+                <Button variant="contained" type="submit" className="btn btn-primary btn-block">
+                  Login
+                </Button>
                 {/* /.col */}
               </div>
             </form>
+
+            <hr className="mt-3" />
             <a href="/register" className="text-center mt-1">
               Don't have an account? Register
             </a>
-            <hr className="mt-3" />
-            <p className="mb-0">by Mantzaris Vasileios</p>
           </div>
+
           {/* /.form-box */}
         </div>
         {/* /.card */}

@@ -40,7 +40,7 @@ import Login from "./components/Login";
 import JobList from "./components/JobList";
 import JobListManager from './components/manager/JobList'
 import { NotFound } from "./components/NotFound";
-
+import Background from './background.jpeg'
 export default class App extends Component {
   render() {
     return (
@@ -58,14 +58,14 @@ export default class App extends Component {
 }
 
 const LoginContainer = () => (
-  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "600px" }}>
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "100vh", background: `url(${Background}) center no-repeat`, backgroundSize: 'cover', }}>
     <Route exact path="/" render={() => <Redirect to="/login" />} />
     <Route path="/login" component={Login} />
   </div>
 )
 
 const RegisterContainer = () => (
-  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "600px" }}>
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "100vh", background: `url(${Background}) center no-repeat`, backgroundSize: 'cover', }}>
     <Route exact path="/" render={() => <Redirect to="/register" />} />
     <Route path="/register" component={Register} />
   </div>
