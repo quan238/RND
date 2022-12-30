@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Bar, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import axios from "axios";
 import { faker } from "@faker-js/faker";
+import { MenuItem, Select } from "@mui/material";
 
 export default class ExpenseChartsPage extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ export default class ExpenseChartsPage extends React.Component {
 
     this.state = {
       chartData: [],
-      paymentYear: 2021,
+      paymentYear: 2023,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -64,6 +65,16 @@ export default class ExpenseChartsPage extends React.Component {
   render() {
     const options = {
       responsive: true,
+      scales: {
+        y: {
+          ticks: {
+            stepSize: (c) =>
+              (Math.max(...c.chart.data.datasets[0].data) -
+                Math.min(...c.chart.data.datasets[0].data)) /
+              2,
+          },
+        },
+      },
       plugins: {
         legend: {
           position: "top",
@@ -101,16 +112,29 @@ export default class ExpenseChartsPage extends React.Component {
 
     return (
       <div className="card p-4">
-        <strong style={{ fontSize: 18 }}>Payment Report Chart</strong>
-        <div className="mt-1" style={{ textAlign: "center" }}>
-          <span className="ml-4">Select Year: </span>
-          <select onChange={this.onChange} value={this.state.paymentYear}>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-          </select>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "space-between",
+          }}
+        >
+          <strong style={{ fontSize: 18 }}>Payment Report Chart</strong>
+          <div className="mt-1" style={{ textAlign: "center" }}>
+            <span className="ml-4">Select Year: </span>
+            <Select
+              defaultValue={"2023"}
+              onChange={this.onChange}
+              value={this.state.expenseYear}
+              size="small"
+              style={{ height: 30 }}
+            >
+              <MenuItem value={"2023"}>2023</MenuItem>
+              <MenuItem value={"2022"}>2022</MenuItem>
+              <MenuItem value={"2021"}>2021</MenuItem>
+              <MenuItem value={"2020"}>2020</MenuItem>
+            </Select>
+          </div>
         </div>
         <div>
           <Line options={options} data={data} />

@@ -29,3 +29,21 @@ code {
   font-weight: 700;
   color: #566371;
 }
+
+.nav-link {
+  padding: 1.1rem 1rem !important;
+}
+
+.nav-item {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin: 0.25rem 0;
+}
+
+.user-panel {
+  align-items: center;
+}
+
+.content {
+  padding: 0 1.5rem !important;
+}
