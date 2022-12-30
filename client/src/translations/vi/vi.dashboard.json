@@ -1,0 +1,28 @@
+{
+  "common": {
+    "select-year": "Select Year"
+  },
+  "employee": {
+    "total": "Tổng Nhân Viên"
+  },
+  "expenses": {
+    "total": "Tổng Bồi Thường",
+    "chart": "Bồi Thường Nhân Viên"
+  },
+  "payments": {
+    "total": "Tổng Thanh Toán",
+    "chart": "Thanh Toán Nhân Viên"
+  },
+  "applications": {
+    "recent": "Đơn Nghỉ Phép Gần Nhất"
+  },
+  "announcement": {
+    "recent": "Thông Báo Gần Nhất"
+  },
+  "holiday": {
+    "title": "Lịch Ngày Lễ",
+    "event": "Thêm Sự Kiện",
+    "today": "Hôm Nay",
+    "month": "Tháng"
+  }
+}

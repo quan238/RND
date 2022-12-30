@@ -1,0 +1,28 @@
+{
+  "common": {
+    "select-year": "Select Year"
+  },
+  "employee": {
+    "total": "Total Employee"
+  },
+  "expenses": {
+    "total": "Total Expenses",
+    "chart": "Expense Chart"
+  },
+  "payments": {
+    "total": "Total Payments",
+    "chart": "Payment Report Chart"
+  },
+  "applications": {
+    "recent": "Recent Applications"
+  },
+  "announcement": {
+    "recent": "Recent Announcement"
+  },
+  "holiday": {
+    "title": "Holiday Calendar",
+    "event": "Add Event",
+    "today": "Today",
+    "month": "Month"
+  }
+}

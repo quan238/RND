@@ -8,7 +8,7 @@ const SelectCountry = (props) => {
 
   const handleSelectCountry = async () => {
     const { value } = await Swal.fire({
-      title: "Select A Country Language",
+      title: "Select a Country Language",
       input: "select",
       inputValue: i18n.language,
       inputOptions: {

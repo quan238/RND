@@ -3,8 +3,9 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 import { faker } from "@faker-js/faker";
 import { MenuItem, Select } from "@mui/material";
+import { withTranslation } from "react-i18next";
 
-export default class ExpenseChartsPage extends React.Component {
+class ExpenseChartsPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -119,7 +120,9 @@ export default class ExpenseChartsPage extends React.Component {
             justifyContent: "space-between",
           }}
         >
-          <strong style={{ fontSize: 18 }}>Payment Report Chart</strong>
+          <strong style={{ fontSize: 18 }}>
+            {this.props.t("payments.chart")}
+          </strong>
           <div className="mt-1" style={{ textAlign: "center" }}>
             <span className="ml-4">Select Year: </span>
             <Select
@@ -164,3 +167,5 @@ export default class ExpenseChartsPage extends React.Component {
     );
   }
 }
+
+export default withTranslation("dashboard")(ExpenseChartsPage);

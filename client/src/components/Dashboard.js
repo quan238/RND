@@ -8,9 +8,9 @@ import PaymentChartsPage from "./PaymentChartsPage";
 import RecentApplciations from "./RecentApplications";
 import RecentAnnouncements from "./RecentAnnouncements";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
+import { withTranslation } from "react-i18next";
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
 
@@ -37,7 +37,7 @@ export default class Dashboard extends Component {
     //Fetch Expenses Total
     axios({
       method: "get",
-      url: "/api/expenses/year/2021",
+      url: "/api/expenses/year/2022",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }).then((res) => {
       let array = res.data;
@@ -53,7 +53,7 @@ export default class Dashboard extends Component {
     //Fetch Payments Total
     axios({
       method: "get",
-      url: "api/payments/year/2021",
+      url: "api/payments/year/2022",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }).then((res) => {
       let array = res.data;
@@ -74,7 +74,7 @@ export default class Dashboard extends Component {
           {/* First info-box */}
           <div className="col-md-4 col-sm-6 col-xs-12">
             <Infobox
-              title="Total Employees"
+              title={this.props.t("employee.total")}
               description={this.state.totalEmployees}
               color="bg-success"
               icon="fa fa-users"
@@ -83,7 +83,7 @@ export default class Dashboard extends Component {
           {/* Second info-box */}
           <div className="col-md-4 col-sm-6 col-xs-12">
             <Infobox
-              title="Total Expenses"
+              title={this.props.t("expenses.total")}
               description={this.state.totalExpenses + " VNĐ"}
               color="bg-warning"
               icon="fa fa-shopping-cart"
@@ -92,7 +92,7 @@ export default class Dashboard extends Component {
           {/* Third info-box */}
           <div className="col-md-4 col-sm-6 col-xs-12">
             <Infobox
-              title="Total Payments"
+              title={this.props.t("payments.total")}
               description={this.state.totalPayments + " VNĐ"}
               color="bg-danger"
               icon="fa fa-money-check"
@@ -125,3 +125,5 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+export default withTranslation("dashboard")(Dashboard);

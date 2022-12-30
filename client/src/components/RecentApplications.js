@@ -1,7 +1,8 @@
 import * as React from "react";
 import axios from "axios";
+import { withTranslation } from "react-i18next";
 
-export default class RecentApplications extends React.Component {
+class RecentApplications extends React.Component {
   _isMounted = false;
 
   constructor(props) {
@@ -33,10 +34,12 @@ export default class RecentApplications extends React.Component {
   render() {
     return (
       <div className="card p-4">
-        <strong style={{ fontSize: 18 }}>Recent Applications</strong>
+        <strong style={{ fontSize: 18 }}>
+          {this.props.t("applications.recent")}
+        </strong>
         <div className="mt-1" style={{ textAlign: "center" }}></div>
         <div>
-          <ul>
+          <ul className="pl-0 mt-3">
             {this.state.recentApplications.map((app) => (
               <li
                 style={{ listStyle: "none", height: "50px" }}
@@ -74,3 +77,5 @@ export default class RecentApplications extends React.Component {
     );
   }
 }
+
+export default withTranslation("dashboard")(RecentApplications);

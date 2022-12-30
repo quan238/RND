@@ -1,9 +1,8 @@
 import * as React from "react";
 import axios from "axios";
-import CalendarIcon from "react-calendar-icon";
-import { ThemeProvider } from "styled-components";
+import { withTranslation } from "react-i18next";
 
-export default class RecentAnnouncements extends React.Component {
+class RecentAnnouncements extends React.Component {
   _isMounted = false;
 
   constructor(props) {
@@ -67,7 +66,9 @@ export default class RecentAnnouncements extends React.Component {
 
     return (
       <div className="card p-4">
-        <strong style={{ fontSize: 18 }}>Recent Announcement</strong>
+        <strong style={{ fontSize: 18 }}>
+          {this.props.t("announcement.recent")}
+        </strong>
         <div className="mt-1" style={{ textAlign: "center" }}></div>
         <ul className="pl-0 mt-2">
           {this.state.recentAnnouncements.map((announcement) => (
@@ -99,3 +100,5 @@ export default class RecentAnnouncements extends React.Component {
     );
   }
 }
+
+export default withTranslation("dashboard")(RecentAnnouncements);

@@ -8,8 +8,9 @@ import AddEventPopup from "./AddEventPopup";
 import moment from "moment";
 import ReactToolTip from "react-tooltip";
 import ShowEventPopup from "./ShowEventPopup";
+import { withTranslation } from "react-i18next";
 
-export default class Calendar extends Component {
+class Calendar extends Component {
   _isMounted = false;
 
   constructor(props) {
@@ -94,7 +95,9 @@ export default class Calendar extends Component {
 
     return (
       <div className="card p-4">
-        <strong style={{ fontSize: 20 }}>Holiday Calendar</strong>
+        <strong style={{ fontSize: 20 }}>
+          {this.props.t("holiday.title")}
+        </strong>
         <FullCalendar
           defaultView="dayGridMonth"
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -102,6 +105,7 @@ export default class Calendar extends Component {
           dateClick={() => this.setState({ showAddModel: true })}
           events={this.state.events}
           eventPositioned={this.handleEventPositioned}
+          locale={this.props.i18n.language}
           eventTimeFormat={{
             hour: "2-digit",
             minute: "2-digit",
@@ -111,7 +115,7 @@ export default class Calendar extends Component {
           themeSystem="bootstrap5"
           customButtons={{
             button: {
-              text: "Add Event",
+              text: this.props.t("holiday.event"),
               click: () => {
                 this.setState({ showAddModel: true });
               },
@@ -137,3 +141,5 @@ export default class Calendar extends Component {
     );
   }
 }
+
+export default withTranslation("dashboard")(Calendar);

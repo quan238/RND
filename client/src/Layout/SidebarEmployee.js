@@ -1,26 +1,26 @@
 import React, { Component } from "react";
-import { loadTree } from '../menuTreeHelper';
-import { NavLink } from 'react-router-dom'
+import { loadTree } from "../menuTreeHelper";
+import { NavLink } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
-export default class SidebarEmployee extends Component {
-
+class SidebarEmployee extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: {}
-    }
+      user: {},
+    };
   }
 
   componentDidMount() {
-    let userData = JSON.parse(localStorage.getItem('user'))
-    this.setState({ user: userData })
+    let userData = JSON.parse(localStorage.getItem("user"));
+    this.setState({ user: userData });
     loadTree();
   }
 
   render() {
     return (
-      <aside className="main-sidebar sidebar-light-primary elevation-4" >
+      <aside className="main-sidebar sidebar-light-primary elevation-4">
         {/* Brand Logo */}
         {/* <a href="/" className="brand-link">
           <span className="brand-text font-weight-light ml-1">HRMS Employee</span>
@@ -31,7 +31,7 @@ export default class SidebarEmployee extends Component {
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
               <img
-                src={process.env.PUBLIC_URL + '/user-64.png'}
+                src={process.env.PUBLIC_URL + "/user-64.png"}
                 className="img-circle elevation-2"
                 alt="User Image"
               />
@@ -55,25 +55,24 @@ export default class SidebarEmployee extends Component {
               <li className="nav-item">
                 <NavLink exact to="/" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt" />
-                  <p>
-                    Dashboard
-                    <span className="right badge badge-success">Home</span>
-                  </p>
+                  <p>{this.props.t("sidebar.dashboard")}</p>
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink exact to="/salary-view" className="nav-link">
                   <i className="nav-icon fas fa-euro-sign" />
-                  <p>
-                    My Salary Details
-                  </p>
+                  <p>{this.props.t("payroll.my-salary")}</p>
                 </NavLink>
               </li>
               <li className="nav-item has-treeview">
-                <NavLink to="/fake-url" className="nav-link" activeClassName="nav-link">
+                <NavLink
+                  to="/expense-report"
+                  className="nav-link"
+                  activeClassName="nav-link"
+                >
                   <i className="nav-icon fa fa-rocket" />
                   <p>
-                    Applications
+                    {this.props.t("application.main")}
                     <i className="right fas fa-angle-left" />
                   </p>
                 </NavLink>
@@ -81,13 +80,13 @@ export default class SidebarEmployee extends Component {
                   <li className="nav-item">
                     <NavLink to="/application" className="nav-link">
                       <i className="fa fa-plus nav-icon" />
-                      <p>Application</p>
+                      <p>{this.props.t("application.main")}</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/application-list" className="nav-link">
                       <i className="fas fa-list-ul nav-icon" />
-                      <p>My Applications</p>
+                      <p> {this.props.t("application.my")}</p>
                     </NavLink>
                   </li>
                 </ul>
@@ -95,9 +94,7 @@ export default class SidebarEmployee extends Component {
               <li className="nav-item">
                 <NavLink exact to="/announcement" className="nav-link">
                   <i className="nav-icon fa fa-bell" />
-                  <p>
-                    Announcements
-                  </p>
+                  <p>{this.props.t("announcements")}</p>
                 </NavLink>
               </li>
             </ul>
@@ -109,3 +106,5 @@ export default class SidebarEmployee extends Component {
     );
   }
 }
+
+export default withTranslation("common")(SidebarEmployee); // instead of "export default App;"

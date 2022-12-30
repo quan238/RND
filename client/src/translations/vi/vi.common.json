@@ -1,4 +1,9 @@
 {
+  "role": {
+    "admin": "Quản Trị Viên",
+    "employee": "Nhân Viên",
+    "manager": "Quản Lý"
+  },
   "sidebar": {
     "dashboard": "Trang Chủ",
     "departments": "Phòng Ban",
@@ -13,13 +18,15 @@
     "application": {
       "main": "Đơn Nghỉ Phép",
       "add": "Tạo Đơn Nghỉ Phép",
-      "list": "Danh Sách Đơn Nghỉ Phép"
+      "list": "Danh Sách Đơn Nghỉ Phép",
+      "my": "Thông Tin Đơn Nghỉ Phép"
     },
     "payroll": {
       "main": "Bảng Lương",
       "salary": "Quản Lý Lương",
       "employee-salary": "Quản Lý Lương Nhân Viên",
-      "payment": "Thanh Toán"
+      "payment": "Thanh Toán",
+      "my-salary": "Thông tin lương"
     },
     "expense": {
       "main": "Bồi Thường",

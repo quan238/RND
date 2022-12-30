@@ -5,6 +5,8 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { LANG } from "./constant";
 import common_vi from "../translations/vi/vi.common.json";
 import common_en from "../translations/en/en.common.json";
+import dashboard_vi from "../translations/vi/vi.dashboard.json";
+import dashboard_en from "../translations/en/en.dashboard.json";
 
 i18n
   // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
@@ -27,7 +29,7 @@ i18n
       escapeValue: false, // not needed for react as it escapes by default
     },
     resources: {
-      en: { common: common_en },
-      vi: { common: common_vi },
+      en: { common: common_en, dashboard: dashboard_en },
+      vi: { common: common_vi, dashboard: dashboard_vi },
     },
   });

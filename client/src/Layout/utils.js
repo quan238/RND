@@ -1,5 +1,5 @@
 export const MAP_ROLE = {
-  ROLE_ADMIN: "Admin",
-  ROLE_EMPLOYEE: "Employee",
-  ROLE_MANAGER: "Manager",
+  ROLE_ADMIN: "role.admin",
+  ROLE_EMPLOYEE: "role.employee",
+  ROLE_MANAGER: "role.manager",
 };

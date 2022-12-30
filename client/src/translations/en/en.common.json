@@ -1,4 +1,9 @@
 {
+  "role": {
+    "admin": "Admin",
+    "employee": "Employee",
+    "manager": "Manager"
+  },
   "sidebar": {
     "dashboard": "Dashboard",
     "departments": "Departments",
@@ -11,6 +16,7 @@
       "list": "Job List"
     },
     "application": {
+      "my": "My Applications",
       "main": "Applications",
       "add": "Add Applications",
       "list": "Applications List"
@@ -19,7 +25,8 @@
       "main": "Payroll Management",
       "salary": "Manage Salary Details",
       "employee-salary": "Employee Salary List",
-      "payment": "Make Payment"
+      "payment": "Make Payment",
+      "my-salary": "My Salary Details"
     },
     "expense": {
       "main": "Expense Management",

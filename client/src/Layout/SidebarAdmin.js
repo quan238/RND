@@ -41,7 +41,7 @@ class SidebarAdmin extends Component {
               <strong href="#" className="d-block">
                 {this.state.user.fullname}
               </strong>
-              <span>{MAP_ROLE[this.state.user.role]}</span>
+              <span>{this.props.t(MAP_ROLE[this.state.user.role])}</span>
             </div>
           </div>
           {/* Sidebar Menu */}
@@ -68,7 +68,7 @@ class SidebarAdmin extends Component {
               </li>
               <li className="nav-item has-treeview">
                 <NavLink
-                  to="/fake-url"
+                  to="/employee-list"
                   className="nav-link"
                   activeClassName="nav-link"
                 >
@@ -101,7 +101,7 @@ class SidebarAdmin extends Component {
               </li>
               <li className="nav-item has-treeview">
                 <NavLink
-                  to="/fake-url"
+                  to="/application-list"
                   className="nav-link"
                   activeClassName="nav-link"
                 >
@@ -128,7 +128,7 @@ class SidebarAdmin extends Component {
               </li>
               <li className="nav-item has-treeview">
                 <NavLink
-                  to="/fake-url"
+                  to="/salary-list"
                   className="nav-link"
                   activeClassName="nav-link"
                 >
