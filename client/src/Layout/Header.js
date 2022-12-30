@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import NewPasswordModal from "../components/NewPasswordModal";
+import SelectCountry from "../components/SelectCountry";
 
 export default class Header extends Component {
   constructor(props) {
@@ -50,16 +51,6 @@ export default class Header extends Component {
               <i className="fas fa-bars" />
             </a>
           </li>
-          {/* <li className="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" className="nav-link">
-              Home
-            </a>
-          </li>
-          <li className="nav-item d-none d-sm-inline-block">
-            <a href="#" className="nav-link">
-              Contact
-            </a>
-          </li> */}
         </ul>
         {/* SEARCH FORM */}
         {/* <form className="form-inline ml-3">
@@ -87,10 +78,9 @@ export default class Header extends Component {
             </a>
             <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               <a href="#" className="dropdown-item">
-                //Message Start
                 <div className="media">
                   <img
-                    src={process.env.PUBLIC_URL + '/dist/img/user1-128x128.jpg'}
+                    src={process.env.PUBLIC_URL + "/dist/img/user1-128x128.jpg"}
                     alt="User Avatar"
                     className="img-size-50 mr-3 img-circle"
                   />
@@ -107,14 +97,12 @@ export default class Header extends Component {
                     </p>
                   </div>
                 </div>
-                // Message End
               </a>
               <div className="dropdown-divider" />
               <a href="#" className="dropdown-item">
-                // Message Start
                 <div className="media">
                   <img
-                    src={process.env.PUBLIC_URL + '/dist/img/user8-128x128.jpg'}
+                    src={process.env.PUBLIC_URL + "/dist/img/user8-128x128.jpg"}
                     alt="User Avatar"
                     className="img-size-50 img-circle mr-3"
                   />
@@ -131,14 +119,12 @@ export default class Header extends Component {
                     </p>
                   </div>
                 </div>
-                // Message End
               </a>
               <div className="dropdown-divider" />
               <a href="#" className="dropdown-item">
-                // Message Start
                 <div className="media">
                   <img
-                    src={process.env.PUBLIC_URL + '/dist/img/user3-128x128.jpg'}
+                    src={process.env.PUBLIC_URL + "/dist/img/user3-128x128.jpg"}
                     alt="User Avatar"
                     className="img-size-50 img-circle mr-3"
                   />
@@ -155,7 +141,6 @@ export default class Header extends Component {
                     </p>
                   </div>
                 </div>
-                // Message End
               </a>
               <div className="dropdown-divider" />
               <a href="#" className="dropdown-item dropdown-footer">
@@ -163,6 +148,8 @@ export default class Header extends Component {
               </a>
             </div>
           </li> */}
+          {/* Select Country */}
+          <SelectCountry />
           {/* Notifications Dropdown Menu */}
           <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">

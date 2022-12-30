@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { loadTree } from "../menuTreeHelper";
 import { NavLink } from "react-router-dom";
 import { MAP_ROLE } from "./utils";
+import { withTranslation } from "react-i18next";
 
-export default class SidebarAdmin extends Component {
+class SidebarAdmin extends Component {
   constructor(props) {
     super(props);
 
@@ -57,7 +58,7 @@ export default class SidebarAdmin extends Component {
                 <NavLink exact to="/" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt" />
                   <p>
-                    Dashboard
+                    {this.props.t("sidebar.dashboard")}
                     <span className="right badge badge-success">Home</span>
                   </p>
                 </NavLink>
@@ -203,3 +204,5 @@ export default class SidebarAdmin extends Component {
     );
   }
 }
+
+export default withTranslation("common")(SidebarAdmin); // instead of "export default App;"
