@@ -455,3 +455,10 @@ time.icon span {
   flex-direction: column;
   align-items: center;
 }
+
+/* full calendar */
+.fc-widget-header:first-of-type,
+.fc-widget-content:first-of-type {
+  border-left: 1px #ddd solid !important ;
+  border-right: 1px #ddd solid !important;
+}

@@ -1,38 +1,43 @@
 import React, { Component } from "react";
-import {Redirect} from "react-router-dom"
-import NewPasswordModal from '../components/NewPasswordModal'
+import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
+import NewPasswordModal from "../components/NewPasswordModal";
 
 export default class Header extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       completed: false,
-      showModal: false
-    }
+      showModal: false,
+    };
   }
 
   onLogout = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('token')
-    this.setState({completed: true})
-  }
+    localStorage.removeItem("token");
+    localStorage.removeItem("token");
+    this.setState({ completed: true });
+    toast.success("Logout Successfully", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
 
   newPassword = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    this.setState({showModal: true})
-  }
+    this.setState({ showModal: true });
+  };
 
   render() {
-    let closeModal = () => this.setState({showModal: false})
+    let closeModal = () => this.setState({ showModal: false });
     return (
       <nav className="main-header navbar navbar-expand navbar-white navbar-light">
         {this.state.completed ? <Redirect to="/" /> : null}
-        {this.state.showModal ? <NewPasswordModal show={true} onHide={closeModal}/> : null}
+        {this.state.showModal ? (
+          <NewPasswordModal show={true} onHide={closeModal} />
+        ) : null}
         {/* Left navbar links */}
         <ul className="navbar-nav">
           <li className="nav-item">
@@ -162,15 +167,15 @@ export default class Header extends Component {
           <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">
               <i className="fas fa-user" />
-              <span className="pl-1">{JSON.parse(localStorage.getItem('user')).fullname}</span>
+              <span className="pl-1">
+                {JSON.parse(localStorage.getItem("user")).fullname}
+              </span>
               {/* <span className="badge badge-warning navbar-badge">15</span> */}
             </a>
             <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <span className="dropdown-header">
-                Options
-              </span>
+              <span className="dropdown-header">Options</span>
               <div className="dropdown-divider" />
-              <a  onClick={this.newPassword} href="#" className="dropdown-item">
+              <a onClick={this.newPassword} href="#" className="dropdown-item">
                 <i className="fas fa-key mr-2" /> Change Password
                 {/* <span className="float-right text-muted text-sm">3 mins</span> */}
               </a>

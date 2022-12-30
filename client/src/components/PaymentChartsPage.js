@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import axios from "axios";
+import { faker } from "@faker-js/faker";
 
 export default class ExpenseChartsPage extends React.Component {
   constructor(props) {
@@ -61,8 +62,46 @@ export default class ExpenseChartsPage extends React.Component {
   };
 
   render() {
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Chart.js Line Chart",
+        },
+      },
+    };
+
+    const labels = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+    ];
+
+    const data = {
+      labels,
+      datasets: [
+        {
+          label: "Dataset 1",
+          data: labels.map(() =>
+            faker.datatype.number({ min: 0, max: 50000000 })
+          ),
+          borderColor: "rgb(53, 162, 235)",
+          backgroundColor: "rgba(53, 162, 235, 0.5)",
+        },
+      ],
+    };
+
     return (
-      <div className="card">
+      <div className="card p-4">
+        <strong style={{ fontSize: 18 }}>Payment Report Chart</strong>
         <div className="mt-1" style={{ textAlign: "center" }}>
           <span className="ml-4">Select Year: </span>
           <select onChange={this.onChange} value={this.state.paymentYear}>
@@ -74,7 +113,8 @@ export default class ExpenseChartsPage extends React.Component {
           </select>
         </div>
         <div>
-          <Bar
+          <Line options={options} data={data} />
+          {/* <Bar
             data={this.state.chartData}
             height={300}
             options={{
@@ -94,7 +134,7 @@ export default class ExpenseChartsPage extends React.Component {
               },
             }}
             redraw
-          />
+          /> */}
         </div>
       </div>
     );

@@ -1,10 +1,9 @@
 import * as React from "react";
 import axios from "axios";
-import CalendarIcon from 'react-calendar-icon'
+import CalendarIcon from "react-calendar-icon";
 import { ThemeProvider } from "styled-components";
 
 export default class RecentAnnouncements extends React.Component {
-
   _isMounted = false;
 
   constructor(props) {
@@ -16,7 +15,7 @@ export default class RecentAnnouncements extends React.Component {
   }
 
   componentDidMount() {
-    this._isMounted = true
+    this._isMounted = true;
     //Fetch Applications Recent
     axios({
       method: "get",
@@ -38,29 +37,58 @@ export default class RecentAnnouncements extends React.Component {
       calendarIcon: {
         textColor: "white", // text color of the header and footer
         primaryColor: "#0da472", // background of the header and footer
-        backgroundColor: "#fafafa"
-      }
+        backgroundColor: "#fafafa",
+      },
     };
 
-    const days = ["Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+    const days = [
+      "Monday",
+      "Tuesday",
+      "Wendesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
 
     return (
-      <div className="card">
+      <div className="card p-4">
+        <strong style={{ fontSize: 18 }}>Recent Announcement</strong>
         <div className="mt-1" style={{ textAlign: "center" }}></div>
-        <ul>
+        <ul className="pl-0 mt-2">
           {this.state.recentAnnouncements.map((announcement) => (
-            <li style={{ listStyle: "none" }} key={announcement.id} className="mb-2 mt-1">
+            <li
+              style={{ listStyle: "none" }}
+              key={announcement.id}
+              className="mb-2 mt-1"
+            >
               <div className="float-left mr-2">
                 <time datetime="2014-09-20" className="icon p-0">
                   <em>{days[new Date(announcement.createdAt).getDay()]}</em>
-                  <strong>{monthNames[new Date(announcement.createdAt).getMonth()]}</strong>
+                  <strong>
+                    {monthNames[new Date(announcement.createdAt).getMonth()]}
+                  </strong>
                   <span>{new Date(announcement.createdAt).getDate()}</span>
                 </time>
               </div>
-              <span><strong>{announcement.announcementTitle}</strong> ({announcement.department?.departmentName})</span>
+              <span>
+                <strong>{announcement.announcementTitle}</strong> (
+                {announcement.department?.departmentName})
+              </span>
               <br className="p-1" />
               <small>{announcement.announcementDescription}</small>
               <hr className=" pt-2 pb-1 mb-0" />

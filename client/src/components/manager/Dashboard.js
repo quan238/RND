@@ -91,21 +91,9 @@ export default class DashboardManager extends Component {
               <ExpenseChartsPage />
             </div>
             <div className="panel panel-default">
-              <div
-                className="panel-heading with-border"
-                style={{ backgroundColor: "#515e73", color: "white" }}
-              >
-                <h3 className="panel-title">Recent Applications</h3>
-              </div>
               <RecentApplciations />
             </div>
             <div className="panel panel-default">
-              <div
-                className="panel-heading with-border"
-                style={{ backgroundColor: "#515e73", color: "white" }}
-              >
-                <h3 className="panel-title">Recent Announcements</h3>
-              </div>
               <RecentAnnouncements />
             </div>
           </div>
