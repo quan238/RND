@@ -35,7 +35,7 @@ code {
 }
 
 .nav-item {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
   margin: 0.25rem 0;
 }
@@ -46,4 +46,9 @@ code {
 
 .content {
   padding: 0 1.5rem !important;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
 }

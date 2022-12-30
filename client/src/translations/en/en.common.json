@@ -1,5 +1,31 @@
 {
   "sidebar": {
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "departments": "Departments",
+    "employee": {
+      "main": "Employee",
+      "add": "Add Employee",
+      "list": "Employee List"
+    },
+    "job": {
+      "list": "Job List"
+    },
+    "application": {
+      "main": "Applications",
+      "add": "Add Applications",
+      "list": "Applications List"
+    },
+    "payroll": {
+      "main": "Payroll Management",
+      "salary": "Manage Salary Details",
+      "employee-salary": "Employee Salary List",
+      "payment": "Make Payment"
+    },
+    "expense": {
+      "main": "Expense Management",
+      "make": "Make Expense",
+      "report": "Expense Report"
+    },
+    "announcements": "Announcements"
   }
 }

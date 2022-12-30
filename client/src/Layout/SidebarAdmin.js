@@ -57,16 +57,13 @@ class SidebarAdmin extends Component {
               <li className="nav-item">
                 <NavLink exact to="/" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt" />
-                  <p>
-                    {this.props.t("sidebar.dashboard")}
-                    <span className="right badge badge-success">Home</span>
-                  </p>
+                  <p>{this.props.t("sidebar.dashboard")}</p>
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink exact to="/departments" className="nav-link">
                   <i className="nav-icon fa fa-building" />
-                  <p>Departments</p>
+                  <p>{this.props.t("sidebar.departments")}</p>
                 </NavLink>
               </li>
               <li className="nav-item has-treeview">
@@ -77,7 +74,7 @@ class SidebarAdmin extends Component {
                 >
                   <i className="nav-icon fa fa-user" />
                   <p>
-                    Employee
+                    {this.props.t("sidebar.employee.main")}
                     <i className="right fas fa-angle-left" />
                   </p>
                 </NavLink>
@@ -85,13 +82,13 @@ class SidebarAdmin extends Component {
                   <li className="nav-item">
                     <NavLink to="/employee-add" className="nav-link">
                       <i className="fa fa-user-plus nav-icon" />
-                      <p>Add Employee</p>
+                      <p>{this.props.t("sidebar.employee.add")}</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/employee-list" className="nav-link">
                       <i className="fas fa-users nav-icon" />
-                      <p>Employee List</p>
+                      <p>{this.props.t("sidebar.employee.list")}</p>
                     </NavLink>
                   </li>
                 </ul>
@@ -99,7 +96,7 @@ class SidebarAdmin extends Component {
               <li className="nav-item">
                 <NavLink to="/job-list" className="nav-link">
                   <i className="nav-icon fas fa-briefcase" />
-                  <p>Job List</p>
+                  <p>{this.props.t("sidebar.job.list")}</p>
                 </NavLink>
               </li>
               <li className="nav-item has-treeview">
@@ -110,7 +107,7 @@ class SidebarAdmin extends Component {
                 >
                   <i className="nav-icon fa fa-rocket" />
                   <p>
-                    Applications
+                    {this.props.t("sidebar.application.main")}
                     <i className="right fas fa-angle-left" />
                   </p>
                 </NavLink>
@@ -118,13 +115,13 @@ class SidebarAdmin extends Component {
                   <li className="nav-item">
                     <NavLink to="/application" className="nav-link">
                       <i className="fa fa-plus nav-icon" />
-                      <p>Add Application</p>
+                      <p>{this.props.t("sidebar.application.add")}</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/application-list" className="nav-link">
                       <i className="fas fa-list-ul nav-icon" />
-                      <p>Application List</p>
+                      <p>{this.props.t("sidebar.application.list")}</p>
                     </NavLink>
                   </li>
                 </ul>
@@ -137,7 +134,7 @@ class SidebarAdmin extends Component {
                 >
                   <i className="nav-icon fas fa-euro-sign" />
                   <p>
-                    Payroll Management
+                    {this.props.t("sidebar.payroll.main")}
                     <i className="right fas fa-angle-left" />
                   </p>
                 </NavLink>
@@ -145,19 +142,19 @@ class SidebarAdmin extends Component {
                   <li className="nav-item">
                     <NavLink to="/salary-details" className="nav-link">
                       <i className="fas fa-euro-sign nav-icon" />
-                      <p>Manage Salary Details</p>
+                      <p>{this.props.t("sidebar.payroll.salary")}</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/salary-list" className="nav-link">
                       <i className="fas fa-users nav-icon" />
-                      <p>Employee Salary List</p>
+                      <p>{this.props.t("sidebar.payroll.employee-salary")}</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/payment" className="nav-link">
                       <i className="fas fa-money-check nav-icon" />
-                      <p>Make Payment</p>
+                      <p>{this.props.t("sidebar.payroll.payment")}</p>
                     </NavLink>
                   </li>
                 </ul>
@@ -170,7 +167,7 @@ class SidebarAdmin extends Component {
                 >
                   <i className="nav-icon fas fa-money-bill" />
                   <p>
-                    Expense Management
+                    {this.props.t("sidebar.expense.main")}
                     <i className="right fas fa-angle-left" />
                   </p>
                 </NavLink>
@@ -178,13 +175,13 @@ class SidebarAdmin extends Component {
                   <li className="nav-item">
                     <NavLink to="/expense" className="nav-link">
                       <i className="fas fa-shopping-cart nav-icon" />
-                      <p>Make Expense</p>
+                      <p>{this.props.t("sidebar.expense.make")}</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/expense-report" className="nav-link">
                       <i className="fas fa-file-invoice nav-icon" />
-                      <p>Expense Report</p>
+                      <p>{this.props.t("sidebar.expense.report")}</p>
                     </NavLink>
                   </li>
                 </ul>
@@ -192,7 +189,7 @@ class SidebarAdmin extends Component {
               <li className="nav-item">
                 <NavLink exact to="/announcement" className="nav-link">
                   <i className="nav-icon fa fa-bell" />
-                  <p>Announcements</p>
+                  <p>{this.props.t("sidebar.announcements")}</p>
                 </NavLink>
               </li>
             </ul>

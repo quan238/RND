@@ -462,3 +462,16 @@ time.icon span {
   border-left: 1px #ddd solid !important ;
   border-right: 1px #ddd solid !important;
 }
+
+button:focus {
+  outline: none;
+}
+
+.swal2-select {
+  border-radius: 8px !important;
+  border-color: #ddd !important;
+}
+
+.swal2-select:focus-visible {
+  outline: #ddd !important;
+}

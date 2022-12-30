@@ -1,5 +1,31 @@
 {
   "sidebar": {
-    "dashboard": "Trang chủ"
+    "dashboard": "Trang Chủ",
+    "departments": "Phòng Ban",
+    "employee": {
+      "main": "Nhân Viên",
+      "add": "Thêm Nhân Viên",
+      "list": "Danh Sách Nhân Viên"
+    },
+    "job": {
+      "list": "Danh Sách Job"
+    },
+    "application": {
+      "main": "Đơn Nghỉ Phép",
+      "add": "Tạo Đơn Nghỉ Phép",
+      "list": "Danh Sách Đơn Nghỉ Phép"
+    },
+    "payroll": {
+      "main": "Bảng Lương",
+      "salary": "Quản Lý Lương",
+      "employee-salary": "Quản Lý Lương Nhân Viên",
+      "payment": "Thanh Toán"
+    },
+    "expense": {
+      "main": "Bồi Thường",
+      "make": "Tạo Bồi Thường",
+      "report": "Báo Cáo Bồi Thường"
+    },
+    "announcements": "Thông Báo"
   }
 }
