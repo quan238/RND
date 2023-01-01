@@ -1,17 +1,37 @@
 import React, { Component } from "react";
-import { Card, Form, Alert } from "react-bootstrap";
-import { Redirect, NavLink } from "react-router-dom";
+import { Card, Form, Alert, Row, Col } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment";
-import { Button } from "@mui/material";
+import {
+  Button,
+  CardContent,
+  CardMedia,
+  Chip,
+  FormControl,
+  Grid,
+  InputLabel,
+  Select,
+  TextField,
+  Switch,
+  Typography,
+  MenuItem,
+  CardActions,
+  Badge,
+} from "@mui/material";
 import { toast } from "react-toastify";
+import EditIcon from "@mui/icons-material/Edit";
+import { MAP_ROLE } from "../Layout/utils";
+import { withTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
-export default class EmployeeEdit extends Component {
+class EmployeeEdit extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      tab: 0,
       user: {
         id: null,
         fullName: "",
@@ -111,6 +131,18 @@ export default class EmployeeEdit extends Component {
 
   handleChangeUser = (event) => {
     const { value, name } = event.target;
+
+    if (name === "active") {
+      this.setState((prevState) => ({
+        user: {
+          ...prevState.user,
+          active: !Boolean(this.state.user.active),
+        },
+      }));
+
+      return;
+    }
+
     this.setState((prevState) => ({
       user: {
         ...prevState.user,
@@ -160,15 +192,11 @@ export default class EmployeeEdit extends Component {
   };
 
   pushDepartments = () => {
-    let items = [];
-    this.state.departments.map((dept, index) => {
-      items.push(
-        <option key={index} value={dept.id}>
-          {dept.departmentName}
-        </option>
-      );
-    });
-    return items;
+    return this.state.departments.map((dept, index) => (
+      <MenuItem key={index} value={dept.id}>
+        {dept.departmentName}
+      </MenuItem>
+    ));
   };
 
   onSubmit = (e) => {
@@ -249,9 +277,6 @@ export default class EmployeeEdit extends Component {
                     },
                   })
                     .then((res) => {
-                      toast.success("Edit Employee Success", {
-                        position: toast.POSITION.TOP_CENTER,
-                      });
                       this.setState({ completed: true });
                     })
                     .catch((err) => {
@@ -262,6 +287,9 @@ export default class EmployeeEdit extends Component {
                       window.scrollTo(0, 0);
                     });
                 } else {
+                  toast.success("Edit Employee Success", {
+                    position: toast.POSITION.TOP_CENTER,
+                  });
                   this.setState({ completed: true });
                 }
               })
@@ -274,19 +302,43 @@ export default class EmployeeEdit extends Component {
               });
           })
           .catch((err) => {
-            toast.error(err.data.message, {
-              position: toast.POSITION.TOP_CENTER,
-            });
             this.setState({ hasError: true, errMsg: err.data.message });
             window.scrollTo(0, 0);
           });
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
         // this.setState({hasError: true, errMsg: err.data.message})
         window.scrollTo(0, 0);
       });
   };
+
+  async editFile() {
+    const { value: file } = await Swal.fire({
+      title: "Select image",
+      input: "file",
+      showCancelButton: true,
+      inputAttributes: {
+        accept: "image/*",
+        "aria-label": "Upload your profile picture",
+      },
+    });
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        Swal.fire({
+          title: "Your uploaded picture",
+          imageUrl: e.target.result,
+          imageAlt: "The uploaded picture",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   render() {
     if (
@@ -297,8 +349,8 @@ export default class EmployeeEdit extends Component {
       return <p>Loading...</p>;
     }
     return (
-      <Form onSubmit={this.onSubmit}>
-        <div className="row">
+      <Form onSubmit={this.onSubmit} className="container-fluid pt-4">
+        <div>
           {this.state.falseRedirect ? <Redirect to="/" /> : null}
           {this.state.hasError ? (
             <Alert variant="danger" className="m-3" block>
@@ -309,355 +361,465 @@ export default class EmployeeEdit extends Component {
           ) : (
             <></>
           )}
+          <Row>
+            <Col sm={12}>
+              <Grid container spacing={2}>
+                <Grid item md={3}>
+                  <Card
+                    sx={{ maxWidth: 200 }}
+                    className="border-radius-default"
+                  >
+                    <CardMedia
+                      style={{
+                        borderTopLeftRadius: "2%",
+                        borderTopRightRadius: "2%",
+                      }}
+                      sx={{ height: 300 }}
+                      image="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/48014adb-982c-4a5c-ae09-a1afab53f3f3/ddrg6q2-92393626-c353-43db-9c70-85d869dd58d9.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ4MDE0YWRiLTk4MmMtNGE1Yy1hZTA5LWExYWZhYjUzZjNmM1wvZGRyZzZxMi05MjM5MzYyNi1jMzUzLTQzZGItOWM3MC04NWQ4NjlkZDU4ZDkucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Vn1TEvEpOgKhNWdIPLDTOtLo-feiJ-mh-kYr1VfJFQY"
+                      title="green iguana"
+                    />
+                    <Badge
+                      badgeContent={
+                        <Button onClick={this.editFile} variant="text">
+                          <EditIcon />
+                        </Button>
+                      }
+                      overlap="circular"
+                      style={{ transform: "translate(1.5rem, -20px)" }}
+                    ></Badge>
+                    <CardContent>
+                      <div className="flex-column flex-align-center">
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          style={{ fontWeight: 500 }}
+                          component="div"
+                          className="text-center"
+                        >
+                          {this.state.user.fullName}
+                          {/* <FormControl controlId="formActive"> */}
 
-          {/* Main Card */}
-          <Card className="col-sm-12 main-card mt-3 mb-5">
-            <Card.Body>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-                className="mb-4"
-              >
-                <h3 className="pt-3">Edit Employee</h3>
-                <Button
-                  variant="contained"
-                  style={{ fontWeight: "700" }}
-                  onClick={this.onSubmit}
-                  block
-                  disabled={this.state.hasError}
-                >
-                  Submit
-                </Button>{" "}
-              </div>
-              <div className="row">
-                {/* Personal Details Card */}
-                <div className="col-sm-6">
-                  <Card className="secondary-card">
-                    <Card.Header>Personal Details</Card.Header>
-                    <Card.Body>
-                      <Card.Text>
-                        <Form.Group controlId="formFullName">
-                          <Form.Label className="text-muted required">
-                            Full Name
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter first Name"
-                            name="fullName"
-                            value={this.state.user.fullName}
-                            onChange={this.handleChangeUser}
-                            required
-                          />
-                        </Form.Group>
-
-                        <Form.Group controlId="formDateofBirth">
-                          <Form.Label className="text-muted required">
-                            Date of Birth
-                          </Form.Label>
-                          <Form.Row>
-                            <DatePicker
-                              selected={this.state.userPersonalInfo.dateOfBirth}
-                              onChange={(dateOfBirth) =>
-                                this.setState((prevState) => ({
-                                  userPersonalInfo: {
-                                    ...prevState.userPersonalInfo,
-                                    dateOfBirth: dateOfBirth,
-                                  },
-                                }))
-                              }
-                              showMonthDropdown
-                              showYearDropdown
-                              dropdownMode="select"
-                              name="dateOfBirth"
-                              dateFormat="yyyy-MM-dd"
-                              className="form-control ml-1"
-                              placeholderText="Select Date Of Birth"
-                              autoComplete="off"
-                              required
-                            />
-                          </Form.Row>
-                        </Form.Group>
-
-                        <Form.Group controlId="formGender">
-                          <Form.Label className="text-muted required">
-                            Gender
-                          </Form.Label>
-                          <Form.Control
-                            as="select"
-                            value={this.state.userPersonalInfo.gender}
-                            onChange={this.handleChangeUserPersonal}
-                            name="gender"
-                            required
-                          >
-                            <option value="">Choose...</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                          </Form.Control>
-                        </Form.Group>
-
-                        <Form.Group controlId="formMaritalStatus">
-                          <Form.Label className="text-muted required">
-                            Marital Status
-                          </Form.Label>
-                          <Form.Control
-                            as="select"
-                            value={this.state.userPersonalInfo.maritalStatus}
-                            onChange={this.handleChangeUserPersonal}
-                            name="maritalStatus"
-                            required
-                          >
-                            <option value="">Choose...</option>
-                            <option value="Married">Married</option>
-                            <option value="Single">Single</option>
-                          </Form.Control>
-                        </Form.Group>
-
-                        <Form.Group controlId="formFatherName">
-                          <Form.Label className="text-muted required">
-                            Father's name
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter Father's Name"
-                            name="fatherName"
-                            value={this.state.userPersonalInfo.fatherName}
-                            onChange={this.handleChangeUserPersonal}
-                            required
-                          />
-                        </Form.Group>
-
-                        <Form.Group controlId="formId">
-                          <Form.Label className="text-muted required">
-                            ID Number
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter ID Number"
-                            name="idNumber"
-                            value={this.state.userPersonalInfo.idNumber}
-                            onChange={this.handleChangeUserPersonal}
-                            required
-                          />
-                        </Form.Group>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </div>
-                <div className="col-sm-6">
-                  <Card className="secondary-card">
-                    <Card.Header>Contact Details</Card.Header>
-                    <Card.Body>
-                      <Card.Text>
-                        <Form.Group controlId="formPhysicalAddress">
-                          <Form.Label className="text-muted required">
-                            Physical Address
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userPersonalInfo.address}
-                            onChange={this.handleChangeUserPersonal}
-                            name="address"
-                            placeholder="Enter Address"
-                            required
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formCountry">
-                          <Form.Label className="text-muted required">
-                            Country
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userPersonalInfo.country}
-                            onChange={this.handleChangeUserPersonal}
-                            name="country"
-                            placeholder="Enter Country"
-                            required
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formCity">
-                          <Form.Label className="text-muted required">
-                            City
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userPersonalInfo.city}
-                            onChange={this.handleChangeUserPersonal}
-                            name="city"
-                            placeholder="Enter City"
-                            required
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formMobile">
-                          <Form.Label className="text-muted required">
-                            Mobile
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userPersonalInfo.mobile}
-                            onChange={this.handleChangeUserPersonal}
-                            name="mobile"
-                            placeholder="Enter Mobile"
-                            required
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formPhone">
-                          <Form.Label className="text-muted">Phone</Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userPersonalInfo.phone || ""}
-                            onChange={this.handleChangeUserPersonal}
-                            name="phone"
-                            placeholder="Enter Phone"
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formEmail">
-                          <Form.Label className="text-muted required">
-                            Email
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userPersonalInfo.emailAddress}
-                            onChange={this.handleChangeUserPersonal}
-                            name="emailAddress"
-                            placeholder="Enter Email"
-                            required
-                          />
-                        </Form.Group>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-6">
-                  <Card className="secondary-card">
-                    <Card.Header>Bank Information</Card.Header>
-                    <Card.Body>
-                      <Card.Text>
-                        <Form.Group controlId="formBankName">
-                          <Form.Label className="text-muted">
-                            Bank Name
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userFinancialInfo.bankName}
-                            onChange={this.handleChangeUserFinancial}
-                            name="bankName"
-                            placeholder="Enter Bank name"
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formAccountName">
-                          <Form.Label className="text-muted">
-                            Account Name
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userFinancialInfo.accountName}
-                            onChange={this.handleChangeUserFinancial}
-                            name="accountName"
-                            placeholder="Enter Account name"
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formAccountNumber">
-                          <Form.Label className="text-muted">
-                            Account Number
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userFinancialInfo.accountNumber}
-                            onChange={this.handleChangeUserFinancial}
-                            name="accountNumber"
-                            placeholder="Enter Account number"
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formIban">
-                          <Form.Label className="text-muted">IBAN </Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={this.state.userFinancialInfo.iban}
-                            onChange={this.handleChangeUserFinancial}
-                            name="iban"
-                            placeholder="Enter Iban"
-                          />
-                        </Form.Group>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </div>
-                <div className="col-sm-6">
-                  <Card className="secondary-card">
-                    <Card.Header>Official Status</Card.Header>
-                    <Card.Body>
-                      <Card.Text>
-                        <Form.Group controlId="formEmployeeId">
-                          <Form.Label className="text-muted">
-                            Employee ID
-                          </Form.Label>
-                          <Form.Control
-                            value={this.state.user.departmentId}
-                            disabled={true}
-                          />
-                        </Form.Group>
-                        <Form.Group controlId="formDepartment">
-                          <Form.Label className="text-muted required">
-                            Department
-                          </Form.Label>
-                          <Form.Control
-                            as="select"
-                            value={this.state.user.departmentId}
-                            onChange={this.handleChangeUser}
-                            name="departmentId"
-                            required
-                          >
-                            {this.pushDepartments()}
-                          </Form.Control>
-                        </Form.Group>
-                        <Form.Group controlId="formRole">
-                          <Form.Label className="text-muted required">
-                            Role
-                          </Form.Label>
-                          <Form.Control
-                            as="select"
-                            value={this.state.user.role || ""}
-                            onChange={this.handleChangeUser}
-                            name="role"
-                            required
-                          >
-                            <option value="">Choose...</option>
-                            <option value="ROLE_EMPLOYEE">Employee</option>
-                            <option value="ROLE_MANAGER">Manager</option>
-                            <option value="ROLE_ADMIN">Admin</option>
-                          </Form.Control>
-                        </Form.Group>
-                        <Form.Group controlId="formActive">
-                          <Form.Label className="text-muted required">
-                            Status
-                          </Form.Label>
-                          <Form.Control
-                            as="select"
-                            value={this.state.user.active}
-                            onChange={this.handleChangeUser}
+                          {/* </FormControl> */}
+                          <Switch
+                            checked={this.state.user.active}
+                            onChange={() =>
+                              this.setState((prevState) => ({
+                                user: {
+                                  ...prevState.user,
+                                  active: !Boolean(this.state.user.active),
+                                },
+                              }))
+                            }
                             name="active"
                             required
+                          />
+                        </Typography>
+
+                        <Chip
+                          label={this.props.t(MAP_ROLE[this.state.user.role])}
+                          color="primary"
+                          variant="outlined"
+                          className="text-center"
+                        />
+                      </div>
+                    </CardContent>
+                    <div className="flex-column flex-align-center">
+                      <TextField
+                        className="w-90 mb-3"
+                        label="Employee No"
+                        id="filled-size-small"
+                        defaultValue={"User IDs"}
+                        value={"No " + this.state.user.id}
+                        variant="filled"
+                        size="small"
+                        disabled
+                      />
+                      <FormControl
+                        controlId="formDepartment"
+                        className="w-90 mb-3"
+                        fullWidth
+                      >
+                        <InputLabel>Department</InputLabel>
+                        <Select
+                          size="small"
+                          required
+                          value={this.state.user.departmentId}
+                          label="Department"
+                          name="departmentId"
+                          onChange={this.handleChangeUser}
+                        >
+                          {this.pushDepartments()}
+                        </Select>
+                      </FormControl>
+                      {JSON.parse(localStorage.getItem("user")).id !==
+                      this.state.user.id ? (
+                        <FormControl
+                          controlId="formRole"
+                          className="w-90 mb-3"
+                          fullWidth
+                        >
+                          <InputLabel>Role</InputLabel>
+                          <Select
+                            size="small"
+                            required
+                            value={this.state.user.role || ""}
+                            label="Role"
+                            name="role"
+                            onChange={this.handleChangeUser}
                           >
-                            <option value="">Choose...</option>
-                            <option value={false}>Inactive</option>
-                            <option value={true}>Active</option>
-                          </Form.Control>
-                        </Form.Group>
-                      </Card.Text>
-                    </Card.Body>
+                            <MenuItem value="ROLE_EMPLOYEE">Employee</MenuItem>
+                            <MenuItem value="ROLE_MANAGER">Manager</MenuItem>
+                            <MenuItem value="ROLE_ADMIN">Admin</MenuItem>
+                          </Select>
+                        </FormControl>
+                      ) : (
+                        <TextField
+                          className="w-90 mb-3"
+                          label="Employee No"
+                          id="filled-size-small"
+                          defaultValue={"User IDs"}
+                          value={this.props.t(MAP_ROLE[this.state.user.role])}
+                          variant="filled"
+                          size="small"
+                          disabled
+                        />
+                      )}
+                    </div>
+                    <CardActions>
+                      <Button
+                        className="w-100"
+                        variant="contained"
+                        style={{ fontWeight: "700", margin: "0 auto" }}
+                        onClick={this.onSubmit}
+                        block
+                        disabled={this.state.hasError}
+                      >
+                        Submit
+                      </Button>{" "}
+                    </CardActions>
                   </Card>
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
+                </Grid>
+                <Grid item md={9}>
+                  <Card sx={{ maxWidth: 200 }} className="px-4 py-3">
+                    <div>
+                      <Row className="flex-row flex-space-between flex-align-center pr-2">
+                        <h4 className="mb-2">Personal Details</h4>
+                      </Row>
+                      <div className="px-3 pt-2">
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={12}>
+                            <Form.Group controlId="formFullName">
+                              <Form.Label className="text-muted required">
+                                Full Name
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                placeholder="Enter first Name"
+                                name="fullName"
+                                value={this.state.user.fullName}
+                                onChange={this.handleChangeUser}
+                                required
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={4}>
+                            <Form.Group controlId="formDateofBirth">
+                              <Form.Label className="text-muted required">
+                                Date of Birth
+                              </Form.Label>
+                              <Form.Row>
+                                <DatePicker
+                                  selected={
+                                    this.state.userPersonalInfo.dateOfBirth
+                                  }
+                                  onChange={(dateOfBirth) =>
+                                    this.setState((prevState) => ({
+                                      userPersonalInfo: {
+                                        ...prevState.userPersonalInfo,
+                                        dateOfBirth: dateOfBirth,
+                                      },
+                                    }))
+                                  }
+                                  showMonthDropdown
+                                  showYearDropdown
+                                  dropdownMode="select"
+                                  name="dateOfBirth"
+                                  dateFormat="yyyy-MM-dd"
+                                  className="form-control ml-1 w-100"
+                                  placeholderText="Select Date Of Birth"
+                                  autoComplete="off"
+                                  required
+                                />
+                              </Form.Row>
+                            </Form.Group>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Form.Group controlId="formGender">
+                              <Form.Label className="text-muted required">
+                                Gender
+                              </Form.Label>
+                              <Form.Control
+                                as="select"
+                                value={this.state.userPersonalInfo.gender}
+                                onChange={this.handleChangeUserPersonal}
+                                name="gender"
+                                required
+                              >
+                                <option value="">Choose...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                              </Form.Control>
+                            </Form.Group>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <Form.Group controlId="formMaritalStatus">
+                              <Form.Label className="text-muted required">
+                                Marital Status
+                              </Form.Label>
+                              <Form.Control
+                                as="select"
+                                value={
+                                  this.state.userPersonalInfo.maritalStatus
+                                }
+                                onChange={this.handleChangeUserPersonal}
+                                name="maritalStatus"
+                                required
+                              >
+                                <option value="">Choose...</option>
+                                <option value="Married">Married</option>
+                                <option value="Single">Single</option>
+                              </Form.Control>
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+                        <Grid container spacing={2}>
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formId">
+                              <Form.Label className="text-muted required">
+                                ID Number
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                placeholder="Enter ID Number"
+                                name="idNumber"
+                                value={this.state.userPersonalInfo.idNumber}
+                                onChange={this.handleChangeUserPersonal}
+                                required
+                              />
+                            </Form.Group>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formFatherName">
+                              <Form.Label className="text-muted required">
+                                Father's name
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                placeholder="Enter Father's Name"
+                                name="fatherName"
+                                value={this.state.userPersonalInfo.fatherName}
+                                onChange={this.handleChangeUserPersonal}
+                                required
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+                      </div>
+                    </div>
+                  </Card>
+                  <Card sx={{ maxWidth: 200 }} className=" p-4">
+                    <div>
+                      <Row className="flex-row flex-space-between flex-align-center pr-2">
+                        <h4 className="mb-2">Contact Details</h4>
+                      </Row>
+                      <div className="px-3 pt-2">
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={12}>
+                            <Form.Group controlId="formPhysicalAddress">
+                              <Form.Label className="text-muted required">
+                                Physical Address
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userPersonalInfo.address}
+                                onChange={this.handleChangeUserPersonal}
+                                name="address"
+                                placeholder="Enter Address"
+                                required
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formCountry">
+                              <Form.Label className="text-muted required">
+                                Country
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userPersonalInfo.country}
+                                onChange={this.handleChangeUserPersonal}
+                                name="country"
+                                placeholder="Enter Country"
+                                required
+                              />
+                            </Form.Group>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formCity">
+                              <Form.Label className="text-muted required">
+                                City
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userPersonalInfo.city}
+                                onChange={this.handleChangeUserPersonal}
+                                name="city"
+                                placeholder="Enter City"
+                                required
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formMobile">
+                              <Form.Label className="text-muted required">
+                                Mobile
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userPersonalInfo.mobile}
+                                onChange={this.handleChangeUserPersonal}
+                                name="mobile"
+                                placeholder="Enter Mobile"
+                                required
+                              />
+                            </Form.Group>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formPhone">
+                              <Form.Label className="text-muted">
+                                Phone
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userPersonalInfo.phone || ""}
+                                onChange={this.handleChangeUserPersonal}
+                                name="phone"
+                                placeholder="Enter Phone"
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formEmail">
+                              <Form.Label className="text-muted required">
+                                Email
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userPersonalInfo.emailAddress}
+                                onChange={this.handleChangeUserPersonal}
+                                name="emailAddress"
+                                placeholder="Enter Email"
+                                required
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+                      </div>
+                    </div>
+                  </Card>
+                  <Card sx={{ maxWidth: 200 }} className=" p-4">
+                    <div>
+                      <Row className="flex-row flex-space-between flex-align-center pr-2">
+                        <h4 className="mb-2">Bank Information</h4>
+                      </Row>
+                      <div className="px-3 pt-2">
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={12}>
+                            <Form.Group controlId="formBankName">
+                              <Form.Label className="text-muted">
+                                Bank Name
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userFinancialInfo.bankName}
+                                onChange={this.handleChangeUserFinancial}
+                                name="bankName"
+                                placeholder="Enter Bank name"
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={12}>
+                            <Form.Group controlId="formAccountName">
+                              <Form.Label className="text-muted">
+                                Account Name
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userFinancialInfo.accountName}
+                                onChange={this.handleChangeUserFinancial}
+                                name="accountName"
+                                placeholder="Enter Account name"
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+                        <Grid container spacing={2} className="mb-2">
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formAccountNumber">
+                              <Form.Label className="text-muted">
+                                Account Number
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={
+                                  this.state.userFinancialInfo.accountNumber
+                                }
+                                onChange={this.handleChangeUserFinancial}
+                                name="accountNumber"
+                                placeholder="Enter Account number"
+                              />
+                            </Form.Group>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Form.Group controlId="formIban">
+                              <Form.Label className="text-muted">
+                                IBAN{" "}
+                              </Form.Label>
+                              <Form.Control
+                                type="text"
+                                value={this.state.userFinancialInfo.iban}
+                                onChange={this.handleChangeUserFinancial}
+                                name="iban"
+                                placeholder="Enter Iban"
+                              />
+                            </Form.Group>
+                          </Grid>
+                        </Grid>
+                      </div>
+                    </div>
+                  </Card>
+                </Grid>
+              </Grid>
+            </Col>
+          </Row>
+          {/* Main Card */}
         </div>
       </Form>
     );
   }
 }
+
+export default withTranslation("common")(EmployeeEdit); // instead of "export default App;"
