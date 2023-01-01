@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import { Card, Form, Button, Alert } from "react-bootstrap";
+import { Card, Form, Alert } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment";
+import { Button } from "@mui/material";
+import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 export default class EmployeeAdd extends Component {
   constructor(props) {
@@ -23,8 +26,8 @@ export default class EmployeeAdd extends Component {
       address: "",
       country: "",
       city: "",
-      mobile: null,
-      phone: null,
+      mobile: "",
+      phone: "",
       email: "",
       username: "",
       password: "",
@@ -37,7 +40,7 @@ export default class EmployeeAdd extends Component {
       jobTitle: null,
       joiningDate: "",
       file: null,
-      hasError: false,
+      hasError: true,
       errMsg: "",
       completed: false,
     };
@@ -62,6 +65,12 @@ export default class EmployeeAdd extends Component {
     this.setState({
       [name]: value,
     });
+    const isError = this.validate({
+      ...this.state,
+      [name]: value,
+    });
+
+    this.setState({ hasError: isError });
   };
 
   fileSelectedHandler = (event) => {
@@ -147,6 +156,9 @@ export default class EmployeeAdd extends Component {
                 })
                   .then((res) => {
                     this.setState({ completed: true });
+                    toast.success("Create Employee Success", {
+                      position: toast.POSITION.TOP_CENTER,
+                    });
                     window.scrollTo(0, 0);
                   })
                   .catch((err) => {
@@ -154,10 +166,16 @@ export default class EmployeeAdd extends Component {
                       hasError: true,
                       errMsg: err.response.data.message,
                     });
+                    toast.error(err.response.data.message, {
+                      position: toast.POSITION.TOP_CENTER,
+                    });
                     window.scrollTo(0, 0);
                   });
               })
               .catch((err) => {
+                toast.error(err.response.data.message, {
+                  position: toast.POSITION.TOP_CENTER,
+                });
                 this.setState({
                   hasError: true,
                   errMsg: err.response.data.message,
@@ -166,6 +184,9 @@ export default class EmployeeAdd extends Component {
               });
           })
           .catch((err) => {
+            toast.error(err.response.data.message, {
+              position: toast.POSITION.TOP_CENTER,
+            });
             this.setState({
               hasError: true,
               errMsg: err.response.data.message,
@@ -175,6 +196,9 @@ export default class EmployeeAdd extends Component {
       })
       .catch((err) => {
         this.setState({ hasError: true, errMsg: err.response.data.message });
+        toast.error(err.response.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
         window.scrollTo(0, 0);
       });
   };
@@ -191,11 +215,38 @@ export default class EmployeeAdd extends Component {
     return items;
   };
 
+  validate(state) {
+    if (
+      state.fistname === "" ||
+      state.lastname === "" ||
+      state.dateOfBirth === "" ||
+      state.gender === "" ||
+      state.maritalStatus === "" ||
+      state.fathername === "" ||
+      state.idNumber === "" ||
+      state.address === "" ||
+      state.country === "" ||
+      state.mobile === "" ||
+      state.city === "" ||
+      state.email === "" ||
+      state.username === "" ||
+      state.password === "" ||
+      state.role === "" ||
+      state.departmentId === null ||
+      state.startDate === "" ||
+      state.endDate === "" ||
+      state.jobTitle === null
+    )
+      return true;
+
+    return false;
+  }
+
   render() {
     return (
       <Form onSubmit={this.onSubmit}>
         <div className="row">
-          {this.state.hasError ? (
+          {/* {this.state.hasError ? (
             <Alert variant="danger" className="m-3" block>
               {this.state.errMsg}
             </Alert>
@@ -205,14 +256,32 @@ export default class EmployeeAdd extends Component {
             </Alert>
           ) : (
             <></>
-          )}
+          )} */}
 
           {/* Main Card */}
-          <Card className="col-sm-12 main-card">
-            <Card.Header>
-              <b>Add Employee</b>
-            </Card.Header>
+          {this.state.completed ? <Redirect to="/employee-list" /> : null}
+          <Card className="col-sm-12 main-card mt-3 mb-5">
             <Card.Body>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+                className="mb-4"
+              >
+                <h4 className="pt-3">Add Employee</h4>
+                <Button
+                  variant="contained"
+                  style={{ fontWeight: "700" }}
+                  onClick={this.onSubmit}
+                  block
+                  disabled={this.state.hasError}
+                >
+                  Create +
+                </Button>
+              </div>
               <div className="row">
                 {/* Personal Details Card */}
                 <div className="col-sm-6">
@@ -397,7 +466,7 @@ export default class EmployeeAdd extends Component {
                           />
                         </Form.Group>
                         <Form.Group controlId="formPhone">
-                          <Form.Label className="text-muted">Phone</Form.Label>
+                          <Form.Label className="text-muted ">Phone</Form.Label>
                           <Form.Control
                             type="text"
                             value={this.state.phone}
@@ -548,9 +617,6 @@ export default class EmployeeAdd extends Component {
                       </Card.Text>
                     </Card.Body>
                   </Card>
-                  <Button variant="primary" type="submit" block>
-                    Submit
-                  </Button>
                 </div>
               </div>
               <div className="row">

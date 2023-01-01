@@ -67,7 +67,7 @@ export default class DashboardManager extends Component {
           <div className="col-md-4 col-sm-6 col-xs-12">
             <Infobox
               title="Department Expenses"
-              description={this.state.totalExpenses + "€"}
+              description={this.state.totalExpenses + " VND"}
               color="bg-warning"
               icon="fa fa-shopping-cart"
             />
@@ -82,12 +82,6 @@ export default class DashboardManager extends Component {
           {/* Expense Report & Recent Applications */}
           <div className="col-md-6">
             <div className="panel panel-default">
-              <div
-                className="panel-heading with-border"
-                style={{ backgroundColor: "#515e73", color: "white" }}
-              >
-                <h3 className="panel-title">Department Expense Report</h3>
-              </div>
               <ExpenseChartsPage />
             </div>
             <div className="panel panel-default">

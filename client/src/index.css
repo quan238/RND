@@ -52,3 +52,28 @@ code {
   display: flex;
   align-items: center;
 }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.MuiToolbar-root {
+  padding-left: 0 !important;
+}
+
+.MuiTableCell-head {
+  background-color: #e2e6e9 !important;
+  font-size: 0.875rem !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1rem !important;
+  transition: background 0.3s ease !important;
+}
+
+.MuiTableCell-body {
+  color: #1e2327 !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  padding: 0.75rem 1rem !important;
+}

@@ -1,26 +1,27 @@
 import React, { Component } from "react";
-import { loadTree } from '../menuTreeHelper';
-import { NavLink } from 'react-router-dom'
+import { loadTree } from "../menuTreeHelper";
+import { NavLink } from "react-router-dom";
+import { MAP_ROLE } from "./utils";
+import { withTranslation } from "react-i18next";
 
-export default class SidebarManager extends Component {
-
+class SidebarManager extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: {}
-    }
+      user: {},
+    };
   }
 
   componentDidMount() {
-    let userData = JSON.parse(localStorage.getItem('user'))
-    this.setState({ user: userData })
+    let userData = JSON.parse(localStorage.getItem("user"));
+    this.setState({ user: userData });
     loadTree();
   }
 
   render() {
     return (
-      <aside className="main-sidebar sidebar-light-primary elevation-4" >
+      <aside className="main-sidebar sidebar-light-primary elevation-4">
         {/* Brand Logo */}
         {/* <a href="/" className="brand-link">
           <span className="brand-text font-weight-light ml-1">HRMS Manager</span>
@@ -31,19 +32,20 @@ export default class SidebarManager extends Component {
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
               <img
-                src={process.env.PUBLIC_URL + '/user-64.png'}
+                src={process.env.PUBLIC_URL + "/user-64.png"}
                 className="img-circle elevation-2"
                 alt="User Image"
               />
             </div>
             <div className="info">
-              <a href="#" className="d-block">
+              <strong href="#" className="d-block">
                 {this.state.user.fullname}
-              </a>
+              </strong>
+              <span>{this.props.t(MAP_ROLE[this.state.user.role])}</span>
             </div>
           </div>
           {/* Sidebar Menu */}
-          <nav className="mt-2">
+          <nav className="mt-0">
             <ul
               className="nav nav-pills nav-sidebar flex-column"
               data-widget="treeview"
@@ -55,30 +57,27 @@ export default class SidebarManager extends Component {
               <li className="nav-item">
                 <NavLink exact to="/" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt" />
-                  <p>
-                    Dashboard
-                    <span className="right badge badge-success">Home</span>
-                  </p>
+                  <p>Dashboard</p>
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink exact to="/employee-list" className="nav-link">
                   <i className="nav-icon fas fa-users" />
-                  <p>
-                    My Employees
-                  </p>
+                  <p>My Employees</p>
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink to="/job-list" className="nav-link">
                   <i className="nav-icon fas fa-briefcase" />
-                  <p>
-                    Job List
-                  </p>
+                  <p>Job List</p>
                 </NavLink>
               </li>
               <li className="nav-item has-treeview">
-                <NavLink to="/fake-url" className="nav-link" activeClassName="nav-link">
+                <NavLink
+                  to="/fake-url"
+                  className="nav-link"
+                  activeClassName="nav-link"
+                >
                   <i className="nav-icon fa fa-rocket" />
                   <p>
                     Applications
@@ -101,7 +100,11 @@ export default class SidebarManager extends Component {
                 </ul>
               </li>
               <li className="nav-item has-treeview">
-                <NavLink to="/fake-url" className="nav-link" activeClassName="nav-link">
+                <NavLink
+                  to="/fake-url"
+                  className="nav-link"
+                  activeClassName="nav-link"
+                >
                   <i className="nav-icon fas fa-money-bill" />
                   <p>
                     Expense Management
@@ -126,9 +129,7 @@ export default class SidebarManager extends Component {
               <li className="nav-item">
                 <NavLink exact to="/announcement" className="nav-link">
                   <i className="nav-icon fa fa-bell" />
-                  <p>
-                    Announcements
-                  </p>
+                  <p>Announcements</p>
                 </NavLink>
               </li>
             </ul>
@@ -140,3 +141,5 @@ export default class SidebarManager extends Component {
     );
   }
 }
+
+export default withTranslation("common")(SidebarManager); // instead of "export default App;"

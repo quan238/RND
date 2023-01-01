@@ -196,7 +196,7 @@ const EmployeeContainer = () => (
           path="/application-list"
           component={withAuth(ApplicationListEmployee)}
         />
-        <Route exact path="/application" component={withAuth(NotFound)} />
+        <Route exact path="/application" component={withAuth(Application)} />
         <Route exact path="/salary-view" component={withAuth(NotFound)} />
         <Route exact path="/announcement" component={withAuth(NotFound)} />
         <Route exact path="/register" component={Register} />

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { loadTree } from "../menuTreeHelper";
 import { NavLink } from "react-router-dom";
 import { withTranslation } from "react-i18next";
+import { MAP_ROLE } from "./utils";
 
 class SidebarEmployee extends Component {
   constructor(props) {
@@ -37,9 +38,10 @@ class SidebarEmployee extends Component {
               />
             </div>
             <div className="info">
-              <a href="#" className="d-block">
+              <strong href="#" className="d-block">
                 {this.state.user.fullname}
-              </a>
+              </strong>
+              <span>{this.props.t(MAP_ROLE[this.state.user.role])}</span>
             </div>
           </div>
           {/* Sidebar Menu */}
@@ -61,7 +63,7 @@ class SidebarEmployee extends Component {
               <li className="nav-item">
                 <NavLink exact to="/salary-view" className="nav-link">
                   <i className="nav-icon fas fa-euro-sign" />
-                  <p>{this.props.t("payroll.my-salary")}</p>
+                  <p>{this.props.t("sidebar.payroll.my-salary")}</p>
                 </NavLink>
               </li>
               <li className="nav-item has-treeview">
@@ -72,7 +74,7 @@ class SidebarEmployee extends Component {
                 >
                   <i className="nav-icon fa fa-rocket" />
                   <p>
-                    {this.props.t("application.main")}
+                    {this.props.t("sidebar.application.main")}
                     <i className="right fas fa-angle-left" />
                   </p>
                 </NavLink>
@@ -80,13 +82,13 @@ class SidebarEmployee extends Component {
                   <li className="nav-item">
                     <NavLink to="/application" className="nav-link">
                       <i className="fa fa-plus nav-icon" />
-                      <p>{this.props.t("application.main")}</p>
+                      <p>{this.props.t("sidebar.application.main")}</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/application-list" className="nav-link">
                       <i className="fas fa-list-ul nav-icon" />
-                      <p> {this.props.t("application.my")}</p>
+                      <p> {this.props.t("sidebar.application.my")}</p>
                     </NavLink>
                   </li>
                 </ul>
@@ -94,7 +96,7 @@ class SidebarEmployee extends Component {
               <li className="nav-item">
                 <NavLink exact to="/announcement" className="nav-link">
                   <i className="nav-icon fa fa-bell" />
-                  <p>{this.props.t("announcements")}</p>
+                  <p>{this.props.t("sidebar.announcements")}</p>
                 </NavLink>
               </li>
             </ul>

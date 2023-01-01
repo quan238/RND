@@ -43,12 +43,6 @@ export default class Dashboard extends Component {
             </div> */}
             <Calendar />
             <div className="panel panel-default">
-              <div
-                className="panel-heading with-border"
-                style={{ backgroundColor: "#515e73", color: "white" }}
-              >
-                <h3 className="panel-title">My Recent Applications</h3>
-              </div>
               <RecentApplciations />
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 export default class DepartmentAdd extends Component {
@@ -12,7 +12,7 @@ export default class DepartmentAdd extends Component {
       departmentDescription: "",
       hasError: false,
       errMsg: "",
-      completed: false
+      completed: false,
     };
   }
 
@@ -24,13 +24,13 @@ export default class DepartmentAdd extends Component {
   };
 
   onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     this.setState({ hasError: false, errorMsg: "", completed: false });
 
     let department = {
       departmentName: this.state.departmentName,
-      departmentDescription: this.state.departmentDescription
+      departmentDescription: this.state.departmentDescription,
     };
 
     axios({
@@ -40,7 +40,7 @@ export default class DepartmentAdd extends Component {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     })
       .then((res) => {
-        this.setState({ completed: true })
+        this.setState({ completed: true });
       })
       .catch((err) => {
         this.setState({ hasError: true, errMsg: err.response.data.message });
@@ -58,9 +58,7 @@ export default class DepartmentAdd extends Component {
           <Card.Text>
             <Form onSubmit={this.onSubmit}>
               <Form.Group controlId="formDepartmentName">
-                <Form.Label className="text-muted mb-2">
-                  Department Name
-                </Form.Label>
+                <Form.Label className="text-muted">Department Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter Department Name"
@@ -72,7 +70,7 @@ export default class DepartmentAdd extends Component {
                 />
               </Form.Group>
               <Form.Group controlId="formDepartmentName">
-                <Form.Label className="text-muted mb-2">
+                <Form.Label className="text-muted mt-3">
                   Department Description
                 </Form.Label>
                 <Form.Control
@@ -86,7 +84,12 @@ export default class DepartmentAdd extends Component {
                   required
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" disabled={!this.state.departmentName} className="mt-2">
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={!this.state.departmentName}
+                className="mt-2"
+              >
                 Add
               </Button>
             </Form>
@@ -98,7 +101,9 @@ export default class DepartmentAdd extends Component {
           </Alert>
         ) : this.state.completed ? (
           <Redirect to="/departments" />
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
       </Card>
     );
   }
