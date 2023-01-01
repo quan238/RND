@@ -26,19 +26,19 @@ import ApplicationList from "./components/ApplicationList";
 import ApplicationListManager from "./components/manager/ApplicationList";
 import ApplicationListEmployee from "./components/employee/ApplicationList";
 import Application from "./components/Application";
-// import SalaryDetails from "./components/SalaryDetails";
-// import SalaryList from "./components/SalaryList";
-// import SalaryView from "./components/SalaryView";
-// import SalaryViewManager from "./components/manager/SalaryView";
-// import SalaryViewEmployee from "./components/employee/SalaryView";
-// import Payment from "./components/Payment";
-// import Expense from "./components/Expense";
-// import ExpenseManager from "./components/manager/Expense";
-// import ExpenseReport from "./components/ExpenseReport";
-// import ExpenseReportManager from "./components/manager/ExpenseReport";
-// import Announcement from "./components/Announcement";
-// import AnnouncementManager from "./components/manager/Announcement";
-// import AnnouncementEmployee from "./components/employee/Announcement";
+import SalaryDetails from "./components/SalaryDetails";
+import SalaryList from "./components/SalaryList";
+import SalaryView from "./components/SalaryView";
+import SalaryViewManager from "./components/manager/SalaryView";
+import SalaryViewEmployee from "./components/employee/SalaryView";
+import Payment from "./components/Payment";
+import Expense from "./components/Expense";
+import ExpenseManager from "./components/manager/Expense";
+import ExpenseReport from "./components/ExpenseReport";
+import ExpenseReportManager from "./components/manager/ExpenseReport";
+import Announcement from "./components/Announcement";
+import AnnouncementManager from "./components/manager/Announcement";
+import AnnouncementEmployee from "./components/employee/Announcement";
 import Register from "./components/Register";
 import withAuth from "./withAuth";
 import Login from "./components/Login";
@@ -118,7 +118,7 @@ const AdminContainer = () => (
         <Route exact path="/" component={withAuth(Dashboard)} />
         <Route exact path="/employee-list" component={withAuth(EmployeeList)} />
         <Route exact path="/employee-add" component={withAuth(EmployeeAdd)} />
-        <Route exact path="/employee-view" component={withAuth(EmployeeView)} />
+        <Route path="/employee-view" component={withAuth(EmployeeView)} />
         <Route exact path="/employee-edit" component={withAuth(EmployeeEdit)} />
         <Route exact path="/departments" component={withAuth(DepartmentList)} />
         <Route exact path="/job-list" component={withAuth(JobList)} />
@@ -128,13 +128,21 @@ const AdminContainer = () => (
           component={withAuth(ApplicationList)}
         />
         <Route exact path="/application" component={withAuth(Application)} />
-        <Route exact path="/salary-details" component={withAuth(NotFound)} />
-        <Route exact path="/salary-list" component={withAuth(NotFound)} />
-        <Route exact path="/salary-view" component={withAuth(NotFound)} />
-        <Route exact path="/payment" component={withAuth(NotFound)} />
-        <Route exact path="/expense" component={withAuth(NotFound)} />
-        <Route exact path="/expense-report" component={withAuth(NotFound)} />
-        <Route exact path="/announcement" component={withAuth(NotFound)} />
+        <Route
+          exact
+          path="/salary-details"
+          component={withAuth(SalaryDetails)}
+        />
+        <Route exact path="/salary-list" component={withAuth(SalaryList)} />
+        <Route exact path="/salary-view" component={withAuth(SalaryView)} />
+        <Route exact path="/payment" component={withAuth(Payment)} />
+        <Route exact path="/expense" component={withAuth(Expense)} />
+        <Route
+          exact
+          path="/expense-report"
+          component={withAuth(ExpenseReport)}
+        />
+        <Route exact path="/announcement" component={withAuth(Announcement)} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
       </Switch>
@@ -167,10 +175,22 @@ const ManagerContainer = () => (
           component={withAuth(ApplicationListManager)}
         />
         <Route exact path="/application" component={withAuth(Application)} />
-        <Route exact path="/expense" component={withAuth(NotFound)} />
-        <Route exact path="/salary-view" component={withAuth(NotFound)} />
-        <Route exact path="/expense-report" component={withAuth(NotFound)} />
-        <Route exact path="/announcement" component={withAuth(NotFound)} />
+        <Route exact path="/expense" component={withAuth(ExpenseManager)} />
+        <Route
+          exact
+          path="/salary-view"
+          component={withAuth(SalaryViewManager)}
+        />
+        <Route
+          exact
+          path="/expense-report"
+          component={withAuth(ExpenseReportManager)}
+        />
+        <Route
+          exact
+          path="/announcement"
+          component={withAuth(AnnouncementManager)}
+        />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
       </Switch>
@@ -197,8 +217,16 @@ const EmployeeContainer = () => (
           component={withAuth(ApplicationListEmployee)}
         />
         <Route exact path="/application" component={withAuth(Application)} />
-        <Route exact path="/salary-view" component={withAuth(NotFound)} />
-        <Route exact path="/announcement" component={withAuth(NotFound)} />
+        <Route
+          exact
+          path="/salary-view"
+          component={withAuth(SalaryViewEmployee)}
+        />
+        <Route
+          exact
+          path="/announcement"
+          component={withAuth(AnnouncementEmployee)}
+        />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
       </Switch>
