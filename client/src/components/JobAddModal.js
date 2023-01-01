@@ -127,7 +127,9 @@ export default class JobAddModal extends Component {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Add Job</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Add New Contract
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.onSubmit}>

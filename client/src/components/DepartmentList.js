@@ -107,7 +107,7 @@ export default class DepartmentList extends Component {
                               state: { selectedDepartment: dept.id },
                             }}
                           >
-                            Go to Job List
+                            Go to Contract List
                           </NavLink>
                         ),
                       },

@@ -214,7 +214,7 @@ export default class JobList extends Component {
         <div className="row">
           <div className="col-sm-12">
             <h4>
-              <Button onClick={this.addJob}>Add Job</Button>
+              <Button onClick={this.addJob}>Add New Contract</Button>
             </h4>
             <Card className="main-card">
               <Card.Body>
@@ -288,7 +288,7 @@ export default class JobList extends Component {
                       this.selectedUser ? (
                         this.selectedUser.fullName
                       ) : (
-                        <h4>Job List</h4>
+                        <h4>Contract List</h4>
                       )
                     }
                   />

@@ -112,7 +112,7 @@ export default class JobList extends Component {
                       this.selectedUser ? (
                         this.selectedUser.fullName
                       ) : (
-                        <h4>Job List</h4>
+                        <h4>Contract List</h4>
                       )
                     }
                   />

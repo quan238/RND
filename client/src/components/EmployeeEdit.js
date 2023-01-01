@@ -401,6 +401,12 @@ class EmployeeEdit extends Component {
 
                           {/* </FormControl> */}
                           <Switch
+                            disabled={
+                              JSON.parse(localStorage.getItem("user")).id !==
+                              this.state.user.id
+                                ? false
+                                : true
+                            }
                             checked={this.state.user.active}
                             onChange={() =>
                               this.setState((prevState) => ({

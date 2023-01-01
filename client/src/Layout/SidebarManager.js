@@ -69,7 +69,7 @@ class SidebarManager extends Component {
               <li className="nav-item">
                 <NavLink to="/job-list" className="nav-link">
                   <i className="nav-icon fas fa-briefcase" />
-                  <p>Job List</p>
+                  <p>Contract List</p>
                 </NavLink>
               </li>
               <li className="nav-item has-treeview">

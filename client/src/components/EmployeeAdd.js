@@ -19,10 +19,10 @@ import {
   Typography,
 } from "@mui/material";
 import { toast } from "react-toastify";
-import EditIcon from "@mui/icons-material/Edit";
 import { MAP_ROLE } from "../Layout/utils";
 import { withTranslation } from "react-i18next";
-import Swal from "sweetalert2";
+import { Redirect } from "react-router-dom";
+import moment from "moment";
 class EmployeeAdd extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +54,7 @@ class EmployeeAdd extends Component {
       endDate: "",
       departments: [],
       jobTitle: null,
+      jobs: [],
       joiningDate: "",
       file: null,
       hasError: true,
@@ -70,6 +71,17 @@ class EmployeeAdd extends Component {
     })
       .then((res) => {
         this.setState({ departments: res.data });
+        let jobs = [];
+
+        res.data.users.map((user) => {
+          user.jobs.map((job, index) => {
+            job.startDate = moment(job.startDate).format("YYYY-MM-DD");
+            job.endDate = moment(job.endDate).format("YYYY-MM-DD");
+            jobs.push(job);
+          });
+        });
+
+        this.setState({ jobs: jobs });
       })
       .catch((err) => {
         console.log(err);
@@ -267,16 +279,13 @@ class EmployeeAdd extends Component {
     return (
       <Form onSubmit={this.onSubmit} className="container-fluid pt-4">
         <div>
-          {/* {this.state.falseRedirect ? <Redirect to="/" /> : null}
           {this.state.hasError ? (
-            <Alert variant="danger" className="m-3" block>
-              {this.state.errMsg}
-            </Alert>
+            <></>
           ) : this.state.completed ? (
             <Redirect to="employee-list" />
           ) : (
             <></>
-          )} */}
+          )}
           <Row>
             <Col sm={12}>
               <Grid container spacing={2}>
@@ -567,21 +576,21 @@ class EmployeeAdd extends Component {
                   <Card sx={{ maxWidth: 200 }} className=" p-4">
                     <div>
                       <Row className="flex-row flex-space-between flex-align-center pr-2">
-                        <h4 className="mb-2">Job Information</h4>
+                        <h4 className="mb-2">Contract Information</h4>
                       </Row>
                       <div className="px-3 pt-2">
                         <Grid container spacing={2} className="mb-2">
                           <Grid item xs={12}>
                             <Form.Group controlId="formJobTitle">
                               <Form.Label className="text-muted required">
-                                Job Title
+                                Contract Title
                               </Form.Label>
                               <Form.Control
                                 type="text"
                                 value={this.state.jobTitle}
                                 onChange={this.handleChange}
                                 name="jobTitle"
-                                placeholder="Enter Job Title"
+                                placeholder="Enter Contract Title"
                               />
                             </Form.Group>
                           </Grid>
