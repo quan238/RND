@@ -1,17 +1,56 @@
 import React, { Component } from "react";
-import { Card, Row, Col, Form } from "react-bootstrap";
-import { Redirect } from 'react-router-dom'
-import axios from 'axios'
-import moment from 'moment'
+import { Card, Row, Col, Form, Button } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
+import {
+  CardContent,
+  CardMedia,
+  Chip,
+  Grid,
+  Tab,
+  Tabs,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import EditIcon from "@mui/icons-material/Edit";
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 2 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 export default class EmployeeView extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      tab: 0,
       user: {},
       department: {
-        departmentName: null
+        departmentName: null,
       },
       job: {
         jobTitle: null,
@@ -24,227 +63,379 @@ export default class EmployeeView extends Component {
         country: null,
         address: null,
         mobile: null,
-        emailAddress: null
+        emailAddress: null,
       },
       userFinancialInfo: {
         bankName: null,
         accountName: null,
         accountNumber: null,
-        iban: null
+        iban: null,
       },
       falseRedirect: false,
-      editRedirect: false
+      editRedirect: false,
     };
   }
 
   componentDidMount() {
-      if(this.props.location.state) {
-          axios({
-              method: 'get',
-              url: 'api/users/' + this.props.location.state.selectedUser.id,
-              headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-          })
-          .then(res => {
-              let user = res.data
-                this.setState({user: user}, () => {
-                    if(user.jobs) {
-                        let jobs = user.jobs
-                        jobs.map(job => {
-                            if(new Date(job.startDate) <= Date.now() && new Date(job.endDate) >= Date.now()) {
-                                this.setState({job: job})
-                            }
-                        })
-                    }
-                    if(user.department) {
-                        this.setState({department: user.department})
-                    }
-                    if(user.user_personal_info) {
-                        if(user.user_personal_info.dateOfBirth) {
-                            user.user_personal_info.dateOfBirth = moment(user.user_personal_info.dateOfBirth).format('D MMM YYYY')
-                        }
-                        this.setState({userPersonalInfo: user.user_personal_info})
-                    }
-                    if(user.user_financial_info) {
-                        this.setState({userFinancialInfo: user.user_financial_info})
-                    }
-                })
-          })
-          .catch(err => {
-              console.log(err)
-          })
-      } else {
-          this.setState({falseRedirect: true})
-      }
+    if (this.props.location.state) {
+      axios({
+        method: "get",
+        url: "api/users/" + this.props.location.state.selectedUser.id,
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+        .then((res) => {
+          let user = res.data;
+          this.setState({ user: user }, () => {
+            if (user.jobs) {
+              let jobs = user.jobs;
+              jobs.map((job) => {
+                if (
+                  new Date(job.startDate) <= Date.now() &&
+                  new Date(job.endDate) >= Date.now()
+                ) {
+                  this.setState({ job: job });
+                }
+              });
+            }
+            if (user.department) {
+              this.setState({ department: user.department });
+            }
+            if (user.user_personal_info) {
+              if (user.user_personal_info.dateOfBirth) {
+                user.user_personal_info.dateOfBirth = moment(
+                  user.user_personal_info.dateOfBirth
+                ).format("D MMM YYYY");
+              }
+              this.setState({ userPersonalInfo: user.user_personal_info });
+            }
+            if (user.user_financial_info) {
+              this.setState({ userFinancialInfo: user.user_financial_info });
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      this.setState({ falseRedirect: true });
+    }
   }
 
   onEdit = () => {
-    this.setState({editRedirect: true})
-  }
+    this.setState({ editRedirect: true });
+  };
 
   render() {
     return (
-        <div className="container-fluid pt-3">
-            {this.state.falseRedirect ? <Redirect to="/" /> : (<></>)}
-            {this.state.editRedirect ? (<Redirect to={{pathname: "/employee-edit", state: {selectedUser: this.state.user}}} />) : null}
-            <Row>
-                <Col sm={12}>
-                    <Card>
-                        <Card.Header style={{ backgroundColor: "#515e73", color: "white", fontSize: '17px' }}>Employee Detail <Form className="float-right"><span style={{cursor: 'pointer'}} onClick={this.onEdit}><i className="far fa-edit"></i> Edit</span></Form></Card.Header>
-                        <Card.Body>
-                            <Card.Title><strong>{this.state.user.fullName}</strong></Card.Title>
-                            <Card.Text>
-                                <Col lg={12}>
-                                    <Row className="pt-4">
-                                        <Col lg={3}>
-                                            <img className="img-circle elevation-1 bp-2" src={process.env.PUBLIC_URL + '/user-128.png'}></img>
-                                        </Col>
-                                        <Col className="pt-4" lg={9}>
-                                            <div className="emp-view-list">
-                                                <ul>
-                                                    <li><span>Employee ID: </span> {this.state.user.id}</li>
-                                                    <li><span>Department: </span> {this.state.department.departmentName}</li>
-                                                    <li><span>Job Title: </span> {this.state.job.jobTitle}</li>
-                                                    <li><span>Role: </span>{this.state.user.role==='ROLE_ADMIN' ? 'Admin' : this.state.user.role==='ROLE_MANAGER' ? 'Manager' : 'Employee'}</li>
-                                                </ul>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col sm={6}>
-                                            <Card className="secondary-card emp-view">
-                                                <Card.Header>Personal Details</Card.Header>
-                                                <Card.Body>
-                                                    <Card.Text id="emp-view-personal">
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Date of Birth: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userPersonalInfo.dateOfBirth}
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Gender: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userPersonalInfo.gender}
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Marital Status: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userPersonalInfo.maritalStatus}
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Father's Name: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userPersonalInfo.fatherName}
-                                                            </span>
-                                                        </Form.Group>
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col sm={6}>
-                                            <Card className="secondary-card emp-view">
-                                                <Card.Header>Contact Details</Card.Header>
-                                                <Card.Body>
-                                                    <Card.Text id="emp-view-contact">
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Location: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userPersonalInfo.country}, {this.state.userPersonalInfo.city}
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Address: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userPersonalInfo.address}
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Mobile: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userPersonalInfo.mobile} {this.state.userPersonalInfo.phone ? (' (' + this.state.userPersonalInfo.phone + ')') : null} 
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Email Address: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userPersonalInfo.emailAddress}
-                                                            </span>
-                                                        </Form.Group>
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col cm={6}>
-                                            <Card className="secondary-card">
-                                                <Card.Header>Bank Information</Card.Header>
-                                                <Card.Body>
-                                                    <Card.Text id="emp-view-bank">
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Bank Name: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userFinancialInfo.bankName}
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Account Name: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userFinancialInfo.accountName}
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                Mobile: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userFinancialInfo.accountNumber}
-                                                            </span>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row}>
-                                                            <Form.Label className="label">
-                                                                IBAN: 
-                                                            </Form.Label>
-                                                            <span>
-                                                                {this.state.userFinancialInfo.iban}
-                                                            </span>
-                                                        </Form.Group>
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col sm={6}>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </div>
+      <div className="container-fluid pt-3">
+        {this.state.falseRedirect ? <Redirect to="/" /> : <></>}
+        {this.state.editRedirect ? (
+          <Redirect
+            to={{
+              pathname: "/employee-edit",
+              state: { selectedUser: this.state.user },
+            }}
+          />
+        ) : null}
+        <Row>
+          <Col sm={12}>
+            <Grid container spacing={2}>
+              <Grid item md={3}>
+                <Card sx={{ maxWidth: 200 }} className="border-radius-default">
+                  <CardMedia
+                    style={{
+                      borderTopLeftRadius: "2%",
+                      borderTopRightRadius: "2%",
+                    }}
+                    sx={{ height: 300 }}
+                    image="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/48014adb-982c-4a5c-ae09-a1afab53f3f3/ddrg6q2-92393626-c353-43db-9c70-85d869dd58d9.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ4MDE0YWRiLTk4MmMtNGE1Yy1hZTA5LWExYWZhYjUzZjNmM1wvZGRyZzZxMi05MjM5MzYyNi1jMzUzLTQzZGItOWM3MC04NWQ4NjlkZDU4ZDkucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Vn1TEvEpOgKhNWdIPLDTOtLo-feiJ-mh-kYr1VfJFQY"
+                    title="green iguana"
+                  />
+                  <CardContent>
+                    <div className="flex-column flex-align-center">
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        style={{ fontWeight: 500 }}
+                        component="div"
+                        className="text-center"
+                      >
+                        {this.state.user.fullName}
+                      </Typography>
+                      <Chip
+                        label="Employee"
+                        color="primary"
+                        variant="outlined"
+                        className="text-center"
+                      />
+                    </div>
+                  </CardContent>
+                  <div className="flex-column flex-align-center">
+                    <TextField
+                      className="w-90 mb-3"
+                      label="Employee No"
+                      id="filled-size-small"
+                      defaultValue={"User IDs"}
+                      value={"No " + this.state.user.id}
+                      variant="filled"
+                      size="small"
+                      disabled
+                    />
+                    <TextField
+                      className="w-90 mb-3"
+                      label="Department Name"
+                      id="filled-size-small"
+                      defaultValue={"User ID"}
+                      value={this.state.department.departmentName}
+                      variant="filled"
+                      size="small"
+                      disabled
+                    />
+                    <TextField
+                      className="w-90 mb-3"
+                      label="Job Title"
+                      id="filled-size-small"
+                      defaultValue={"User ID"}
+                      value={this.state.job.jobTitle}
+                      variant="filled"
+                      size="small"
+                      disabled
+                    />
+                  </div>
+                </Card>
+              </Grid>
+              <Grid item md={9}>
+                <Tabs
+                  className="px-4"
+                  value={this.state.tab}
+                  onChange={() => {}}
+                  aria-label="basic tabs example"
+                >
+                  <Tab label="Personal and contact" {...a11yProps(0)} />
+                  <Tab label="Documents" {...a11yProps(1)} />
+                  <Tab label="Additional Data" {...a11yProps(2)} />
+                </Tabs>
+                <TabPanel value={this.state.tab} index={0} className="pt-0">
+                  <Card sx={{ maxWidth: 200 }} className="px-4 py-3">
+                    <div>
+                      <Row className="flex-row flex-space-between flex-align-center pr-2">
+                        <h4 className="mb-0">Personal Details</h4>
+                        <Button type="text" variant="" onClick={this.onEdit}>
+                          <EditIcon />
+                        </Button>
+                      </Row>
+                      <div className="px-3 pt-2">
+                        <TextField
+                          className="w-100 mb-3"
+                          label="Full Name"
+                          id="filled-size-small"
+                          defaultValue={"User IDs"}
+                          value={this.state.user.fullName}
+                          variant="filled"
+                          size="small"
+                          disabled
+                        />
+                        <Grid container spacing={2}>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Date of Birth"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userPersonalInfo.dateOfBirth}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Gender"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userPersonalInfo.gender}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                        </Grid>
+                        <Grid container spacing={2}>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Marital Status"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userPersonalInfo.maritalStatus}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Father's Name"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userPersonalInfo.fatherName}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                        </Grid>
+                      </div>
+                    </div>
+                  </Card>
+                  <Card sx={{ maxWidth: 200 }} className=" p-4">
+                    <div>
+                      <Row className="flex-row flex-space-between flex-align-center pr-2">
+                        <h4 className="mb-0">Contact Details</h4>
+                        <Button type="text" variant="" onClick={this.onEdit}>
+                          <EditIcon />
+                        </Button>
+                      </Row>
+                      <div className="px-3 pt-2">
+                        <TextField
+                          className="w-100 mb-3"
+                          label="Location"
+                          id="filled-size-small"
+                          defaultValue={"User IDs"}
+                          value={
+                            this.state.userPersonalInfo.country +
+                            " " +
+                            this.state.userPersonalInfo.city
+                          }
+                          variant="filled"
+                          size="small"
+                          disabled
+                        />
+                        <TextField
+                          className="w-100 mb-3"
+                          label="Address"
+                          id="filled-size-small"
+                          defaultValue={"User IDs"}
+                          value={this.state.userPersonalInfo.address}
+                          variant="filled"
+                          size="small"
+                          disabled
+                        />
+                        <Grid container spacing={2}>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Mobile"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userPersonalInfo.mobile}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Phone"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userPersonalInfo.phone}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                        </Grid>
+                        <Grid container spacing={2}>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Email Address"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userPersonalInfo.emailAddress}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                        </Grid>
+                      </div>
+                    </div>
+                  </Card>
+                  <Card sx={{ maxWidth: 200 }} className=" p-4">
+                    <div>
+                      <Row className="flex-row flex-space-between flex-align-center pr-2">
+                        <h4 className="mb-0">Bank Information</h4>
+                        <Button type="text" variant="" onClick={this.onEdit}>
+                          <EditIcon />
+                        </Button>
+                      </Row>
+                      <div className="px-3 pt-2">
+                        <TextField
+                          className="w-100 mb-3"
+                          label=" Bank Name"
+                          id="filled-size-small"
+                          defaultValue={"User IDs"}
+                          value={this.state.userFinancialInfo.bankName}
+                          variant="filled"
+                          size="small"
+                          disabled
+                        />
+                        <TextField
+                          className="w-100 mb-3"
+                          label="Account Name"
+                          id="filled-size-small"
+                          defaultValue={"User IDs"}
+                          value={this.state.userFinancialInfo.accountName}
+                          variant="filled"
+                          size="small"
+                          disabled
+                        />
+                        <Grid container spacing={2}>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Account Number"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userFinancialInfo.accountNumber}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                          <Grid item xs={6}>
+                            <TextField
+                              className="w-100 mb-3"
+                              label="Iban"
+                              id="filled-size-small"
+                              defaultValue={"User IDs"}
+                              value={this.state.userFinancialInfo.iban}
+                              variant="filled"
+                              size="small"
+                              disabled
+                            />
+                          </Grid>
+                        </Grid>
+                      </div>
+                    </div>
+                  </Card>
+                </TabPanel>
+                <TabPanel value={this.state.tab} index={2}>
+                  Item Two
+                </TabPanel>
+                <TabPanel value={this.state.tab} index={3}>
+                  Item Three
+                </TabPanel>
+              </Grid>
+            </Grid>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }

@@ -68,7 +68,7 @@ export default class RecentAnnouncements extends React.Component {
 
     return (
       <div className="card p-4">
-        <strong style={{ fontSize: 18 }}>My Recent Applications</strong>
+        <strong style={{ fontSize: 18 }}>Recent Announcement</strong>
         <div className="mt-1" style={{ textAlign: "center" }}></div>
         <ul>
           {this.state.recentAnnouncements.map((announcement) => (
