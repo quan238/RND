@@ -102,8 +102,8 @@ div.myDiv input {
 }
 
 .form-group {
-  margin-top: 5px;
-  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 15px;
 }
 
 .form-label {
@@ -474,4 +474,9 @@ button:focus {
 
 .swal2-select:focus-visible {
   outline: #ddd !important;
+}
+
+.required {
+  display: flex;
+  align-items: center;
 }

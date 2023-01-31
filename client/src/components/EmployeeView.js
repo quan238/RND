@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
+import createHistory from "history/createBrowserHistory";
+
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -77,7 +79,15 @@ export default class EmployeeView extends Component {
   }
 
   componentDidMount() {
+    const history = createHistory();
     if (this.props.location.state) {
+      if (this.props.location.state.tab) {
+        let state = { ...history.location.state };
+        delete state.tab;
+        history.replace({ ...history.location, state });
+        this.setState({ ...this.state, tab: this.props.location.state?.tab });
+      }
+
       axios({
         method: "get",
         url: "api/users/" + this.props.location.state.selectedUser.id,
@@ -123,6 +133,10 @@ export default class EmployeeView extends Component {
 
   onEdit = () => {
     this.setState({ editRedirect: true });
+  };
+
+  handleChangeTab = (event, newValue) => {
+    this.setState({ tab: newValue });
   };
 
   render() {
@@ -208,12 +222,13 @@ export default class EmployeeView extends Component {
                 <Tabs
                   className="px-4"
                   value={this.state.tab}
-                  onChange={() => {}}
+                  onChange={this.handleChangeTab}
                   aria-label="basic tabs example"
                 >
                   <Tab label="Personal and contact" {...a11yProps(0)} />
-                  <Tab label="Documents" {...a11yProps(1)} />
-                  <Tab label="Additional Data" {...a11yProps(2)} />
+                  <Tab label="Salary" {...a11yProps(1)} />
+                  <Tab label="Documents" {...a11yProps(2)} />
+                  <Tab label="Additional Data" {...a11yProps(3)} />
                 </Tabs>
                 <TabPanel value={this.state.tab} index={0} className="pt-0">
                   <Card sx={{ maxWidth: 200 }} className="px-4 py-3">
@@ -425,10 +440,10 @@ export default class EmployeeView extends Component {
                     </div>
                   </Card>
                 </TabPanel>
-                <TabPanel value={this.state.tab} index={2}>
+                <TabPanel value={this.state.tab} index={1}>
                   Item Two
                 </TabPanel>
-                <TabPanel value={this.state.tab} index={3}>
+                <TabPanel value={this.state.tab} index={2}>
                   Item Three
                 </TabPanel>
               </Grid>
