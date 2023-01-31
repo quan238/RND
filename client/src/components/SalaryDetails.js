@@ -361,55 +361,164 @@ export default class SalaryDetails extends Component {
         {this.state.selectedUser ? (
           <Form onSubmit={this.onSubmit}>
             <div className="row">
-              <div className="col-sm-12">
-                <Card className="main-card">
-                  <strong>
-                    <h5 className="pl-4 pt-4"> Salary Details</h5>
-                  </strong>
-                  <Card.Body>
-                    <Card.Text>
-                      <Form.Group>
-                        <Form.Label className="required">
-                          Employment Type{" "}
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          className="select-css"
-                          value={this.state.employmentType}
-                          onChange={this.handleChangeEmploymentType}
-                          name="employmentType"
-                        >
-                          <option value="">Choose one...</option>
-                          <option value="Full Time">Full Time</option>
-                          <option value="Part Time">Part Time</option>
-                        </Form.Control>
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label className="required">Currency</Form.Label>
-                        <Form.Control
-                          type="string"
-                          value={"VND"}
-                          onChange={this.handleChange}
-                          name="salaryBasic"
-                          disabled
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Label className="required">
-                          Basic Salary
-                        </Form.Label>
-                        <Form.Control
-                          type="number"
-                          value={this.state.salaryBasic}
-                          onChange={this.handleChange}
-                          name="salaryBasic"
-                        />
-                      </Form.Group>
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+              <div className="col-sm-6">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <Card className="main-card">
+                      <strong>
+                        <h5 className="pl-4 pt-4"> Salary Details</h5>
+                      </strong>
+                      <Card.Body>
+                        <Card.Text>
+                          <Form.Group>
+                            <Form.Label className="required">
+                              Employment Type{" "}
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              className="select-css"
+                              value={this.state.employmentType}
+                              onChange={this.handleChangeEmploymentType}
+                              name="employmentType"
+                            >
+                              <option value="">Choose one...</option>
+                              <option value="Full Time">Full Time</option>
+                              <option value="Part Time">Part Time</option>
+                            </Form.Control>
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label className="required">
+                              Currency
+                            </Form.Label>
+                            <Form.Control
+                              type="string"
+                              value={"VND"}
+                              onChange={this.handleChange}
+                              name="salaryBasic"
+                              disabled
+                            />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label className="required">
+                              Basic Salary
+                            </Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={this.state.salaryBasic}
+                              onChange={this.handleChange}
+                              name="salaryBasic"
+                            />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label className="required">
+                              Number of dependents
+                            </Form.Label>
+                            <Form.Control type="number" value={0} />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label className="required">
+                              Personal & Dependent Deduction
+                            </Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={11000000}
+                              disabled
+                            />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label className="required">
+                              Annual Leave
+                            </Form.Label>
+                            <Form.Control type="number" value={8} disabled />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label className="required">
+                              Annual Leave
+                            </Form.Label>
+                            <Form.Control type="number" value={8} disabled />
+                          </Form.Group>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <Card className="main-card">
+                      <strong>
+                        <h5 className="pl-4 pt-4">Deductions</h5>
+                      </strong>
+                      <Card.Body>
+                        <Card.Text>
+                          <Form.Group>
+                            <Form.Label>Social Insurance</Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={23840000}
+                              // onChange={this.handleChange}
+                              // name="deductionTax"
+                              disabled
+                            />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label>Medical Insurance</Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={447000}
+                              // onChange={this.handleChange}
+                              // name="deductionOther"
+                              disabled
+                            />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label>Unemployment Insurance</Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={360000}
+                              // onChange={this.handleChange}
+                              // name="deductionOther"
+                              disabled
+                            />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label>Trade Union 1%</Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={149000}
+                              // onChange={this.handleChange}
+                              // name="deductionOther"
+                              disabled
+                            />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label>Personal Income Tax</Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={1048623}
+                              // onChange={this.handleChange}
+                              // name="deductionTax"
+                              disabled
+                            />
+                          </Form.Group>
+                          <Form.Group>
+                            <Form.Label>Other Deduction</Form.Label>
+                            <Form.Control
+                              type="number"
+                              value={this.state.deductionOther}
+                              onChange={this.handleChange}
+                              name="deductionOther"
+                            />
+                          </Form.Group>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div className="row">
               <div className="col-sm-6">
                 <Card className="main-card">
@@ -477,74 +586,39 @@ export default class SalaryDetails extends Component {
                 </Card>
               </div>
               <div className="col-sm-6">
-                <div className="row">
-                  <div className="col-sm-12">
-                    <Card className="main-card">
-                      <strong>
-                        <h5 className="pl-4 pt-4">Deductions</h5>
-                      </strong>
-                      <Card.Body>
-                        <Card.Text>
-                          <Form.Group>
-                            <Form.Label>Tax Deduction</Form.Label>
-                            <Form.Control
-                              type="number"
-                              value={this.state.deductionTax}
-                              onChange={this.handleChange}
-                              name="deductionTax"
-                            />
-                          </Form.Group>
-                          <Form.Group>
-                            <Form.Label>Other Deduction</Form.Label>
-                            <Form.Control
-                              type="number"
-                              value={this.state.deductionOther}
-                              onChange={this.handleChange}
-                              name="deductionOther"
-                            />
-                          </Form.Group>
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-12">
-                    <Card className="main-card">
-                      <strong>
-                        <h5 className="pl-4 pt-4">Total Salary Details</h5>
-                      </strong>
-                      <Card.Body>
-                        <Card.Text>
-                          <Form.Group>
-                            <Form.Label>Gross Salary</Form.Label>
-                            <Form.Control
-                              type="number"
-                              value={salaryGross}
-                              readOnly
-                            />
-                          </Form.Group>
-                          <Form.Group>
-                            <Form.Label>Total Deductions</Form.Label>
-                            <Form.Control
-                              type="number"
-                              value={deductionTotal}
-                              readOnly
-                            />
-                          </Form.Group>
-                          <Form.Group>
-                            <Form.Label>Net Salary</Form.Label>
-                            <Form.Control
-                              type="number"
-                              value={salaryNet}
-                              readOnly
-                            />
-                          </Form.Group>
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                </div>
+                <Card className="main-card card">
+                  <strong>
+                    <h5 className="pl-4 pt-4">Total Salary Details</h5>
+                  </strong>
+                  <Card.Body>
+                    <Card.Text>
+                      <Form.Group>
+                        <Form.Label>Gross Salary</Form.Label>
+                        <Form.Control
+                          type="number"
+                          value={salaryGross}
+                          readOnly
+                        />
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Total Deductions</Form.Label>
+                        <Form.Control
+                          type="number"
+                          value={deductionTotal}
+                          readOnly
+                        />
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Net Salary</Form.Label>
+                        <Form.Control
+                          type="number"
+                          value={salaryNet}
+                          readOnly
+                        />
+                      </Form.Group>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
                 <div className="row mb-2">
                   <Button type="submit" block>
                     Submit
