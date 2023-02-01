@@ -84,12 +84,18 @@ db.expense.belongsTo(db.department, { foreignKey: { allowNull: false } });
 
 // Job Associations
 db.job.belongsTo(db.user, { foreignKey: { allowNull: false } });
+db.job.hasMany(db.payment, {
+  foreginKey: { allowNull: true },
+  onDelete: "CASCADE",
+  hooks: true,
+});
 
 // Application Associations
 db.application.belongsTo(db.user);
 
 // Payment Associations
 db.payment.belongsTo(db.user);
+db.payment.belongsTo(db.job);
 
 // Announcement Associations
 db.deptAnnouncement.belongsTo(db.department, {
