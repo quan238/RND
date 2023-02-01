@@ -46,6 +46,7 @@ import JobList from "./components/JobList";
 import JobListManager from "./components/manager/JobList";
 import { NotFound } from "./components/NotFound";
 import Background from "./background.jpeg";
+import PaymentHistory from "./components/PaymentHistory";
 
 export default class App extends Component {
   render() {
@@ -136,6 +137,11 @@ const AdminContainer = () => (
         <Route exact path="/salary-list" component={withAuth(SalaryList)} />
         <Route exact path="/salary-view" component={withAuth(SalaryView)} />
         <Route exact path="/payment" component={withAuth(Payment)} />
+        <Route
+          exact
+          path="/payment-history"
+          component={withAuth(PaymentHistory)}
+        />
         <Route exact path="/expense" component={withAuth(Expense)} />
         <Route
           exact

@@ -26,7 +26,8 @@
       "salary": "Manage Salary Details",
       "employee-salary": "Employee Salary List",
       "payment": "Make Payment",
-      "my-salary": "My Salary Details"
+      "my-salary": "My Salary Details",
+      "history": "Payment History"
     },
     "expense": {
       "main": "Expense Management",

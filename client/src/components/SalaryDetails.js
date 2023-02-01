@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import { Card, Button, Form, Alert, Badge } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
-import JobAddModal from "./JobAddModal";
-import JobEditModal from "./JobEditModal";
-import JobDeleteModal from "./JobDeleteModal";
+import { Card, Button, Form, Alert } from "react-bootstrap";
 import axios from "axios";
-import moment from "moment";
-import MaterialTable from "material-table";
-import { ThemeProvider } from "@material-ui/core";
-import { createMuiTheme } from "@material-ui/core/styles";
-import AlertModal from "./AlertModal";
+import {
+  calculateIncomeTax,
+  calculateMedicalInsurance,
+  calculateSocial,
+  calculateSocialInsurance,
+  calculateTradeUnionFee,
+  calculateUnemploymentInsurance,
+  formatVNDCurrency,
+} from "../utils";
+import CurrencyTextField from "@unicef/material-ui-currency-textfield/dist/CurrencyTextField";
 
 export default class SalaryDetails extends Component {
   constructor(props) {
@@ -242,7 +243,10 @@ export default class SalaryDetails extends Component {
         this.state.allowanceOther,
       deductionTax: this.state.deductionTax,
       deductionOther: this.state.deductionOther,
-      deductionTotal: this.state.deductionTax + this.state.deductionOther,
+      deductionTotal:
+        this.state.deductionOther +
+        calculateIncomeTax(this.state.salaryBasic) +
+        calculateSocial(this.state.salaryBasic),
       salaryGross:
         this.state.salaryBasic +
         this.state.allowanceHouseRent +
@@ -297,7 +301,10 @@ export default class SalaryDetails extends Component {
       this.state.allowanceFuel +
       this.state.allowanceOther;
 
-    let deductionTotal = this.state.deductionTax + this.state.deductionOther;
+    let deductionTotal =
+      this.state.deductionOther +
+      calculateIncomeTax(this.state.salaryBasic) +
+      calculateSocial(this.state.salaryBasic);
 
     let salaryNet = salaryGross - deductionTotal;
 
@@ -394,7 +401,6 @@ export default class SalaryDetails extends Component {
                               type="string"
                               value={"VND"}
                               onChange={this.handleChange}
-                              name="salaryBasic"
                               disabled
                             />
                           </Form.Group>
@@ -413,23 +419,17 @@ export default class SalaryDetails extends Component {
                             <Form.Label className="required">
                               Number of dependents
                             </Form.Label>
-                            <Form.Control type="number" value={0} />
+                            <Form.Control type="number" value={1} />
                           </Form.Group>
                           <Form.Group>
                             <Form.Label className="required">
                               Personal & Dependent Deduction
                             </Form.Label>
                             <Form.Control
-                              type="number"
-                              value={11000000}
+                              type="string"
+                              value={formatVNDCurrency(11000000)}
                               disabled
                             />
-                          </Form.Group>
-                          <Form.Group>
-                            <Form.Label className="required">
-                              Annual Leave
-                            </Form.Label>
-                            <Form.Control type="number" value={8} disabled />
                           </Form.Group>
                           <Form.Group>
                             <Form.Label className="required">
@@ -455,8 +455,10 @@ export default class SalaryDetails extends Component {
                           <Form.Group>
                             <Form.Label>Social Insurance</Form.Label>
                             <Form.Control
-                              type="number"
-                              value={23840000}
+                              type="string"
+                              value={formatVNDCurrency(
+                                calculateSocialInsurance(this.state.salaryBasic)
+                              )}
                               // onChange={this.handleChange}
                               // name="deductionTax"
                               disabled
@@ -465,8 +467,12 @@ export default class SalaryDetails extends Component {
                           <Form.Group>
                             <Form.Label>Medical Insurance</Form.Label>
                             <Form.Control
-                              type="number"
-                              value={447000}
+                              type="string"
+                              value={formatVNDCurrency(
+                                calculateMedicalInsurance(
+                                  this.state.salaryBasic
+                                )
+                              )}
                               // onChange={this.handleChange}
                               // name="deductionOther"
                               disabled
@@ -475,8 +481,12 @@ export default class SalaryDetails extends Component {
                           <Form.Group>
                             <Form.Label>Unemployment Insurance</Form.Label>
                             <Form.Control
-                              type="number"
-                              value={360000}
+                              type="string"
+                              value={formatVNDCurrency(
+                                calculateUnemploymentInsurance(
+                                  this.state.salaryBasic
+                                )
+                              )}
                               // onChange={this.handleChange}
                               // name="deductionOther"
                               disabled
@@ -485,8 +495,10 @@ export default class SalaryDetails extends Component {
                           <Form.Group>
                             <Form.Label>Trade Union 1%</Form.Label>
                             <Form.Control
-                              type="number"
-                              value={149000}
+                              type="string"
+                              value={formatVNDCurrency(
+                                calculateTradeUnionFee(this.state.salaryBasic)
+                              )}
                               // onChange={this.handleChange}
                               // name="deductionOther"
                               disabled
@@ -495,8 +507,10 @@ export default class SalaryDetails extends Component {
                           <Form.Group>
                             <Form.Label>Personal Income Tax</Form.Label>
                             <Form.Control
-                              type="number"
-                              value={1048623}
+                              type="string"
+                              value={formatVNDCurrency(
+                                calculateIncomeTax(this.state.salaryBasic)
+                              )}
                               // onChange={this.handleChange}
                               // name="deductionTax"
                               disabled
@@ -595,24 +609,24 @@ export default class SalaryDetails extends Component {
                       <Form.Group>
                         <Form.Label>Gross Salary</Form.Label>
                         <Form.Control
-                          type="number"
-                          value={salaryGross}
+                          type="string"
+                          value={formatVNDCurrency(salaryGross)}
                           readOnly
                         />
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Total Deductions</Form.Label>
                         <Form.Control
-                          type="number"
-                          value={deductionTotal}
+                          type="string"
+                          value={formatVNDCurrency(deductionTotal)}
                           readOnly
                         />
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Net Salary</Form.Label>
                         <Form.Control
-                          type="number"
-                          value={salaryNet}
+                          type="string"
+                          value={formatVNDCurrency(salaryNet)}
                           readOnly
                         />
                       </Form.Group>

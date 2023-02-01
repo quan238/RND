@@ -144,7 +144,7 @@ export default class ApplicationList extends Component {
                         rowData.user.id !=
                         JSON.parse(localStorage.getItem("user")).id ? (
                           rowData.status === "Pending" ? (
-                            <>
+                            <div className="row">
                               <Button
                                 onClick={this.onApprove(rowData)}
                                 variant="success"
@@ -161,7 +161,7 @@ export default class ApplicationList extends Component {
                               >
                                 <i className="fas fa-trash"></i>Reject
                               </Button>
-                            </>
+                            </div>
                           ) : null
                         ) : null,
                     },

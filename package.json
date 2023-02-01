@@ -17,6 +17,7 @@
   "author": "quantran2381",
   "license": "ISC",
   "dependencies": {
+    "@unicef/material-ui-currency-textfield": "^0.8.6",
     "bcrypt": "^5.0.0",
     "concurrently": "^3.6.1",
     "cookie-parser": "~1.4.4",

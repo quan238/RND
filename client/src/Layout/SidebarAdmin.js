@@ -157,6 +157,12 @@ class SidebarAdmin extends Component {
                       <p>{this.props.t("sidebar.payroll.payment")}</p>
                     </NavLink>
                   </li>
+                  <li className="nav-item">
+                    <NavLink to="/payment-history" className="nav-link">
+                      <i className="fas  fa-money-bill-wave-alt nav-icon" />
+                      <p>{this.props.t("sidebar.payroll.history")}</p>
+                    </NavLink>
+                  </li>
                 </ul>
               </li>
               <li className="nav-item has-treeview">
