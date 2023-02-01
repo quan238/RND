@@ -50,6 +50,27 @@ export default function PaymentHistory() {
       });
   }, []);
 
+  const handleDownloadPdf = (id) => {
+    axios({
+      method: "post",
+      url: `api/payments/${id}/download`,
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
+      .then((res) => {
+        console.log(res.data);
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "file.pdf");
+        document.body.appendChild(link);
+        link.click();
+        window.scrollTo(0, 0);
+      })
+      .catch((err) => {
+        window.scrollTo(0, 0);
+      });
+  };
+
   return (
     <div className="pt-5 pb-5">
       <Card className="main-card">
@@ -111,7 +132,12 @@ export default function PaymentHistory() {
                     title: "Action",
                     render: (rowData) => (
                       <>
-                        <Button size="sm" variant="info" className="mr-2">
+                        <Button
+                          size="sm"
+                          variant="info"
+                          className="mr-2"
+                          onClick={() => handleDownloadPdf(rowData.id)}
+                        >
                           <i className="fa fa-download"></i> Download PDF
                         </Button>
                       </>

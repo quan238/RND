@@ -1,12 +1,20 @@
 const db = require("../models");
 const { user } = require("../models");
+const {
+  handlePayslipData,
+  getPayslipTemplateData,
+} = require("../utils/payslip");
 const Payment = db.payment;
 const User = db.user;
 const Job = db.job;
 const UserFinancialInfo = db.userFinancialInfo;
+const UserPersonalInfo = db.userPersonalInfo;
+const Department = db.department;
 const Op = db.Sequelize.Op;
 const sequelize = db.sequelize;
-
+const fs = require("fs");
+const path = require("path");
+const { PDFDocument, TextAlignment } = require("pdf-lib");
 // Create and Save a new Payment
 exports.create = (req, res) => {
   // Validate request
@@ -41,6 +49,69 @@ exports.create = (req, res) => {
     });
 };
 
+exports.downloadFile = async (req, res) => {
+  const id = req.params.id;
+  const payment = await Payment.findOne({
+    where: { id: id },
+    raw: true,
+    nest: true,
+    include: [
+      {
+        model: User,
+        include: [
+          {
+            model: UserPersonalInfo,
+          },
+          {
+            model: UserFinancialInfo,
+          },
+          {
+            model: Department,
+          },
+          {
+            model: Job,
+          },
+        ],
+      },
+    ],
+  });
+
+  if (!payment) {
+    res.status(500).send({
+      message: "Not found payment " + id,
+    });
+    return;
+  }
+
+  const payslipTemplate = getPayslipTemplateData(payment);
+
+  const readStream = await fs.readFileSync(
+    path.resolve("./template/template_payslip.pdf")
+  );
+  const pdfDoc = await PDFDocument.load(readStream);
+
+  const form = pdfDoc.getForm();
+  const fields = pdfDoc
+    .getForm()
+    .getFields()
+    .map((t) => t.getName());
+
+  const payslipForm = handlePayslipData(payslipTemplate);
+  for (const item of fields) {
+    form.getTextField(item).setText(payslipForm[item]);
+    form.getTextField(item).setAlignment(TextAlignment.Right);
+    form.getTextField(item).setFontSize(8);
+  }
+
+  form.flatten();
+
+  const buffer = await pdfDoc.save();
+
+  res.setHeader("Content-Type", "text/plain");
+  res.setHeader("Content-Disposition", 'attachment; filename="payslip.pdf"');
+  res.send(Buffer.from(buffer));
+};
+
 // Retrieve all Payments from the database.
 exports.findAll = (req, res) => {
   Payment.findAll({
@@ -50,6 +121,15 @@ exports.findAll = (req, res) => {
         include: [
           {
             model: UserFinancialInfo,
+          },
+          {
+            model: UserPersonalInfo,
+          },
+          {
+            model: Department,
+          },
+          {
+            model: Job,
           },
         ],
       },
