@@ -101,7 +101,7 @@ export default class Expense extends Component {
             </Alert>
           ) : null}
 
-          <div className="col-sm-12">
+          <div className="col-sm-12 pt-5">
             <Card className="main-card">
               <Card.Header>Add Expense</Card.Header>
               <Card.Body>

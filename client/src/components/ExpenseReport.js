@@ -8,6 +8,7 @@ import axios from "axios";
 import moment from "moment";
 import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { formatVNDCurrency } from "../utils";
 
 export default class ExpenseReport extends Component {
   constructor(props) {
@@ -31,32 +32,26 @@ export default class ExpenseReport extends Component {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  onSubmit = (event) => {
-    event.preventDefault();
 
     axios({
       method: "get",
       url: "api/expenses",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }).then((res) => {
-      console.log(res);
-      let data = res.data;
-      let expenses = [];
-      data.map((expense) => {
-        if (
-          new Date(expense.date).getMonth() ==
-            new Date(this.state.selectedDate).getMonth() &&
-          new Date(expense.date).getFullYear() ==
-            new Date(this.state.selectedDate).getFullYear()
-        ) {
-          expenses.push(expense);
-        }
-      });
+      let expenses = res.data;
+      // data.map((expense) => {
+      //   if (
+      //     new Date(expense.date).getMonth() ==
+      //       new Date(this.state.selectedDate).getMonth() &&
+      //     new Date(expense.date).getFullYear() ==
+      //       new Date(this.state.selectedDate).getFullYear()
+      //   ) {
+      //     expenses.push(expense);
+      //   }
+      // });
       this.setState({ expenses: expenses });
     });
-  };
+  }
 
   render() {
     const theme = createMuiTheme({
@@ -87,7 +82,7 @@ export default class ExpenseReport extends Component {
     return (
       <div className="container-fluid pt-4">
         <div className="row">
-          <div className="col-sm-3">
+          {/* <div className="col-sm-3">
             <Card className="secondary-card">
               <Card.Header>Select Date</Card.Header>
               <Card.Body>
@@ -121,27 +116,25 @@ export default class ExpenseReport extends Component {
                 </Button>
               </div>
             </div>
-          </div>
-          <div className="col-sm-9">
+          </div> */}
+          <div className="col-sm-12">
             <Card>
-              <Card.Header
-                style={{ backgroundColor: "#515e73", color: "white" }}
-              >
-                <div className="panel-title">
-                  <strong>Expenses</strong>
-                </div>
-              </Card.Header>
               <Card.Body>
                 <ThemeProvider theme={theme}>
                   <MaterialTable
                     columns={[
                       { title: "ID", field: "id" },
                       { title: "Item Name", field: "expenseItemName" },
-                      { title: "Purchased From", field: "expenseItemStore" },
+                      {
+                        title: "Purchased From",
+                        field: "expenseItemStore",
+                        render: (rowData) =>
+                          moment(rowData.date).format("DD/MM/YYYY"),
+                      },
                       {
                         title: "Purchase Date",
                         render: (rowData) =>
-                          moment(rowData.date).format("DD MMM,YYYY"),
+                          moment(rowData.date).format("DD/MM/YYYY"),
                       },
                       {
                         title: "Department",
@@ -149,7 +142,7 @@ export default class ExpenseReport extends Component {
                       },
                       {
                         title: "Amount",
-                        render: (rowData) => "€ " + rowData.amount,
+                        render: (rowData) => formatVNDCurrency(rowData.amount),
                       },
                       { accessor: "cash", footer: "Total:" + 1 },
                     ]}
@@ -163,7 +156,7 @@ export default class ExpenseReport extends Component {
                       pageSize: 10,
                       pageSizeOptions: [10, 20, 30, 50, 75, 100],
                     }}
-                    title="Expense Report"
+                    title={<h4>Expense Report</h4>}
                   />
                 </ThemeProvider>
               </Card.Body>
