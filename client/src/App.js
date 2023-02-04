@@ -44,7 +44,6 @@ import withAuth from "./withAuth";
 import Login from "./components/Login";
 import JobList from "./components/JobList";
 import JobListManager from "./components/manager/JobList";
-import { NotFound } from "./components/NotFound";
 import Background from "./background.jpeg";
 import PaymentHistory from "./components/PaymentHistory";
 

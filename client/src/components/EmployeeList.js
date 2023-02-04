@@ -108,23 +108,41 @@ export default class EmployeeList extends Component {
               <ThemeProvider theme={theme}>
                 <MaterialTable
                   columns={[
-                    { title: "EMP ID", field: "id" },
-                    { title: "Full Name", field: "fullName" },
-                    { title: "Department", field: "department.departmentName" },
+                    { title: "EMP ID", field: "id", width: 150 },
+                    { title: "Full Name", field: "fullName", width: 150 },
+                    {
+                      title: "Department",
+                      field: "department.departmentName",
+                      render: (rowData) =>
+                        rowData.department?.departmentName
+                          ? rowData.department?.departmentName
+                          : "N/A",
+                    },
                     {
                       title: "Job Title",
                       field: "jobs",
                       render: (rowData) =>
-                        rowData.jobs.map((job, index) => {
-                          if (
-                            new Date(job.startDate).setHours(0) <= Date.now() &&
-                            new Date(job.endDate).setHours(24) >= Date.now()
-                          ) {
-                            return job.jobTitle;
-                          }
-                        }),
+                        rowData.jobs[0]?.jobTitle
+                          ? rowData.jobs[0]?.jobTitle
+                          : "N/A",
                     },
-                    { title: "Mobile", field: "user_personal_info.mobile" },
+                    {
+                      title: "Mobile",
+                      field: "user_personal_info.mobile",
+                      render: (rowData) =>
+                        rowData.user_personal_info?.mobile
+                          ? rowData.user_personal_info?.mobile
+                          : "N/A",
+                    },
+                    {
+                      title: "Gender",
+                      field: "user_personal_info.gender",
+                      render: (rowData) =>
+                        rowData.user_personal_info?.gender
+                          ? rowData.user_personal_info?.gender
+                          : "N/A",
+                      lookup: { Male: "Male", Female: "Female" },
+                    },
                     {
                       title: "Status",
                       field: "active",
@@ -138,6 +156,8 @@ export default class EmployeeList extends Component {
                             Inactive
                           </Badge>
                         ),
+                      export: false,
+                      lookup: { true: "Active", false: "Inactive" },
                     },
                     {
                       title: "View",
@@ -152,6 +172,7 @@ export default class EmployeeList extends Component {
                           </Button>
                         </Form>
                       ),
+                      export: false,
                     },
                     {
                       title: "Action",
@@ -180,6 +201,7 @@ export default class EmployeeList extends Component {
                           )}
                         </>
                       ),
+                      export: false,
                     },
                   ]}
                   data={this.state.users}
@@ -191,6 +213,8 @@ export default class EmployeeList extends Component {
                     },
                     pageSize: 10,
                     pageSizeOptions: [10, 20, 30, 50, 75, 100],
+                    exportButton: true,
+                    filtering: true,
                   }}
                   title={<h4 className="pl-0">Employee List</h4>}
                 />
