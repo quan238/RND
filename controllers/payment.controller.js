@@ -203,20 +203,24 @@ exports.findOne = (req, res) => {
 
 exports.findAllByUser = (req, res) => {
   const id = req.params.id;
-
+  console.log("123123123", id);
   Payment.findAll({
+    where: { userId: id },
     include: [
       {
-        model: Job,
-        where: { userId: id },
+        model: User,
         include: [
           {
-            model: User,
-            include: [
-              {
-                model: UserFinancialInfo,
-              },
-            ],
+            model: UserFinancialInfo,
+          },
+          {
+            model: UserPersonalInfo,
+          },
+          {
+            model: Department,
+          },
+          {
+            model: Job,
           },
         ],
       },

@@ -4,9 +4,9 @@ import moment from "moment";
 import React, { useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import axios from "axios";
-import { formatCurrency, formatVNDCurrency } from "../utils";
+import { formatVNDCurrency } from "../../utils";
 
-export default function PaymentHistory({ id }) {
+export default function PaymentEmployeeHistory({ id }) {
   const [payments, setPayments] = React.useState([]);
 
   const theme = createMuiTheme({
@@ -37,7 +37,7 @@ export default function PaymentHistory({ id }) {
   useEffect(() => {
     axios({
       method: "get",
-      url: "api/payments",
+      url: "api/payments/user/" + id,
 
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     })
@@ -79,7 +79,6 @@ export default function PaymentHistory({ id }) {
             <ThemeProvider theme={theme}>
               <MaterialTable
                 columns={[
-                  { title: "Full Name", field: "user.fullName" },
                   {
                     title: "Payment Month",
                     render: (rowData) =>

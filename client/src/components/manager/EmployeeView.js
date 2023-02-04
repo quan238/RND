@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
+import PaymentHistory from "../PaymentHistory";
+import PaymentEmployeeHistory from "../employee-detail/PaymentEmployeeHistory";
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -426,7 +428,7 @@ export default class EmployeeView extends Component {
                   </Card>
                 </TabPanel>
                 <TabPanel value={this.state.tab} index={2}>
-                  Item Two
+                  <PaymentEmployeeHistory />
                 </TabPanel>
                 <TabPanel value={this.state.tab} index={3}>
                   Item Three
