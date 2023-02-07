@@ -73,25 +73,41 @@ export default class RecentAnnouncements extends React.Component {
         <ul>
           {this.state.recentAnnouncements.map((announcement) => (
             <li
-              style={{ listStyle: "none" }}
+              style={{
+                listStyle: "none",
+                display: "flex",
+                alignItems: "center",
+              }}
               key={announcement.id}
-              className="mb-2 mt-1"
+              className="mb-2 mt-1 ml-2 mr-2"
             >
-              <div className="float-left mr-2">
-                <time datetime="2014-09-20" className="icon p-0">
-                  <em>{days[new Date(announcement.createdAt).getDay()]}</em>
-                  <strong>
+              <div class="calendar">
+                <div class="calendar-body">
+                  <span class="month-name">
                     {monthNames[new Date(announcement.createdAt).getMonth()]}
-                  </strong>
-                  <span>{new Date(announcement.createdAt).getDate()}</span>
-                </time>
+                  </span>
+                  <span class="day-name">
+                    {days[new Date(announcement.createdAt).getDay()]}
+                  </span>
+                  <span class="date-number">
+                    {new Date(announcement.createdAt).getDate()}
+                  </span>
+                  <span class="year">
+                    {new Date(announcement.createdAt).getFullYear()}
+                  </span>
+                  <span className="mb-2">
+                    <strong>{announcement.announcementTitle}</strong>(
+                    {announcement.department?.departmentName})
+                  </span>
+                </div>
               </div>
-              <span>
-                <strong>{announcement.announcementTitle}</strong>
+              {/* <span>
+                <strong>{announcement.announcementTitle}</strong> (
+                {announcement.department?.departmentName})
               </span>
               <br className="p-1" />
               <small>{announcement.announcementDescription}</small>
-              <hr className=" pt-2 pb-1 mb-0" />
+              <hr className=" pt-2 pb-1 mb-0" /> */}
             </li>
           ))}
         </ul>

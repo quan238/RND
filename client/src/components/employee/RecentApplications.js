@@ -1,5 +1,8 @@
 import * as React from "react";
 import axios from "axios";
+import moment from "moment";
+import { stringToColor } from "../../utils";
+import { Avatar, Chip } from "@mui/material";
 
 export default class RecentApplications extends React.Component {
   _isMounted = false;
@@ -42,16 +45,26 @@ export default class RecentApplications extends React.Component {
               <li
                 style={{ listStyle: "none", height: "50px" }}
                 key={app.id}
-                className="mt-1 mb-2"
+                className="mt-1 mb-2 flex w-100 pl-2 hover"
               >
-                <h5>
-                  <div className="float-left mr-1">
+                <Avatar sx={{ bgcolor: stringToColor(app.user.fullName) }}>
+                  {app.user.fullName[0]}
+                </Avatar>
+                <div className="mb-0 ml-3 flex space-between w-100">
+                  {/* <div className="float-left mr-1">
                     <img src={process.env.PUBLIC_URL + "/user-40.png"}></img>
+                  </div> */}
+                  <div className="w-100">
+                    <div className="flex w-100">
+                      <h5 className="mb-0">{app.user.fullName} </h5>
+                    </div>
+                    <div>
+                      {moment(app.startDate).format("DD/MM/YYYY")} -{" "}
+                      <span className="mb-0">{app.type}</span>
+                    </div>
                   </div>
-                  <span>{app.user.fullName} </span>
-                  <small>({app.type})</small>
-                  <div className="float-right mt-2 mr-3">
-                    <small
+                  <div className="float-right mr-3">
+                    <Chip
                       style={{
                         color:
                           app.status === "Approved"
@@ -60,13 +73,12 @@ export default class RecentApplications extends React.Component {
                             ? "red"
                             : "orange",
                       }}
-                    >
-                      {app.status}
-                    </small>
+                      variant="outlined"
+                      label={app.status}
+                    ></Chip>
                   </div>
                   <p></p>
-                </h5>
-                <hr className="mt-2 mb-2" />
+                </div>
               </li>
             ))}
           </ul>

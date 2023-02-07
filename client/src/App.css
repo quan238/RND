@@ -580,3 +580,9 @@ button:focus {
   content: "";
   background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
 }
+
+dl,
+ol,
+ul {
+  padding-left: 0.5rem !important;
+}

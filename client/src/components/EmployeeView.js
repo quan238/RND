@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Row, Col, Form, Button } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
@@ -16,7 +16,6 @@ import {
 import { Box } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
 import createHistory from "history/createBrowserHistory";
-import PaymentHistory from "./PaymentHistory";
 import PaymentEmployeeHistory from "./employee-detail/PaymentEmployeeHistory";
 
 export function TabPanel(props) {

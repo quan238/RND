@@ -27,14 +27,14 @@ export default class Dashboard extends Component {
         {/* Second Row with Calendar and Expense Report */}
         <div className="row pt-4">
           {/* Calendar */}
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <EmployeeViewDashboard />
-            <div className="panel panel-default">
+            {/* <div className="panel panel-default">
               <RecentAnnouncements />
-            </div>
+            </div> */}
           </div>
           {/* Expense Report & Recent Applications */}
-          <div className="col-md-6">
+          <div className="col-md-4">
             {/* <div className="panel panel-default">
               <div className="panel-heading with-border" style={{ "backgroundColor": "#515e73", color: "white" }}>
                 <h3 className="panel-title">My Recent Applications</h3>

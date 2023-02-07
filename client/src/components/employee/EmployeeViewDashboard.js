@@ -1,9 +1,22 @@
 import React, { Component } from "react";
-import { Card, Row, Col, Form } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { Card } from "react-bootstrap";
 import axios from "axios";
 import moment from "moment";
+import {
+  Avatar,
+  CardContent,
+  CardMedia,
+  Chip,
+  TextField,
+  Typography,
+} from "@mui/material";
+import Box from "@mui/material/Box";
 
+import IconButton from "@mui/material/IconButton";
+
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import WelcomeImage from "./welcome.png";
+import RecentAnnouncements from "../RecentAnnouncementsManagerEmp";
 export default class EmployeeViewEmployee extends Component {
   constructor(props) {
     super(props);
@@ -80,158 +93,94 @@ export default class EmployeeViewEmployee extends Component {
 
   render() {
     return (
-      <Card>
-        <Card.Body>
-          <Card.Title>
-            <strong style={{ fontSize: 20 }}>My Profile</strong>
-          </Card.Title>
-          <Card.Text>
-            <Col lg={12}>
-              <Row className="pt-4">
-                <Col lg={3}>
-                  <img
-                    className="img-circle elevation-1 bp-2"
-                    src={process.env.PUBLIC_URL + "/user-128.png"}
-                  ></img>
-                </Col>
-                <Col className="pt-4" lg={9}>
-                  <div className="emp-view-list">
-                    <ul>
-                      <li>
-                        <span>Full Name: </span> {this.state.user.fullName}
-                      </li>
-                      <li>
-                        <span>Employee ID: </span> {this.state.user.id}
-                      </li>
-                      <li>
-                        <span>Department: </span>{" "}
-                        {this.state.department.departmentName}
-                      </li>
-                      <li>
-                        <span>Job Title: </span> {this.state.job.jobTitle}
-                      </li>
-                      <li>
-                        <span>Role: </span>
-                        {this.state.user.role === "ROLE_ADMIN"
-                          ? "Admin"
-                          : this.state.user.role === "ROLE_MANAGER"
-                          ? "Manager"
-                          : "Employee"}
-                      </li>
-                    </ul>
+      <>
+        {" "}
+        <Card
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            height: "15rem",
+          }}
+        >
+          <Box style={{ display: "flex", flexDirection: "row" }}>
+            <CardContent sx={{ flex: "1 0 auto" }} style={{ padding: 35 }}>
+              <div style={{ width: "45%" }}>
+                <h3 component="div" variant="h5">
+                  <strong>Welcome {this.state.user.fullName}</strong>
+                </h3>
+                <Typography
+                  variant="subtitle1"
+                  color="text.secondary"
+                  component="div"
+                  // width={"50rem"}
+                >
+                  Manage all the things from single dashboard HRMS, Payroll,
+                  Leave, Attendance, Recruitment, Performance, Training, and
+                  much more.
+                </Typography>
+              </div>
+            </CardContent>
+          </Box>
+          <CardMedia
+            component="img"
+            sx={{ width: 300 }}
+            image={WelcomeImage}
+            alt="Live from space album cover"
+          />
+        </Card>
+        <div className="row">
+          <div className="col-6">
+            <Card sx={{ maxWidth: 200 }} className="border-radius-default">
+              <div className="flex-column flex-align-center w-100 pt-3">
+                <Avatar
+                  sx={{ width: 100, height: 100 }}
+                  src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/48014adb-982c-4a5c-ae09-a1afab53f3f3/ddrg6q2-92393626-c353-43db-9c70-85d869dd58d9.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ4MDE0YWRiLTk4MmMtNGE1Yy1hZTA5LWExYWZhYjUzZjNmM1wvZGRyZzZxMi05MjM5MzYyNi1jMzUzLTQzZGItOWM3MC04NWQ4NjlkZDU4ZDkucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Vn1TEvEpOgKhNWdIPLDTOtLo-feiJ-mh-kYr1VfJFQY"
+                />
+                <CardContent className="w-100">
+                  <div className="flex-column flex-align-center">
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      style={{ fontWeight: 500 }}
+                      component="div"
+                      className="text-center"
+                    >
+                      {this.state.user.fullName}
+                    </Typography>
+                    <Chip
+                      label="Employee"
+                      color="primary"
+                      variant="outlined"
+                      className="text-center"
+                    />
                   </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={6}>
-                  <Card className="secondary-card emp-view">
-                    <Card.Header>Personal Details</Card.Header>
-                    <Card.Body>
-                      <Card.Text id="emp-view-personal-dashboard">
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">
-                            Date of Birth:
-                          </Form.Label>
-                          <span>{this.state.userPersonalInfo.dateOfBirth}</span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">Gender:</Form.Label>
-                          <span>{this.state.userPersonalInfo.gender}</span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">
-                            Marital Status:
-                          </Form.Label>
-                          <span>
-                            {this.state.userPersonalInfo.maritalStatus}
-                          </span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">
-                            Father's Name:
-                          </Form.Label>
-                          <span>{this.state.userPersonalInfo.fatherName}</span>
-                        </Form.Group>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col sm={6}>
-                  <Card className="secondary-card emp-view">
-                    <Card.Header>Contact Details</Card.Header>
-                    <Card.Body>
-                      <Card.Text id="emp-view-contact-dashboard">
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">Location:</Form.Label>
-                          <span>
-                            {this.state.userPersonalInfo.country},{" "}
-                            {this.state.userPersonalInfo.city}
-                          </span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">Address:</Form.Label>
-                          <span>{this.state.userPersonalInfo.address}</span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">Mobile:</Form.Label>
-                          <span>
-                            {this.state.userPersonalInfo.mobile}{" "}
-                            {this.state.userPersonalInfo.phone
-                              ? " (" + this.state.userPersonalInfo.phone + ")"
-                              : null}
-                          </span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">
-                            Email Address:
-                          </Form.Label>
-                          <span>
-                            {this.state.userPersonalInfo.emailAddress}
-                          </span>
-                        </Form.Group>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col cm={6}>
-                  <Card className="secondary-card">
-                    <Card.Header>Bank Information</Card.Header>
-                    <Card.Body>
-                      <Card.Text id="emp-view-bank-dashboard">
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">Bank Name:</Form.Label>
-                          <span>{this.state.userFinancialInfo.bankName}</span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">
-                            Account Name:
-                          </Form.Label>
-                          <span>
-                            {this.state.userFinancialInfo.accountName}
-                          </span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">Mobile:</Form.Label>
-                          <span>
-                            {this.state.userFinancialInfo.accountNumber}
-                          </span>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                          <Form.Label className="label">IBAN:</Form.Label>
-                          <span>{this.state.userFinancialInfo.iban}</span>
-                        </Form.Group>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col sm={6}></Col>
-              </Row>
-            </Col>
-          </Card.Text>
-        </Card.Body>
-      </Card>
+                </CardContent>
+                <div
+                  className="flex-column flex-align-center w-100"
+                  style={{ fontSize: 16 }}
+                >
+                  <div className="flex-row flex-space-between w-100 px-5 pb-3">
+                    <strong>Employee No</strong>
+                    <span>{"No " + this.state.user.id}</span>
+                  </div>
+                  <div className="flex-row flex-space-between w-100 px-5 pb-3">
+                    <strong>Department Name</strong>
+                    <span>{this.state.department.departmentName}</span>
+                  </div>
+                  <div className="flex-row flex-space-between w-100 px-5 pb-3">
+                    <strong>Job</strong>
+                    <span>{this.state.job.jobTitle || "N/A"}</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+          <div className="col-6">
+            <RecentAnnouncements />
+          </div>
+        </div>
+      </>
     );
   }
 }
