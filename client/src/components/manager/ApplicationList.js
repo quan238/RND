@@ -128,6 +128,11 @@ export default class ApplicationList extends Component {
                     {
                       title: "Status",
                       field: "status",
+                      lookup: {
+                        Approved: "Approved",
+                        Pending: "Pending",
+                        Rejected: "Rejected",
+                      },
                       render: (rowData) => (
                         <Button
                           size="sm"
@@ -180,6 +185,8 @@ export default class ApplicationList extends Component {
                     },
                     pageSize: 10,
                     pageSizeOptions: [10, 20, 30, 50, 75, 100],
+                    exportButton: true,
+                    filtering: true,
                   }}
                   title={<h4>Applications List</h4>}
                 />

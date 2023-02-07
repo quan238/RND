@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Card, Row, Col, Form } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 

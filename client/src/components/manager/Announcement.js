@@ -108,12 +108,10 @@ export default class Announcement extends Component {
       <div className="container-fluid pt-2">
         {this.state.completed ? <Redirect to="/announcement" /> : null}
         <div className="row">
-          <div className="col-sm-12">
+          <div className="col-sm-6">
             <Card className="main-card">
-              <Card.Header>
-                <strong>Add Announcement</strong>
-              </Card.Header>
               <Card.Body>
+                <h4>Add Announcement</h4>
                 <Card.Text>
                   <Form onSubmit={this.onSubmit}>
                     <Form.Group>
@@ -148,11 +146,6 @@ export default class Announcement extends Component {
         <div className="row">
           <div className="col-sm-12">
             <Card className="main-card">
-              <Card.Header>
-                <div className="panel-title">
-                  <strong>Announcement List</strong>
-                </div>
-              </Card.Header>
               <Card.Body>
                 <ThemeProvider theme={theme}>
                   <MaterialTable
@@ -195,7 +188,7 @@ export default class Announcement extends Component {
                       pageSize: 7,
                       pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
                     }}
-                    title="Announcements"
+                    title={<h4>Announcement List</h4>}
                   />
                 </ThemeProvider>
               </Card.Body>

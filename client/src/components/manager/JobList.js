@@ -107,6 +107,8 @@ export default class JobList extends Component {
                       },
                       pageSize: 8,
                       pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
+                      exportButton: true,
+                      filtering: true,
                     }}
                     title={
                       this.selectedUser ? (

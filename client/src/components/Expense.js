@@ -103,8 +103,8 @@ export default class Expense extends Component {
 
           <div className="col-sm-12 pt-5">
             <Card className="main-card">
-              <Card.Header>Add Expense</Card.Header>
               <Card.Body>
+                <h4>Card Expense</h4>
                 <Card.Text>
                   <Form onSubmit={this.onSubmit}>
                     <Form.Group>

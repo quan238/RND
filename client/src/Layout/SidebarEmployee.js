@@ -62,7 +62,7 @@ class SidebarEmployee extends Component {
               </li>
               <li className="nav-item">
                 <NavLink exact to="/salary-view" className="nav-link">
-                  <i className="nav-icon fas fa-euro-sign" />
+                  <i className="nav-icon fas fa-user" />
                   <p>{this.props.t("sidebar.payroll.my-salary")}</p>
                 </NavLink>
               </li>

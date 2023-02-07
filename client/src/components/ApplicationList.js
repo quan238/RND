@@ -137,6 +137,11 @@ export default class ApplicationList extends Component {
                           {rowData.status}
                         </Button>
                       ),
+                      lookup: {
+                        Approved: "Approved",
+                        Pending: "Pending",
+                        Rejected: "Rejected",
+                      },
                     },
                     {
                       title: "Action",
@@ -175,6 +180,8 @@ export default class ApplicationList extends Component {
                     },
                     pageSize: 10,
                     pageSizeOptions: [10, 20, 30, 50, 75, 100],
+                    exportButton: true,
+                    filtering: true,
                   }}
                   title={<h4>Applications List</h4>}
                 />
