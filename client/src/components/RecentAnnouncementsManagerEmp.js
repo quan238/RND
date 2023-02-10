@@ -97,7 +97,7 @@ export default class RecentAnnouncements extends React.Component {
                   </span>
                   <span className="mb-2">
                     <strong>{announcement.announcementTitle}</strong>(
-                    {announcement.department?.departmentName})
+                    {/* {announcement.department?.departmentName}) */}
                   </span>
                 </div>
               </div>

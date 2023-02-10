@@ -1,33 +1,32 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
-import moment from 'moment'
-import axios from 'axios'
-import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css"
-
+import moment from "moment";
+import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default class ShowEventPopup extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        title: '',
-        description: '',
-        startDate: null,
-        endDate: null,
-        done: false
-    }
+      title: "",
+      description: "",
+      startDate: null,
+      endDate: null,
+      done: false,
+    };
   }
 
   componentDidMount() {
-     this.setState({
-        id: this.props.data.id,
-        title: this.props.data.title,
-        description: this.props.data.description,
-        startDate: this.props.data.start,
-        endDate: this.props.data.end
-    }) 
+    this.setState({
+      id: this.props.data.id,
+      title: this.props.data.title,
+      description: this.props.data.description,
+      startDate: this.props.data.start,
+      endDate: this.props.data.end,
+    });
   }
 
   handleChange = (event) => {
@@ -38,20 +37,19 @@ export default class ShowEventPopup extends Component {
   };
 
   deleteEvent = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     axios({
-        method: 'delete',
-        url: `/api/personalEvents/${this.state.id}`,
-        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-    })
-    .then(res => {
-        if(res.status !== 200) {
-            alert(res.data)
-        } else {
-            this.setState({done: true})
-        }
-    })
-  }
+      method: "delete",
+      url: `/api/personalEvents/${this.state.id}`,
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    }).then((res) => {
+      if (res.status !== 200) {
+        alert(res.data);
+      } else {
+        this.setState({ done: true });
+      }
+    });
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -69,7 +67,7 @@ export default class ShowEventPopup extends Component {
             ),
             eventEndDate: moment(this.state.endDate).format(
               "YYYY-MM-DD HH:mm:ss"
-            )
+            ),
           },
         },
         () => {
@@ -85,7 +83,7 @@ export default class ShowEventPopup extends Component {
               if (res.status !== 200) {
                 alert(res.data);
               } else {
-                this.setState({done: true})
+                this.setState({ done: true });
               }
             })
             .catch((err) => {
@@ -97,7 +95,7 @@ export default class ShowEventPopup extends Component {
   };
 
   render() {
-    const {showAlert, done} = this.state  
+    const { showAlert, done } = this.state;
     return (
       <Modal
         {...this.props}
@@ -111,85 +109,93 @@ export default class ShowEventPopup extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            {done ? <Redirect to="/" /> : <></>}
-            {showAlert ? (
-                <Alert variant="alert alert-warning" className="m-1">
-                    <Alert.Heading>Wrong End Date</Alert.Heading>
-                    <p>End Date should be after Start Date</p>
-                </Alert>) : (<></>)
-            }
-            <Form onSubmit={this.onSubmit}>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Title <span style={{ color: "red" }}>*</span></Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter a Title"
-                        className="col-6"
-                        name="title"
-                        value={this.state.title}
-                        onChange={this.handleChange}
-                        required
-                    />
-                </Form.Group>
+          {done ? <Redirect to="/" /> : <></>}
+          {showAlert ? (
+            <Alert variant="alert alert-warning" className="m-1">
+              <Alert.Heading>Wrong End Date</Alert.Heading>
+              <p>End Date should be after Start Date</p>
+            </Alert>
+          ) : (
+            <></>
+          )}
+          <Form onSubmit={this.onSubmit}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>
+                Title <span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter a Title"
+                className="col-6"
+                name="title"
+                value={this.state.title}
+                onChange={this.handleChange}
+                required
+              />
+            </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter a Description"
-                        className="col-6"
-                        name="description"
-                        value={this.state.description}
-                        onChange={this.handleChange}
-                    />
-                </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter a Description"
+                className="col-6"
+                name="description"
+                value={this.state.description}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
 
-                <Form.Group controlId="formStartDate mt-1">
-                    <Form.Label className="required">Start Date</Form.Label>
-                    <DatePicker
-                        selected={this.state.startDate}
-                        onChange={newStartDate => this.setState({ startDate: newStartDate })}
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        name="startDate"
-                        timeIntervals={30}
-                        timeCaption="time"
-                        dateFormat="yyyy-MM-dd HH:mm:ss"
-                        className="form-control ml-1"
-                        placeholderText="Select Start Date"
-                        autoComplete="off"
-                        required
-                    />
-                </Form.Group>
+            <Form.Group controlId="formStartDate mt-1">
+              <Form.Label className="required">Start Date</Form.Label>
+              <DatePicker
+                selected={this.state.startDate}
+                onChange={(newStartDate) =>
+                  this.setState({ startDate: newStartDate })
+                }
+                showTimeSelect
+                timeFormat="HH:mm"
+                name="startDate"
+                timeIntervals={30}
+                timeCaption="time"
+                dateFormat="yyyy-MM-dd HH:mm:ss"
+                className="form-control ml-1"
+                placeholderText="Select Start Date"
+                autoComplete="off"
+                required
+              />
+            </Form.Group>
 
-                <Form.Group controlId="formEndDate">
-                    <Form.Label>End Date</Form.Label>
-                    <DatePicker
-                        selected={this.state.endDate}
-                        onChange={newEndDate => this.setState({ endDate: newEndDate })}
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        name="endDate"
-                        timeIntervals={30}
-                        timeCaption="time"
-                        dateFormat="yyyy-MM-dd HH:mm:ss"
-                        className="form-control ml-3"
-                        placeholderText="Select End Date"
-                        autoComplete="off"
-                        required
-                    />
-                </Form.Group>
+            <Form.Group controlId="formEndDate">
+              <Form.Label>End Date</Form.Label>
+              <DatePicker
+                selected={this.state.endDate}
+                onChange={(newEndDate) =>
+                  this.setState({ endDate: newEndDate })
+                }
+                showTimeSelect
+                timeFormat="HH:mm"
+                name="endDate"
+                timeIntervals={30}
+                timeCaption="time"
+                dateFormat="yyyy-MM-dd HH:mm:ss"
+                className="form-control ml-3"
+                placeholderText="Select End Date"
+                autoComplete="off"
+                required
+              />
+            </Form.Group>
 
-                <Form.Text className="mb-3 required">Required Fields</Form.Text>
-                <Button variant="success" type="submit">
-                    Submit
+            <Form.Text className="mb-3 required">Required Fields</Form.Text>
+            <Button variant="success" type="submit">
+              Submit
             </Button>
-            </Form>
-            <Form onSubmit={this.deleteEvent}>
-                <Button variant="danger" type="submit" className="mt-2">
-                    Delete
-                </Button>
-            </Form>
+          </Form>
+          <Form onSubmit={this.deleteEvent}>
+            <Button variant="danger" type="submit" className="mt-2">
+              Delete
+            </Button>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.onHide}>Close</Button>
