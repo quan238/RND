@@ -128,10 +128,10 @@ export default class Announcement extends Component {
     });
 
     return (
-      <div className="container-fluid pt-2">
+      <div className="container-fluid pt-2 py-4">
         {this.state.completed ? <Redirect to="/announcement" /> : null}
-        <div className="row">
-          <div className="col-sm-12">
+        <div className="row ">
+          <div className="col-sm-12 ">
             <Card className="main-card">
               <Card.Body>
                 <h4>Add Announcement</h4>

@@ -5,6 +5,7 @@ import MaterialTable from "material-table";
 import axios from "axios";
 import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { formatVNDCurrency } from "../utils";
 
 export default class SalaryList extends Component {
   constructor(props) {
@@ -93,11 +94,40 @@ export default class SalaryList extends Component {
                 <MaterialTable
                   columns={[
                     { title: "EMP ID", field: "user.id" },
-                    { title: "Full Name", field: "user.fullName" },
-                    { title: "Gross Salary", field: "salaryGross" },
-                    { title: "Deductions", field: "deductionTotal" },
-                    { title: "Net Salary", field: "salaryNet" },
-                    { title: "Emp Type", field: "employmentType" },
+                    {
+                      title: "Full Name",
+                      field: "user.fullName",
+                    },
+                    {
+                      title: "Gross Salary",
+                      field: "salaryGross",
+                      render: (rowData) =>
+                        formatVNDCurrency(rowData.salaryGross),
+                      filtering: false,
+                    },
+                    {
+                      title: "Deductions",
+                      field: "deductionTotal",
+                      render: (rowData) =>
+                        formatVNDCurrency(rowData.deductionTotal),
+                      filtering: false,
+                    },
+                    {
+                      title: "Net Salary",
+                      field: "salaryNet",
+                      render: (rowData) => formatVNDCurrency(rowData.salaryNet),
+                      filtering: false,
+                    },
+                    {
+                      title: "Emp Type",
+                      field: "employmentType",
+                      render: (rowData) =>
+                        rowData.employmentType ? rowData.employmentType : "N/A",
+                      lookup: {
+                        "Full Time": "Full Time",
+                        "Part Time": "Part Time",
+                      },
+                    },
                     {
                       title: "View",
                       render: (rowData) => (

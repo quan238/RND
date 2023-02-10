@@ -46,8 +46,30 @@ export function calculateIncomeTax(salary) {
   return taxAmount;
 }
 
+export const CURRENCY = {
+  vietnam: { languageCode: "vi-VN", currency: "VND", symbol: "VNĐ" },
+  cambodia: { languageCode: "kh-KH", currency: "KHR", symbol: "USD" },
+  malaysia: { languageCode: "ms-MY", currency: "MYR", symbol: "MYR" },
+};
+
 export function formatVNDCurrency(amount) {
-  return amount.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
+  const currency = CURRENCY["vietnam"];
+
+  const style = currency.symbol ? "decimal" : "currency";
+
+  const fNumber = currency
+    ? new Intl.NumberFormat(currency.languageCode, {
+        style,
+
+        currency: currency.currency,
+      }).format(amount)
+    : new Intl.NumberFormat("vi-VN", {
+        style,
+
+        currency: "VND",
+      }).format(amount);
+
+  return !currency.symbol ? fNumber : `${fNumber} ${currency.symbol}`;
 }
 
 export function formatCurrency(amount) {

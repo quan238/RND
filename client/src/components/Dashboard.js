@@ -9,6 +9,7 @@ import RecentApplciations from "./RecentApplications";
 import RecentAnnouncements from "./RecentAnnouncements";
 import axios from "axios";
 import { withTranslation } from "react-i18next";
+import { formatVNDCurrency } from "../utils";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class Dashboard extends Component {
     //Fetch Expenses Total
     axios({
       method: "get",
-      url: "/api/expenses/year/2022",
+      url: "/api/expenses/year/2023",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }).then((res) => {
       let array = res.data;
@@ -53,7 +54,7 @@ class Dashboard extends Component {
     //Fetch Payments Total
     axios({
       method: "get",
-      url: "api/payments/year/2022",
+      url: "api/payments/year/2023",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }).then((res) => {
       let array = res.data;
@@ -84,7 +85,7 @@ class Dashboard extends Component {
           <div className="col-md-4 col-sm-6 col-xs-12">
             <Infobox
               title={this.props.t("expenses.total")}
-              description={this.state.totalExpenses + " VNĐ"}
+              description={formatVNDCurrency(this.state.totalExpenses)}
               color="bg-warning"
               icon="fa fa-shopping-cart"
             />
@@ -93,7 +94,7 @@ class Dashboard extends Component {
           <div className="col-md-4 col-sm-6 col-xs-12">
             <Infobox
               title={this.props.t("payments.total")}
-              description={this.state.totalPayments + " VNĐ"}
+              description={formatVNDCurrency(this.state.totalPayments)}
               color="bg-danger"
               icon="fa fa-money-check"
             />

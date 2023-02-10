@@ -65,7 +65,7 @@ exports.getPayslipTemplateData = (payslipInformation) => {
   const salaryBasic = user_financial_info.salaryBasic;
   console.log("user_financial_info", user_financial_info);
   return {
-    payrollCycle: "October 2022",
+    payrollCycle: "October 2023",
     companyName: "SAS Company",
     employeeFullName: removeAccents(fullName),
     employeeCode: "EMP" + id,
