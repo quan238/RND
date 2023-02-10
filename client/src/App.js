@@ -181,11 +181,11 @@ const ManagerContainer = () => (
         />
         <Route exact path="/application" component={withAuth(Application)} />
         <Route exact path="/expense" component={withAuth(ExpenseManager)} />
-        <Route
+        {/* <Route
           exact
           path="/salary-view"
-          component={withAuth(SalaryViewManager)}
-        />
+          component={withAuth(SalaryViewEmployee)}
+        /> */}
         <Route
           exact
           path="/expense-report"

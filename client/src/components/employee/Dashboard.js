@@ -32,6 +32,7 @@ export default class Dashboard extends Component {
             {/* <div className="panel panel-default">
               <RecentAnnouncements />
             </div> */}
+            <RecentApplciations />
           </div>
           {/* Expense Report & Recent Applications */}
           <div className="col-md-4">
@@ -42,9 +43,7 @@ export default class Dashboard extends Component {
               <RecentApplciations />
             </div> */}
             <Calendar />
-            <div className="panel panel-default">
-              <RecentApplciations />
-            </div>
+            <div className="panel panel-default"></div>
           </div>
         </div>
       </div>

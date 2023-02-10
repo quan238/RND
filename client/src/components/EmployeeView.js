@@ -159,7 +159,7 @@ export default class EmployeeView extends Component {
               <Grid item md={3}>
                 <Card sx={{ maxWidth: 200 }} className="border-radius-default">
                   <AvatarEmployee
-                    userId={JSON.parse(localStorage.getItem("user")).id}
+                    userId={this.props.location.state.selectedUser.id}
                     edit={false}
                     view={true}
                   />

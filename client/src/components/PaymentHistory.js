@@ -152,6 +152,8 @@ export default function PaymentHistory({ id }) {
                     }
                   },
                   pageSize: 10,
+                  filtering: true,
+                  exportButton: true,
                   pageSizeOptions: [10, 20, 30, 50, 75, 100],
                 }}
                 title={<h4>Payment History</h4>}

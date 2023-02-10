@@ -3,6 +3,7 @@ import { loadTree } from "../menuTreeHelper";
 import { NavLink } from "react-router-dom";
 import { MAP_ROLE } from "./utils";
 import { withTranslation } from "react-i18next";
+import { AvatarEmployeeIcon } from "../components/AvatarEmployeeIcon";
 
 class SidebarManager extends Component {
   constructor(props) {
@@ -31,10 +32,8 @@ class SidebarManager extends Component {
           {/* Sidebar user panel (optional) */}
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
-              <img
-                src={process.env.PUBLIC_URL + "/user-64.png"}
-                className="img-circle elevation-2"
-                alt="User Image"
+              <AvatarEmployeeIcon
+                userId={JSON.parse(localStorage.getItem("user")).id}
               />
             </div>
             <div className="info">
@@ -74,7 +73,7 @@ class SidebarManager extends Component {
               </li>
               <li className="nav-item has-treeview">
                 <NavLink
-                  to="/fake-url"
+                  to="/application-list"
                   className="nav-link"
                   activeClassName="nav-link"
                 >
@@ -101,7 +100,7 @@ class SidebarManager extends Component {
               </li>
               <li className="nav-item has-treeview">
                 <NavLink
-                  to="/fake-url"
+                  to="/expense-report"
                   className="nav-link"
                   activeClassName="nav-link"
                 >

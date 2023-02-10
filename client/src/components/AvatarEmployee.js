@@ -98,6 +98,16 @@ export const AvatarEmployee = ({ userId, edit = true, view = false }) => {
     }
   }
 
+  const handlePreview = () => {
+    if (preview) {
+      if (!edit || !view) return preview;
+
+      return "https://www.w3schools.com/w3images/avatar2.png";
+    }
+
+    return `https://www.w3schools.com/w3images/avatar2.png`;
+  };
+
   return (
     <>
       <CardMedia
@@ -106,11 +116,7 @@ export const AvatarEmployee = ({ userId, edit = true, view = false }) => {
           borderTopRightRadius: "2%",
         }}
         sx={{ height: 300 }}
-        image={
-          !preview && !(edit || view)
-            ? `https://www.w3schools.com/w3images/avatar2.png`
-            : preview
-        }
+        image={handlePreview()}
         title="green iguana"
         loading="lazy"
       />

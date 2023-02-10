@@ -17,6 +17,7 @@ import { Box } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
 import PaymentHistory from "../PaymentHistory";
 import PaymentEmployeeHistory from "../employee-detail/PaymentEmployeeHistory";
+import { AvatarEmployee } from "../AvatarEmployee";
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -144,14 +145,10 @@ export default class EmployeeView extends Component {
             <Grid container spacing={2}>
               <Grid item md={3}>
                 <Card sx={{ maxWidth: 200 }} className="border-radius-default">
-                  <CardMedia
-                    style={{
-                      borderTopLeftRadius: "2%",
-                      borderTopRightRadius: "2%",
-                    }}
-                    sx={{ height: 300 }}
-                    image="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/48014adb-982c-4a5c-ae09-a1afab53f3f3/ddrg6q2-92393626-c353-43db-9c70-85d869dd58d9.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ4MDE0YWRiLTk4MmMtNGE1Yy1hZTA5LWExYWZhYjUzZjNmM1wvZGRyZzZxMi05MjM5MzYyNi1jMzUzLTQzZGItOWM3MC04NWQ4NjlkZDU4ZDkucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Vn1TEvEpOgKhNWdIPLDTOtLo-feiJ-mh-kYr1VfJFQY"
-                    title="green iguana"
+                  <AvatarEmployee
+                    userId={this.props.location.state.selectedUser.id}
+                    edit={false}
+                    view={true}
                   />
                   <CardContent>
                     <div className="flex-column flex-align-center">

@@ -152,14 +152,14 @@ export default class EmployeeList extends Component {
                           >
                             <i className="far fa-address-card"></i>
                           </Button>
-                          <Button
+                          {/* <Button
                             className="ml-2"
                             size="sm"
                             variant="info"
                             onClick={this.onSalaryView(rowData)}
                           >
                             <i className="fas fa-euro-sign"></i>
-                          </Button>
+                          </Button> */}
                         </Form>
                       ),
                     },

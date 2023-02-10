@@ -167,7 +167,7 @@ class SidebarAdmin extends Component {
               </li>
               <li className="nav-item has-treeview">
                 <NavLink
-                  to="/fake-url"
+                  to="/expense-report"
                   className="nav-link"
                   activeClassName="nav-link"
                 >
