@@ -10,6 +10,7 @@ var path = require("path");
 
 const bcrypt = require("bcrypt");
 const upload = require("../upload");
+const { sendMailChangePassword } = require("../send-email");
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -234,33 +235,55 @@ exports.changePassword = (req, res) => {
 
   User.findOne({
     where: { id: id },
-  }).then((user) => {
+    nest: true,
+    raw: true,
+    include: [
+      {
+        model: UserPersonalInfo,
+      },
+    ],
+  }).then(async (user) => {
     if (user) {
+      console.log(user);
+      const email = user?.user_personal_info?.emailAddress;
+      if (!email) {
+        res.status(400).send({
+          message: "You need to setup email in your account",
+        });
+        return;
+      }
+
       if (bcrypt.compareSync(req.body.oldPassword, user.password)) {
         let hash = bcrypt.hashSync(req.body.newPassword, 10);
         console.log("hash", hash);
         let data = {
           password: hash,
         };
-        User.update(data, {
-          where: { id: id },
-        })
-          .then((num) => {
-            if (num == 1) {
-              res.send({
-                message: "User was updated successfully.",
-              });
-            } else {
-              res.send({
-                message: `Cannot update User with id=${id}. Maybe Organization was not found or req.body is empty!`,
-              });
-            }
+        await Promise.all([
+          User.update(data, {
+            where: { id: id },
           })
-          .catch((err) => {
-            res.status(500).send({
-              message: "Error updating User with id=" + id,
-            });
-          });
+            .then(async (num) => {
+              if (num == 1) {
+                res.status(200).send({
+                  message: "User was updated successfully.",
+                });
+              } else {
+                res.send({
+                  message: `Cannot update User with id=${id}. Maybe Organization was not found or req.body is empty!`,
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(500).send({
+                message: "Error updating User with id=" + id,
+              });
+            }),
+          sendMailChangePassword(email, "Change Password", {
+            name: user.fullName,
+          }),
+        ]);
       } else {
         res.status(400).send({
           message: "Wrong Password",

@@ -5,6 +5,7 @@ import moment from "moment";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { toast } from "react-toastify";
 
 export default class NewPasswordModal extends Component {
   constructor(props) {
@@ -45,10 +46,15 @@ export default class NewPasswordModal extends Component {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
         .then((res) => {
+          toast.success("Change password successfully", {
+            position: toast.POSITION.TOP_CENTER,
+          });
           this.setState({ completed: true, showAlert: false, hasError: false });
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err.response.data.message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
           this.setState({ hasError: true, errMsg: err.response.data.message });
         });
     }
