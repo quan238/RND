@@ -24,6 +24,10 @@ router.get(
   user.findTotal
 );
 
+router.post("/:id/upload-avatar", withAuth.verifyToken, user.uploadAvatar);
+
+router.get("/:id/avatar", withAuth.verifyToken, user.getAvatar);
+
 router.get(
   "/total/department/:id",
   withAuth.verifyToken,

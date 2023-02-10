@@ -322,7 +322,11 @@ class EmployeeAdd extends Component {
                     sx={{ maxWidth: 200 }}
                     className="border-radius-default"
                   >
-                    <AvatarEmployee />
+                    <AvatarEmployee
+                      edit={false}
+                      view={false}
+                      userId={JSON.parse(localStorage.getItem("user")).id}
+                    />
                     <CardContent>
                       <div className="flex-column flex-align-center">
                         <Typography
