@@ -221,6 +221,8 @@ export default class Announcement extends Component {
                       },
                       pageSize: 8,
                       pageSizeOptions: [5, 10, 20, 30, 50, 75, 100],
+                      filtering: true,
+                      exportButton: true,
                     }}
                     title={<h4>Announcement List</h4>}
                   />
