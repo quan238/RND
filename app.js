@@ -70,6 +70,4 @@ app.use(function (err, req, res, next) {
   res.send({ message: err.message });
 });
 
-app.listen(3001);
-
 module.exports = app;
