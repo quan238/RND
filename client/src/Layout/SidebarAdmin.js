@@ -198,6 +198,51 @@ class SidebarAdmin extends Component {
                   <p>{this.props.t("sidebar.announcements")}</p>
                 </NavLink>
               </li>
+              <li className="nav-item has-treeview">
+                <NavLink
+                  to="/settings"
+                  className="nav-link"
+                  activeClassName="nav-link"
+                >
+                  <i className="nav-icon fas fa-cog" />
+                  <p>
+                    Settings
+                    <i className="right fas fa-angle-left" />
+                  </p>
+                </NavLink>
+                <ul className="nav nav-treeview">
+                  <li className="nav-item">
+                    <NavLink to="/general-settings" className="nav-link">
+                      <i className="fas fa-signal nav-icon" />
+                      <p>General Settings</p>
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/working-days-settings" className="nav-link">
+                      <i className="fas fa-calendar nav-icon" />
+                      <p>Set Workings Days</p>
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/holiday-settings" className="nav-link">
+                      <i className="fas fa-shopping-cart nav-icon" />
+                      <p>Holiday List</p>
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/leave-category-settings" className="nav-link">
+                      <i className="fas fa-shopping-cart nav-icon" />
+                      <p>Leave Category</p>
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/notification-settings" className="nav-link">
+                      <i className="fas fa-shopping-cart nav-icon" />
+                      <p>Notification Settings</p>
+                    </NavLink>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </nav>
           {/* /.sidebar-menu */}
