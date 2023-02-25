@@ -3,7 +3,6 @@ import { loadTree } from "../menuTreeHelper";
 import { NavLink } from "react-router-dom";
 import { MAP_ROLE } from "./utils";
 import { withTranslation } from "react-i18next";
-import { Avatar } from "@mui/material";
 import { AvatarEmployeeIcon } from "../components/AvatarEmployeeIcon";
 
 class SidebarAdmin extends Component {
@@ -97,6 +96,12 @@ class SidebarAdmin extends Component {
                 <NavLink to="/job-list" className="nav-link">
                   <i className="nav-icon fas fa-briefcase" />
                   <p>{this.props.t("sidebar.job.list")}</p>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/contract-list" className="nav-link">
+                  <i className="nav-icon fas fa-file-contract" />
+                  <p>{this.props.t("sidebar.contract.list")}</p>
                 </NavLink>
               </li>
               <li className="nav-item has-treeview">
@@ -200,7 +205,7 @@ class SidebarAdmin extends Component {
               </li>
               <li className="nav-item has-treeview">
                 <NavLink
-                  to="/settings"
+                  to="/general-settings"
                   className="nav-link"
                   activeClassName="nav-link"
                 >
@@ -213,31 +218,37 @@ class SidebarAdmin extends Component {
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
                     <NavLink to="/general-settings" className="nav-link">
-                      <i className="fas fa-signal nav-icon" />
+                      <i className="fas fa-cog nav-icon" />
                       <p>General Settings</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
+                    <NavLink to="/payment-settings" className="nav-link">
+                      <i className="fas fa-credit-card nav-icon" />
+                      <p>Payment Method</p>
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
                     <NavLink to="/working-days-settings" className="nav-link">
-                      <i className="fas fa-calendar nav-icon" />
-                      <p>Set Workings Days</p>
+                      <i className="fas fa-calendar-alt nav-icon" />
+                      <p>Set Working Days</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/holiday-settings" className="nav-link">
-                      <i className="fas fa-shopping-cart nav-icon" />
+                      <i className="fas fa-gift nav-icon" />
                       <p>Holiday List</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/leave-category-settings" className="nav-link">
-                      <i className="fas fa-shopping-cart nav-icon" />
+                      <i className="fas fa-briefcase nav-icon" />
                       <p>Leave Category</p>
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink to="/notification-settings" className="nav-link">
-                      <i className="fas fa-shopping-cart nav-icon" />
+                      <i className="fas fa-bell nav-icon" />
                       <p>Notification Settings</p>
                     </NavLink>
                   </li>

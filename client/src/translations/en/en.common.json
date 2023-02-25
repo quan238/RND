@@ -13,6 +13,9 @@
       "list": "Employee List"
     },
     "job": {
+      "list": "Job List"
+    },
+    "contract": {
       "list": "Contract List"
     },
     "application": {

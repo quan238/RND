@@ -10,9 +10,8 @@ import MaterialTable from "material-table";
 import { ThemeProvider } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
 import AlertModal from "./AlertModal";
-import { uniqBy } from "lodash";
 
-export default class JobList extends Component {
+export default class ContractList extends Component {
   constructor(props) {
     super(props);
 
@@ -44,7 +43,6 @@ export default class JobList extends Component {
             this.fetchData();
           }
         });
-        this.handleChange();
       })
       .catch((err) => {
         console.log(err);
@@ -69,11 +67,7 @@ export default class JobList extends Component {
           });
         });
 
-        this.setState({
-          jobs: uniqBy(jobs, function (e) {
-            return e.name;
-          }),
-        });
+        this.setState({ jobs: jobs });
       })
       .catch((err) => {
         console.log(err);
@@ -100,11 +94,7 @@ export default class JobList extends Component {
           });
         });
 
-        this.setState({
-          jobs: uniqBy(jobs, function (e) {
-            return e.jobTitle;
-          }).map((item, key) => ({ ...item, id: key + 1 })),
-        });
+        this.setState({ jobs: jobs });
       })
       .catch((err) => {
         console.log(err);
@@ -137,15 +127,13 @@ export default class JobList extends Component {
   };
 
   handleChange = (event) => {
-    // this.setState({ selectedDepartment: event.target.value }, () => {
-    //   // if (this.state.selectedDepartment === "all") {
-    //   //   this.fetchDataAll();
-    //   // } else {
-    //   //   this.fetchData();
-    //   // }
-    //   this.fetchDataAll();
-    // });
-    this.fetchDataAll();
+    this.setState({ selectedDepartment: event.target.value }, () => {
+      if (this.state.selectedDepartment === "all") {
+        this.fetchDataAll();
+      } else {
+        this.fetchData();
+      }
+    });
   };
 
   onEdit(job) {
@@ -201,8 +189,8 @@ export default class JobList extends Component {
     });
 
     return (
-      <div className="container-fluid pt-5">
-        {/* <div className="row">
+      <div className="container-fluid pt-2">
+        <div className="row">
           <div className="col-sm-6">
             <Card className="secondary-card">
               <Card.Header>
@@ -222,9 +210,12 @@ export default class JobList extends Component {
               </Card.Body>
             </Card>
           </div>
-        </div> */}
+        </div>
         <div className="row">
           <div className="col-sm-12">
+            <h4>
+              <Button onClick={this.addJob}>Add New Contract</Button>
+            </h4>
             <Card className="main-card">
               <Card.Body>
                 <ThemeProvider theme={theme}>
@@ -232,7 +223,7 @@ export default class JobList extends Component {
                     columns={[
                       { title: "JOB ID", field: "id" },
                       { title: "Job Title", field: "jobTitle" },
-                      // { title: "Employee", field: "user.fullName" },
+                      { title: "Employee", field: "user.fullName" },
                       { title: "Start Date", field: "startDate" },
                       { title: "End Date", field: "endDate" },
                       {
@@ -257,31 +248,31 @@ export default class JobList extends Component {
                           paddingRight: 30,
                         },
                       },
-                      // {
-                      //   title: "Action",
-                      //   render: (rowData) => (
-                      //     <Form className="row">
-                      //       <div className="col">
-                      //         <Button
-                      //           size="sm"
-                      //           variant="info"
-                      //           onClick={this.onEdit(rowData)}
-                      //         >
-                      //           <i className="fas fa-edit"></i>Edit
-                      //         </Button>
-                      //       </div>
-                      //       <div className="col">
-                      //         <Button
-                      //           onClick={this.onDelete(rowData)}
-                      //           size="sm"
-                      //           variant="danger"
-                      //         >
-                      //           <i className="fas fa-trash"></i>Delete
-                      //         </Button>
-                      //       </div>
-                      //     </Form>
-                      //   ),
-                      // },
+                      {
+                        title: "Action",
+                        render: (rowData) => (
+                          <Form className="row">
+                            <div className="col">
+                              <Button
+                                size="sm"
+                                variant="info"
+                                onClick={this.onEdit(rowData)}
+                              >
+                                <i className="fas fa-edit"></i>Edit
+                              </Button>
+                            </div>
+                            <div className="col">
+                              <Button
+                                onClick={this.onDelete(rowData)}
+                                size="sm"
+                                variant="danger"
+                              >
+                                <i className="fas fa-trash"></i>Delete
+                              </Button>
+                            </div>
+                          </Form>
+                        ),
+                      },
                     ]}
                     data={this.state.jobs}
                     options={{
@@ -299,7 +290,7 @@ export default class JobList extends Component {
                       this.selectedUser ? (
                         this.selectedUser.fullName
                       ) : (
-                        <h4>Job List</h4>
+                        <h4>Contract List</h4>
                       )
                     }
                   />

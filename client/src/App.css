@@ -20,6 +20,16 @@ body {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.nav-item .nav-link p {
+  display: flex !important;
+  align-items: baseline !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+}
+
+.nav-item .nav-link i {
+  position: initial !important;
+}
 
 .App-header {
   background-color: #282c34;

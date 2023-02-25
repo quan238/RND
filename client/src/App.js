@@ -29,7 +29,6 @@ import Application from "./components/Application";
 import SalaryDetails from "./components/SalaryDetails";
 import SalaryList from "./components/SalaryList";
 import SalaryView from "./components/SalaryView";
-import SalaryViewManager from "./components/manager/SalaryView";
 import SalaryViewEmployee from "./components/employee/SalaryView";
 import Payment from "./components/Payment";
 import Expense from "./components/Expense";
@@ -42,10 +41,14 @@ import AnnouncementEmployee from "./components/employee/Announcement";
 import Register from "./components/Register";
 import withAuth from "./withAuth";
 import Login from "./components/Login";
-import JobList from "./components/JobList";
+import ContractList from "./components/ContractList";
 import JobListManager from "./components/manager/JobList";
 import Background from "./background.jpeg";
 import PaymentHistory from "./components/PaymentHistory";
+import CompanySettings from "./pages/company-settings";
+import JobList from "./components/JobList";
+import PaymentMethods from "./pages/payment-settings";
+import HolidayListSetting from "./pages/holiday-settings";
 
 export default class App extends Component {
   render() {
@@ -102,10 +105,10 @@ const DefaultContainer = () => (
     {JSON.parse(localStorage.getItem("user")).role === "ROLE_ADMIN"
       ? AdminContainer()
       : JSON.parse(localStorage.getItem("user")).role === "ROLE_MANAGER"
-      ? ManagerContainer()
-      : JSON.parse(localStorage.getItem("user")).role === "ROLE_EMPLOYEE"
-      ? EmployeeContainer()
-      : null}
+        ? ManagerContainer()
+        : JSON.parse(localStorage.getItem("user")).role === "ROLE_EMPLOYEE"
+          ? EmployeeContainer()
+          : null}
   </div>
 );
 
@@ -122,6 +125,7 @@ const AdminContainer = () => (
         <Route exact path="/employee-edit" component={withAuth(EmployeeEdit)} />
         <Route exact path="/departments" component={withAuth(DepartmentList)} />
         <Route exact path="/job-list" component={withAuth(JobList)} />
+        <Route exact path="/contract-list" component={withAuth(ContractList)} />
         <Route
           exact
           path="/application-list"
@@ -141,6 +145,13 @@ const AdminContainer = () => (
           path="/payment-history"
           component={withAuth(PaymentHistory)}
         />
+        <Route
+          exact
+          path="/payment-settings"
+          component={withAuth(PaymentMethods)}
+        />
+        <Route component={withAuth(HolidayListSetting)} exact
+          path="/holiday-settings" />
         <Route exact path="/expense" component={withAuth(Expense)} />
         <Route
           exact
@@ -150,6 +161,7 @@ const AdminContainer = () => (
         <Route exact path="/announcement" component={withAuth(Announcement)} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/general-settings" component={CompanySettings} />
       </Switch>
     </Layout>
     <Footer />
