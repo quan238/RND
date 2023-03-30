@@ -4,6 +4,7 @@ const {
   handlePayslipData,
   getPayslipTemplateData,
 } = require("../utils/payslip");
+const { formatVNDCurrency } = require("../utils/index");
 const Payment = db.payment;
 const User = db.user;
 const Job = db.job;
@@ -15,8 +16,10 @@ const sequelize = db.sequelize;
 const fs = require("fs");
 const path = require("path");
 const { PDFDocument, TextAlignment } = require("pdf-lib");
+const { sendPayslipToUser } = require("../send-email");
+
 // Create and Save a new Payment
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -36,17 +39,111 @@ exports.create = (req, res) => {
     userId: req.body.userId,
   };
 
-  // Save Payment in the database
-  Payment.create(payment)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Payment.",
-      });
+  const userData = await User.findOne({
+    raw: true,
+    nest: true,
+    include: [
+      {
+        model: UserPersonalInfo,
+      },
+      {
+        model: UserFinancialInfo,
+      },
+      {
+        model: Department,
+      },
+      {
+        model: Job,
+        include: [
+          {
+            model: Payment,
+          },
+        ],
+      },
+    ],
+    where: {
+      id: req.body.userId,
+    },
+  });
+
+  if (!userData) {
+    res.status(400).send({
+      message: "User Data Not Found!",
     });
+    return;
+  }
+  Payment.create(payment).then(async (data) => {
+    const payment = await Payment.findOne({
+      where: { id: data.id },
+      raw: true,
+      nest: true,
+      include: [
+        {
+          model: User,
+          include: [
+            {
+              model: UserPersonalInfo,
+            },
+            {
+              model: UserFinancialInfo,
+            },
+            {
+              model: Department,
+            },
+            {
+              model: Job,
+            },
+          ],
+        },
+      ],
+    });
+    const payslipTemplate = getPayslipTemplateData(payment);
+
+    const readStream = await fs.readFileSync(
+      path.resolve("./template/template_payslip.pdf")
+    );
+    const pdfDoc = await PDFDocument.load(readStream);
+
+    const form = pdfDoc.getForm();
+    const fields = pdfDoc
+      .getForm()
+      .getFields()
+      .map((t) => t.getName());
+
+    const payslipForm = handlePayslipData(payslipTemplate);
+    for (const item of fields) {
+      form.getTextField(item).setText(payslipForm[item]);
+      form.getTextField(item).setAlignment(TextAlignment.Right);
+      form.getTextField(item).setFontSize(8);
+    }
+
+    form.flatten();
+
+    const buffer = await pdfDoc.save();
+
+    const email = userData?.user_personal_info?.emailAddress;
+    if (email) {
+      sendPayslipToUser(
+        email,
+        "Payslip",
+        {
+          company: payslipTemplate?.companyName,
+          month: payslipTemplate?.payrollCycle,
+          year: "2023",
+          employeeName: payslipTemplate?.employeeFullName,
+          basicSalary: formatVNDCurrency(payslipTemplate?.contractSalary),
+          totalEarnings: formatVNDCurrency(
+            payslipTemplate?.paidSalaryThisMonth
+          ),
+          totalDeductions: formatVNDCurrency(payslipTemplate.personalIncomeTax),
+          netPay: formatVNDCurrency(payslipTemplate?.paidSalaryThisMonth),
+        },
+        buffer
+      );
+    }
+
+    res.send(data);
+  });
 };
 
 exports.downloadFile = async (req, res) => {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= company %> Payslip for <%= month %>, <%= year %></title>
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			padding: 8px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+<body>
+	<h1><%= company %> Payslip for <%= month %>, <%= year %></h1>
+	<p>Dear <%= employeeName %>,</p>
+	<p>Please find attached your payslip for the month of <%= month %>, <%= year %>.</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Earnings</th>
+				<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Basic Salary</td>
+				<td><%= basicSalary %></td>
+			</tr>
+			<!-- Add any other earnings here -->
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>Total earnings:</td>
+				<td><%= totalEarnings %></td>
+			</tr>
+			<tr>
+				<td>Total deductions:</td>
+				<td><%= totalDeductions %></td>
+			</tr>
+			<tr>
+				<td>Net pay:</td>
+				<td><%= netPay %></td>
+			</tr>
+		</tfoot>
+	</table>
+</body>
+</html>

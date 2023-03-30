@@ -27,7 +27,6 @@ exports.create = (req, res) => {
     hash = bcrypt.hashSync(req.body.password.toString(), 10);
   }
 
-  console.log(req.body);
   // Create a User
   const user = {
     username: req.body.username,
