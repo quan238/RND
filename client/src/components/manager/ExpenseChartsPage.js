@@ -65,6 +65,9 @@ export default class ExpenseChartsPage extends React.Component {
   };
 
   render() {
+
+
+
     const options = {
       responsive: true,
       scales: {
@@ -106,7 +109,6 @@ export default class ExpenseChartsPage extends React.Component {
           data: labels.map(() =>
             faker.datatype.number({ min: 0, max: 239765400 })
           ),
-
           backgroundColor: "rgba(53, 162, 235, 0.5)",
         },
       ],

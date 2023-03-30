@@ -49,8 +49,10 @@ class ExpenseChartsPage extends React.Component {
       labels: data.map((d) => d.month),
       datasets: [
         {
+          label: "Payment",
           data: [...data.map((d) => d.expenses)],
-          backgroundColor: "#007fad",
+          borderColor: "rgb(53, 162, 235)",
+          backgroundColor: "rgba(53, 162, 235, 0.5)",
         },
       ],
     };
@@ -140,7 +142,7 @@ class ExpenseChartsPage extends React.Component {
           </div>
         </div>
         <div>
-          <Line options={options} data={data} />
+          <Line options={options} data={this.state.chartData} />
           {/* <Bar
             data={this.state.chartData}
             height={300}
