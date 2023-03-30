@@ -2,12 +2,12 @@ const nodemailer = require("nodemailer");
 const ejs = require("ejs");
 
 const config = {
-  host: "smtp.gmail.com",
-  port: 587,
+  host: process.env.HOST_SMTP,
+  port: process.env.PORT_SMTP,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: "munkudo@gmail.com",
-    pass: "hxugkscnayfkowon",
+    user: process.env.USER_SMTP,
+    pass: process.env.PASSWORD_SMTP,
   },
 };
 
@@ -34,7 +34,6 @@ exports.sendMailCreateUser = async (to, subject, data) => {
 };
 
 exports.sendMailChangePassword = async (to, subject, data) => {
-  console.log(to, subject, data);
   // Create a transporter object to send emails
   let transporter = nodemailer.createTransport(config);
 
