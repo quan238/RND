@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import axios from "axios";
-import { formatCurrency, formatVNDCurrency } from "../utils";
+import {  formatVNDCurrency } from "../utils";
 
 export default function PaymentHistory({ id }) {
   const [payments, setPayments] = React.useState([]);
@@ -38,7 +38,6 @@ export default function PaymentHistory({ id }) {
     axios({
       method: "get",
       url: "api/payments",
-
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     })
       .then((res) => {
@@ -54,6 +53,7 @@ export default function PaymentHistory({ id }) {
     axios({
       method: "post",
       url: `api/payments/${id}/download`,
+      responseType: "blob", // important
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     })
       .then((res) => {

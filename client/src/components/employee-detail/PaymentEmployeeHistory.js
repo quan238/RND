@@ -54,10 +54,10 @@ export default function PaymentEmployeeHistory({ id }) {
     axios({
       method: "post",
       url: `api/payments/${id}/download`,
+      responseType: "blob", // important
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     })
       .then((res) => {
-        console.log(res.data);
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = document.createElement("a");
         link.href = url;
