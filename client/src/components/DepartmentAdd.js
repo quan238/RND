@@ -75,7 +75,6 @@ export default class DepartmentAdd extends Component {
                 </Form.Label>
                 <Form.Control
                   type="text"
-                  disabled
                   placeholder="Enter Department Description"
                   name="departmentDescription"
                   style={{ width: "50%" }}

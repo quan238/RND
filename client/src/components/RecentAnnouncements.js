@@ -95,9 +95,8 @@ class RecentAnnouncements extends React.Component {
                   <span class="year">
                     {new Date(announcement.createdAt).getFullYear()}
                   </span>
-                  <span className="mb-2">
-                    <strong>{announcement.announcementTitle}</strong>(
-                    {announcement.department?.departmentName})
+                  <span className="mb-2" style={{ wordWrap: 'break-word', textAlign:'center'}}>
+                    <strong>{announcement.announcementTitle}</strong>
                   </span>
                 </div>
               </div>

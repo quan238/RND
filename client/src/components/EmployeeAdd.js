@@ -59,6 +59,7 @@ class EmployeeAdd extends Component {
       departments: [],
       jobTitle: null,
       jobs: [],
+      active:1,
       joiningDate: "",
       file: null,
       hasError: true,
