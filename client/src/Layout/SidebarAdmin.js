@@ -104,32 +104,11 @@ class SidebarAdmin extends Component {
                   <p>{this.props.t("sidebar.contract.list")}</p>
                 </NavLink>
               </li>
-              <li className="nav-item has-treeview">
-                <NavLink
-                  to="/application-list"
-                  className="nav-link"
-                  activeClassName="nav-link"
-                >
-                  <i className="nav-icon fa fa-rocket" />
-                  <p>
-                    {this.props.t("sidebar.application.main")}
-                    <i className="right fas fa-angle-left" />
-                  </p>
+              <li className="nav-item">
+                <NavLink to="/application-list" className="nav-link">
+                  <i className="fas fa-list-ul nav-icon" />
+                  <p>{this.props.t("sidebar.application.list")}</p>
                 </NavLink>
-                <ul className="nav nav-treeview">
-                  <li className="nav-item">
-                    <NavLink to="/application" className="nav-link">
-                      <i className="fa fa-plus nav-icon" />
-                      <p>{this.props.t("sidebar.application.add")}</p>
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/application-list" className="nav-link">
-                      <i className="fas fa-list-ul nav-icon" />
-                      <p>{this.props.t("sidebar.application.list")}</p>
-                    </NavLink>
-                  </li>
-                </ul>
               </li>
               <li className="nav-item has-treeview">
                 <NavLink
