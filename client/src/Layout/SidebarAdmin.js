@@ -202,6 +202,12 @@ class SidebarAdmin extends Component {
                     </NavLink>
                   </li>
                   <li className="nav-item">
+                    <NavLink to="/social-settings" className="nav-link">
+                      <i className="fas fa-share nav-icon" />
+                      <p>Social</p>
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
                     <NavLink to="/payment-settings" className="nav-link">
                       <i className="fas fa-credit-card nav-icon" />
                       <p>Payment Method</p>
@@ -224,13 +230,7 @@ class SidebarAdmin extends Component {
                       <i className="fas fa-briefcase nav-icon" />
                       <p>Leave Category</p>
                     </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/notification-settings" className="nav-link">
-                      <i className="fas fa-bell nav-icon" />
-                      <p>Notification Settings</p>
-                    </NavLink>
-                  </li>
+                  </li>        
                 </ul>
               </li>
             </ul>

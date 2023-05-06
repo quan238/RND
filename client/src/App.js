@@ -49,6 +49,8 @@ import CompanySettings from "./pages/company-settings";
 import JobList from "./components/JobList";
 import PaymentMethods from "./pages/payment-settings";
 import HolidayListSetting from "./pages/holiday-settings";
+import LeaveCategorySetting from "./pages/leave-category-settings";
+import SocialLinksForm from "./pages/SocialLinkForm";
 
 export default class App extends Component {
   render() {
@@ -150,8 +152,21 @@ const AdminContainer = () => (
           path="/payment-settings"
           component={withAuth(PaymentMethods)}
         />
-        <Route component={withAuth(HolidayListSetting)} exact
-          path="/holiday-settings" />
+        <Route
+          exact
+          path="/social-settings"
+          component={withAuth(SocialLinksForm)}
+        />
+        <Route
+          component={withAuth(HolidayListSetting)}
+          exact
+          path="/holiday-settings"
+        />
+        <Route
+          component={withAuth(LeaveCategorySetting)}
+          exact
+          path="/leave-category-settings"
+        />
         <Route exact path="/expense" component={withAuth(Expense)} />
         <Route
           exact
