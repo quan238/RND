@@ -100,13 +100,13 @@ class ExpenseChartsPage extends React.Component {
     ];
 
     const data = {
-      labels,
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
       datasets: [
         {
           label: "Dataset 1",
-          data: labels.map(() =>
-            faker.datatype.number({ min: 0, max: 50000000 })
-          ),
+          data: [
+            43337032, 25193848, 22896992, 25263770, 3629853, 16615761, 40455754,
+          ],
           borderColor: "rgb(53, 162, 235)",
           backgroundColor: "rgba(53, 162, 235, 0.5)",
         },
@@ -142,7 +142,7 @@ class ExpenseChartsPage extends React.Component {
           </div>
         </div>
         <div>
-          <Line options={options} data={this.state.chartData} />
+          <Line options={options} data={data} />
           {/* <Bar
             data={this.state.chartData}
             height={300}

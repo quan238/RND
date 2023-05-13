@@ -3,6 +3,9 @@ import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import NewPasswordModal from "../components/NewPasswordModal";
 import SelectCountry from "../components/SelectCountry";
+import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
+import { Button } from "@mui/material";
+import Badge from "@mui/material/Badge";
 
 export default class Header extends Component {
   constructor(props) {
@@ -40,7 +43,10 @@ export default class Header extends Component {
           <NewPasswordModal show={true} onHide={closeModal} />
         ) : null}
         {/* Left navbar links */}
-        <ul className="navbar-nav">
+        <ul
+          className="navbar-nav"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <li className="nav-item">
             <a
               className="nav-link"
@@ -149,7 +155,13 @@ export default class Header extends Component {
             </div>
           </li> */}
           {/* Select Country */}
+
           <SelectCountry />
+          <Button onClick={() => {}} type="text" className="p-0 m-0">
+            <Badge badgeContent={4} color="primary">
+              <NotificationsNoneRoundedIcon color="#fffff" />
+            </Badge>
+          </Button>
           {/* Notifications Dropdown Menu */}
           <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">

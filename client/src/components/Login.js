@@ -161,7 +161,7 @@ export default class Login extends Component {
 
             <hr className="mt-3" />
             <a href="/register" className="text-center mt-1">
-              Don't have an account? Register
+              Forgot Password
             </a>
           </div>
 

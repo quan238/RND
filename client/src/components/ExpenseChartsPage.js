@@ -30,7 +30,7 @@ class ExpenseChartsPage extends React.Component {
       .then((res) => {
         let data = this.transformData(res.data);
         let array = this.makeArrayStructure(data);
-       
+
         this.setState({ chartData: array });
       })
       .catch((err) => {
@@ -100,19 +100,18 @@ class ExpenseChartsPage extends React.Component {
     ];
 
     const data = {
-      labels,
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
       datasets: [
         {
           label: "Dataset 1",
-          data: labels.map(() =>
-            faker.datatype.number({ min: 0, max: 239765400 })
-          ),
+          data: [
+            179245604, 123182547, 191524102, 45165477, 7400957, 105206383,
+            137303638,
+          ],
           backgroundColor: "rgba(53, 162, 235, 0.5)",
         },
       ],
     };
-
-    console.log(this.chartData);
 
     return (
       <div className="card p-3">
@@ -143,7 +142,7 @@ class ExpenseChartsPage extends React.Component {
           </div>
         </div>
         <div>
-          <Bar options={options} data={this.state.chartData} />
+          <Bar options={options} data={data} />
           {/* <Bar
             data={this.state.chartData}
             height={300}

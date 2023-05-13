@@ -29,7 +29,7 @@ const SelectCountry = (props) => {
 
   return (
     <>
-      <Button onClick={handleSelectCountry} type="text">
+      <Button onClick={handleSelectCountry} type="text" className="p-0 m-0">
         <LanguageIcon />
       </Button>
     </>
