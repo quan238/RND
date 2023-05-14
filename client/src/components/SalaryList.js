@@ -115,7 +115,7 @@ export default class SalaryList extends Component {
                     {
                       title: "Net Salary",
                       field: "salaryNet",
-                      render: (rowData) => formatVNDCurrency(rowData.salaryNet),
+                      render: (rowData) => formatVNDCurrency(rowData.salaryGross - rowData.deductionTotal),
                       filtering: false,
                     },
                     {

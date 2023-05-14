@@ -128,7 +128,7 @@ export default class JobAddModal extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Add New Contract
+            Adjust contract
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -148,18 +148,30 @@ export default class JobAddModal extends Component {
               </Form.Control>
             </Form.Group>
             {this.state.selectedDepartment ? (
-              <Form.Group>
-                <Form.Label>Select User</Form.Label>
-                <Form.Control
-                  as="select"
-                  className="form-control"
-                  value={this.state.selectedUser || ""}
-                  onChange={this.onUserChange}
-                >
-                  <option value="">Choose one...</option>
-                  {this.pushUsers()}
-                </Form.Control>
-              </Form.Group>
+              <>
+                <Form.Group>
+                  <Form.Label>Select User</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="form-control"
+                    value={this.state.selectedUser || ""}
+                    onChange={this.onUserChange}
+                  >
+                    <option value="">Choose one...</option>
+                    {this.pushUsers()}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Adjust Type</Form.Label>
+                  <Form.Control as="select" className="form-control">
+                    <option value="">Choose one...</option>
+                    <option value="">Extend Contract</option>
+                    <option value="">
+                      Add New Contract & Set Current One Old{" "}
+                    </option>
+                  </Form.Control>
+                </Form.Group>
+              </>
             ) : null}
             {done ? (
               <Redirect
@@ -178,17 +190,20 @@ export default class JobAddModal extends Component {
             ) : (
               <></>
             )}
-            <Form.Group controlId="formJobTitle">
-              <Form.Label className="mb-2 required">Job Title</Form.Label>
+
+            <Form.Group>
+              <Form.Label className="required">Select Contract</Form.Label>
               <Form.Control
-                type="text"
-                className="col-8"
+                as="select"
                 name="jobTitle"
+                className="form-control"
                 value={this.state.jobTitle}
                 onChange={this.handleChange}
-                autoComplete="off"
                 required
-              />
+              >
+                <option value="">Choose one...</option>
+                <option value="Fullstack developer">Fullstack developer</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group controlId="formStartDate">
               <Form.Label className="mb-2 required">Job Start Date</Form.Label>
@@ -218,12 +233,12 @@ export default class JobAddModal extends Component {
                 required
               />
             </Form.Group>
-            <Button variant="success" type="submit" className="mt-2">
-              Submit
-            </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
+          <Button variant="success" onClick={this.onSubmit}>
+            Submit
+          </Button>
           <Button onClick={this.props.onHide}>Close</Button>
         </Modal.Footer>
       </Modal>

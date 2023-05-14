@@ -114,7 +114,7 @@ export default function PaymentHistory({ id }) {
                     field: "user.user_financial_info.salaryNet",
                     render: (rowData) =>
                       formatVNDCurrency(
-                        rowData.user.user_financial_info.salaryNet
+                        rowData.user.user_financial_info.salaryGross - rowData.user.user_financial_info.deductionTotal
                       ),
                   },
                   {

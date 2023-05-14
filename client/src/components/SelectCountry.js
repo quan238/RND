@@ -25,6 +25,7 @@ const SelectCountry = (props) => {
     });
 
     i18n.changeLanguage(value);
+    window.location.reload()
   };
 
   return (
