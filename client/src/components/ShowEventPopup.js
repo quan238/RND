@@ -126,7 +126,7 @@ export default class ShowEventPopup extends Component {
               <Form.Control
                 type="text"
                 placeholder="Enter a Title"
-                className="col-6"
+                className="col-12"
                 name="title"
                 value={this.state.title}
                 onChange={this.handleChange}
@@ -139,7 +139,7 @@ export default class ShowEventPopup extends Component {
               <Form.Control
                 type="text"
                 placeholder="Enter a Description"
-                className="col-6"
+                className="col-12"
                 name="description"
                 value={this.state.description}
                 onChange={this.handleChange}
@@ -159,7 +159,7 @@ export default class ShowEventPopup extends Component {
                 timeIntervals={30}
                 timeCaption="time"
                 dateFormat="yyyy-MM-dd HH:mm:ss"
-                className="form-control ml-1"
+                className="form-control"
                 placeholderText="Select Start Date"
                 autoComplete="off"
                 required
@@ -179,7 +179,7 @@ export default class ShowEventPopup extends Component {
                 timeIntervals={30}
                 timeCaption="time"
                 dateFormat="yyyy-MM-dd HH:mm:ss"
-                className="form-control ml-3"
+                className="form-control"
                 placeholderText="Select End Date"
                 autoComplete="off"
                 required
@@ -187,17 +187,15 @@ export default class ShowEventPopup extends Component {
             </Form.Group>
 
             <Form.Text className="mb-3 required">Required Fields</Form.Text>
-            <Button variant="success" type="submit">
-              Submit
-            </Button>
-          </Form>
-          <Form onSubmit={this.deleteEvent}>
-            <Button variant="danger" type="submit" className="mt-2">
-              Delete
-            </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{display:'flex', alignItems:'center'}}>
+          <Button variant="success" type="submit" onClick={this.onSubmit}>
+            Submit
+          </Button>
+          <Button variant="danger" type="submit" onClick={this.deleteEvent}>
+            Delete
+          </Button>
           <Button onClick={this.props.onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
