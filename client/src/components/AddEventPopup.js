@@ -105,29 +105,32 @@ export default class AddEventModel extends Component {
             <></>
           )}
           <Form onSubmit={this.onSubmit}>
-            <TextField
-              id="outlined-title"
-              name="title"
-              label="Event"
-              size="small"
-              variant="outlined"
-              type="text"
-              placeholder="Enter a Title"
-              className="col-12"
-              value={this.state.title}
-              required
-              onChange={this.handleChange}
-            />
             <FormGroup>
+              <Form.Label className="required">Event name</Form.Label>
               <TextField
                 id="outlined-title"
-                name="description"
-                label="Description"
+                name="title"
+                placeholder="Event"
                 size="small"
                 variant="outlined"
                 type="text"
-                placeholder="Enter a Title"
-                className="col-12 mt-4"
+                className="col-12"
+                value={this.state.title}
+                required
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup className="mt-4">
+              <Form.Label className="">Event description</Form.Label>
+              <TextField
+                id="outlined-title"
+                name="description"
+                placeholder="Description"
+                size="small"
+                variant="outlined"
+                type="text"
+                // placeholder="Enter a Title"
+                className="col-12"
                 value={this.state.description}
                 onChange={this.handleChange}
               />
@@ -165,7 +168,7 @@ export default class AddEventModel extends Component {
                 timeIntervals={30}
                 timeCaption="time"
                 dateFormat="yyyy-MM-dd HH:mm:ss"
-                className="form-control ml-3"
+                className="form-control col-12"
                 placeholderText="Select End Date"
                 autoComplete="off"
                 required

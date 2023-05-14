@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Alert } from "react-bootstrap";
-import { NavLink } from 'react-router-dom'
+import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default class Register extends Component {
   constructor(props) {
@@ -50,30 +51,10 @@ export default class Register extends Component {
   onSubmit = (event) => {
     event.preventDefault();
 
-    if (this.state.password !== this.state.checkPassword) {
-      alert("Passwords don't match");
-    } else {
-      var newUser = {
-        username: this.state.username,
-        password: this.state.password,
-        fullname: this.state.fullname,
-      };
-
-      axios({
-        method: "post",
-        url: "/register",
-        data: newUser,
-      })
-        .then((res) => {
-          this.setState({ completed: true, hasError: false })
-        })
-        .catch((err) => {
-          this.setState({
-            hasError: true,
-            errorMessage: err.response.data.message
-          });
-        });
-    }
+    this.setState({ completed: true, hasError: false });
+    toast.success("Email send forgot Successfully", {
+      position: toast.POSITION.TOP_CENTER,
+    });
   };
 
   render() {
@@ -86,34 +67,18 @@ export default class Register extends Component {
             ) : null}
             {this.state.completed ? (
               <Alert variant="success">
-                You have been registered successfully. <NavLink to="/login">Go to Login.</NavLink>
-              </Alert>
+                You email reset password have been send. Please check your inbox!!{" "}
+             </Alert>
             ) : null}
-            <p className="login-box-msg">Register</p>
+            <p className="login-box-msg">Forgot Password</p>
             <form onSubmit={this.onSubmit}>
               <div>
                 <div className="input-group mb-3">
                   <input
                     type="text"
                     className="form-control"
-                    name="username"
-                    placeholder="Username"
-                    value={this.state.username}
-                    onChange={this.onChange}
-                    required
-                  />
-                  <div className="input-group-append">
-                    <div className="input-group-text">
-                      <span className="fas fa-user" />
-                    </div>
-                  </div>
-                </div>
-                <div className="input-group mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
                     name="fullname"
-                    placeholder="Fullname"
+                    placeholder="Email"
                     value={this.state.fullname}
                     onChange={this.onChange}
                     required
@@ -124,82 +89,24 @@ export default class Register extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="input-group mb-3">
-                  <input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    id="password"
-                    placeholder="Password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                    required
-                  />
-                  <div className="input-group-append">
-                    <div className="input-group-text">
-                      <span className="fas fa-lock" />
-                    </div>
-                  </div>
-                  <div className="input-group-append">
-                    <div className="input-group-text">
-                      <span
-                        className={
-                          this.state.passwordShow
-                            ? "fas fa-eye"
-                            : "fas fa-eye-slash"
-                        }
-                        onClick={this.passwordVisibilityHandler}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="input-group mb-3">
-                  <input
-                    type="password"
-                    className="form-control"
-                    name="checkPassword"
-                    id="checkPassword"
-                    placeholder="Retype Password"
-                    value={this.state.checkPassword}
-                    onChange={this.onChange}
-                    required
-                  />
-                  <div className="input-group-append">
-                    <div className="input-group-text">
-                      <span className="fas fa-lock" />
-                    </div>
-                  </div>
-
-                  <div className="input-group-append">
-                    <div className="input-group-text">
-                      <span
-                        className={
-                          this.state.passwordCheckShow
-                            ? "fas fa-eye"
-                            : "fas fa-eye-slash"
-                        }
-                        onClick={this.passwordVisibilityHandlerCheck}
-                      />
-                    </div>
-                  </div>
-                </div>
               </div>
               <div className="row">
                 <div className="col-8"></div>
                 {/* /.col */}
-                <div className="col-4">
-                  <button type="submit" className="btn btn-primary btn-block">
-                    Register
-                  </button>
-                </div>
+                <div className="col-4"></div>
                 {/* /.col */}
               </div>
             </form>
-            <a href="/login" className="text-center mt-1">
-              Already have an account? Login
-            </a>
-            <hr className="mt-3" />
 
+            <button
+              className="btn btn-primary btn-block mb-3"
+              onClick={this.onSubmit}
+            >
+              Send Email
+            </button>
+            <a href="/login" className="text-center mt-3">
+              Back to Login
+            </a>
           </div>
           {/* /.form-box */}
         </div>

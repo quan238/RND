@@ -3,7 +3,7 @@ import { Modal, Button, Form, Alert } from "react-bootstrap";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
-
+import { Input, TextField } from "@mui/material";
 export default class NewPasswordModal extends Component {
   constructor(props) {
     super(props);
@@ -47,12 +47,14 @@ export default class NewPasswordModal extends Component {
             position: toast.POSITION.TOP_CENTER,
           });
           this.setState({ completed: true, showAlert: false, hasError: false });
+          this.props.onHide();
         })
         .catch((err) => {
           toast.error(err.response.data.message, {
             position: toast.POSITION.TOP_CENTER,
           });
           this.setState({ hasError: true, errMsg: err.response.data.message });
+          this.props.onHide();
         });
     }
   };
@@ -96,42 +98,51 @@ export default class NewPasswordModal extends Component {
           <Form onSubmit={this.onSubmit}>
             <Form.Group controlId="formOldPassword">
               <Form.Label className="required">Old Password</Form.Label>
-              <Form.Control
+              <TextField
                 type="password"
                 placeholder="Enter old password"
-                className="col-12"
                 name="oldPassword"
+                className="col-12"
                 value={this.state.oldPassword}
                 onChange={this.handleChange}
                 required
-              />
+                fullWidth
+                color="info"
+                size="small"
+              />{" "}
             </Form.Group>
 
             <Form.Group controlId="formNewPassword">
               <Form.Label>New Password</Form.Label>
-              <Form.Control
+              <TextField
                 type="password"
                 placeholder="Enter new Password"
                 className="col-12"
                 name="newPassword"
                 value={this.state.newPassword}
                 onChange={this.handleChange}
+                required
+                fullWidth
+                color="info"
+                size="small"
               />
             </Form.Group>
 
             <Form.Group controlId="formNewPasswordCheck">
               <Form.Label>New Password Repeat</Form.Label>
-              <Form.Control
+              <TextField
                 type="password"
                 placeholder="Repeat new Password"
                 className="col-12"
                 name="newPasswordCheck"
                 value={this.state.newPasswordCheck}
                 onChange={this.handleChange}
+                required
+                fullWidth
+                color="info"
+                size="small"
               />
             </Form.Group>
-
-            <Form.Text className="mb-3 required"> Required Fields</Form.Text>
           </Form>
         </Modal.Body>
         <Modal.Footer>
