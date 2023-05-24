@@ -67,18 +67,35 @@ export default class Register extends Component {
             ) : null}
             {this.state.completed ? (
               <Alert variant="success">
-                You email reset password have been send. Please check your inbox!!{" "}
-             </Alert>
+                You email reset password have been send. Please check your
+                inbox!!{" "}
+              </Alert>
             ) : null}
-            <p className="login-box-msg">Forgot Password</p>
+            <p className="login-box-msg">Reset Password</p>
             <form onSubmit={this.onSubmit}>
               <div>
                 <div className="input-group mb-3">
                   <input
-                    type="text"
+                    type="password"
                     className="form-control"
                     name="fullname"
-                    placeholder="Email"
+                    placeholder="New Password"
+                    value={this.state.fullname}
+                    onChange={this.onChange}
+                    required
+                  />
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-user" />
+                    </div>
+                  </div>
+                </div>
+                <div className="input-group mb-3">
+                  <input
+                    type="password"
+                    className="form-control"
+                    name="fullname"
+                    placeholder="Confirm Password"
                     value={this.state.fullname}
                     onChange={this.onChange}
                     required
@@ -102,7 +119,7 @@ export default class Register extends Component {
               className="btn btn-primary btn-block mb-3"
               onClick={this.onSubmit}
             >
-              Send Email
+              Reset Password
             </button>
             <a href="/login" className="text-center mt-3">
               Back to Login
